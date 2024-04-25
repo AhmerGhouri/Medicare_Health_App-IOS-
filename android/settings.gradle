@@ -1,6 +1,11 @@
 rootProject.name = 'test_app'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
+include ':react-native-async-storage_async-storage'
+include ':react-native-community_blur'
+include ':react-native-community_geolocation'
+include ':react-native-masked-view_masked-view'
+include ':lottie-react-native'
 includeBuild('../node_modules/@react-native/gradle-plugin')
 include ':react-native-splash-screen'   
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
