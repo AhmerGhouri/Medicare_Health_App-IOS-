@@ -1,4 +1,4 @@
-package com.test_app;
+package com.HHS_Medicare;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

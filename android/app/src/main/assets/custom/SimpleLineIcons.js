@@ -1,1 +1,16 @@
-var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:true});exports.getImageSourceSync=exports.getImageSource=exports.default=exports.Button=void 0;var _createIconSet=_interopRequireDefault(require("./lib/create-icon-set"));var _SimpleLineIcons=_interopRequireDefault(require("./glyphmaps/SimpleLineIcons.json"));var iconSet=(0,_createIconSet.default)(_SimpleLineIcons.default,'simple-line-icons','SimpleLineIcons.ttf');var _default=iconSet;exports.default=_default;var Button=iconSet.Button,getImageSource=iconSet.getImageSource,getImageSourceSync=iconSet.getImageSourceSync;exports.getImageSourceSync=getImageSourceSync;exports.getImageSource=getImageSource;exports.Button=Button;
+/**
+ * SimpleLineIcons icon set component.
+ * Usage: <SimpleLineIcons name="icon-name" size={20} color="#4F8EF7" />
+ */
+
+import createIconSet from './lib/create-icon-set';
+import glyphMap from './glyphmaps/SimpleLineIcons.json';
+
+const iconSet = createIconSet(glyphMap, 'simple-line-icons', 'SimpleLineIcons.ttf');
+
+export default iconSet;
+export const {
+  Button,
+  getImageSource,
+  getImageSourceSync,
+} = iconSet;
