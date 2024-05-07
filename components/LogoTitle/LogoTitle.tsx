@@ -5,7 +5,7 @@ import { s } from 'react-native-wind'
 export default function LogoTitle({ title, tintColor, ...props }) {
   return (
     <View style={s`items-center`}>
-      <Text style={[s` text-lg` , { color: tintColor , fontFamily : 'Quicksand-Bold' }]}>{title}</Text>
+      <Text allowFontScaling={false} style={[s` text-lg` , { color: tintColor , fontFamily : 'Quicksand-Bold' }]}>{title}</Text>
     </View>
   )
 }

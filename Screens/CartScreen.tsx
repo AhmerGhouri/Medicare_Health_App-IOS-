@@ -68,7 +68,7 @@ const CartScreen = ({ route , navigation }: cartScreenProps) => {
               loop
             />
 
-            <Text style={[s`text-lg text-red-500` , { fontFamily : 'Quicksand-Bold' }]}>Your Cart is Empty</Text>
+            <Text allowFontScaling={false} style={[s`text-lg text-red-500` , { fontFamily : 'Quicksand-Bold' }]}>Your Cart is Empty</Text>
 
           </View>
           :

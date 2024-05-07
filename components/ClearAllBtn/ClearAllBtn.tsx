@@ -20,7 +20,7 @@ export default function ClearAllBtn() {
     return (
         <>
             <Pressable onPress={() => setModalVisible(true)}>
-                <Text style={{ fontFamily: 'Quicksand-Bold' , color : 'white'}}>Clear All</Text>
+                <Text allowFontScaling={false} style={{ fontFamily: 'Quicksand-Bold' , color : 'white'}}>Clear All</Text>
             </Pressable>
 
             <Modal
@@ -38,14 +38,14 @@ export default function ClearAllBtn() {
 
                     <View style={[s`flex shrink-0 pt-6 w-full items-center`]}>
 
-                        <Text style={[s`text-lg text-black`, { fontFamily: 'Quicksand-Bold' }]}>Delete From Cart</Text>
+                        <Text allowFontScaling={false} style={[s`text-lg text-black`, { fontFamily: 'Quicksand-Bold' }]}>Delete From Cart</Text>
 
                     </View>
 
                     <View style={[s`flex-row justify-center items-center w-full` , {height : '55%'}]}>
 
                         <View style={[s`items-center`]}>
-                            <Text style={{fontFamily : 'Quicksand-Regular' , color : 'gray'}}>Are you sure you want to clear all items?</Text>
+                            <Text allowFontScaling={false} style={{fontFamily : 'Quicksand-Regular' , color : 'gray'}}>Are you sure you want to clear all items?</Text>
                         </View>
 
                     </View>
@@ -53,10 +53,10 @@ export default function ClearAllBtn() {
                     <View style={[s`flex-row justify-end items-center px-4 w-full`]}>
 
                         <Pressable onPress={ClearCart} style={[s`items-center px-4 py-2`]}>
-                            <Text style={{fontFamily : 'Quicksand-Bold' , color : '#313594'}}>Yes</Text>
+                            <Text allowFontScaling={false} style={{fontFamily : 'Quicksand-Bold' , color : '#313594'}}>Yes</Text>
                         </Pressable>
                         <Pressable onPress={() => setModalVisible(false)} style={[s`items-center px-4 py-2`]}>
-                            <Text style={{fontFamily : 'Quicksand-Bold' , color : 'red'}}>No</Text>
+                            <Text allowFontScaling={false} style={{fontFamily : 'Quicksand-Bold' , color : 'red'}}>No</Text>
                         </Pressable>
 
                     </View>

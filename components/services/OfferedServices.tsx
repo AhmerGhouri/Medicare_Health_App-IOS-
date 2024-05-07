@@ -256,14 +256,14 @@ export default function Services({ mob, bottomSheetRef, handleSetBottomSheetData
                     <View style={[s`shadow-2xl py-6 px-2 flex-column bg-white justify-center items-center rounded-3xl m-2`,
                       styles.box]}>
                       <Icon name={item.icon} size={Dimensions.get('window').height <= 704 ? 22 : 30} color={'red'} />
-                      <Text style={[s`pt-2 text-blue-800 text-center `, {fontSize: Dimensions.get('window').height <= 704 ? 10 : 14, fontFamily: 'Quicksand-Bold' }]}>
+                      <Text allowFontScaling={false} style={[s`pt-2 text-blue-800 text-center `, {fontSize: Dimensions.get('window').height <= 704 ? 10 : 14, fontFamily: 'Quicksand-Bold' }]}>
                         {item.servicE_DESC}
                       </Text>
                     </View>
                   </Pressable>
                 )}
               />
-              {error ? <Text style={styles.errorMsg}>{error}</Text> : null}
+              {error ? <Text allowFontScaling={false} style={styles.errorMsg}>{error}</Text> : null}
             </View>
           </View>
         </View>
@@ -291,8 +291,10 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 10,
-    width: Dimensions.get('window').height <= 804 ? 88 : 110,
-    height: Dimensions.get('window').height <= 804 ? 95 : 110
+    // width: Dimensions.get('window').height <= 804 ? 88 : 110,
+    // height: Dimensions.get('window').height <= 804 ? 95 : 110
+    width: Dimensions.get('window').height <= 640 ? 80 : 110 && Dimensions.get('window').height <= 804 ? 88 : 110,
+    height: Dimensions.get('window').height <= 640 ? 80 : 110 && Dimensions.get('window').height <= 804 ? 95 : 110
     // width: Dimensions.get('window').height <= 592 ? '60%' : '70%',
     // height: Dimensions.get('window').height <= 592 ? '40%' : '60%'
   },

@@ -41,7 +41,7 @@ export default function UserDrawer({ user }) {
             <View style={s``}>
               {/* <Avatar ImageUrl={user.gender === 'M' ? Man : Woman} width={80} height={80} /> */}
               <Image source={user.gender === 'M' ? Man : Woman} style={s`w-16 h-16`} width={20} height={20} />
-            <Text style={s`text-white p-2 items-center justify-center`}>{user.pname}</Text>
+            <Text allowFontScaling={false} style={s`text-white p-2 items-center justify-center`}>{user.pname}</Text>
             </View>
             <View style={s``}>
               <TouchableOpacity onPress={navigateToCart}>
@@ -57,7 +57,7 @@ export default function UserDrawer({ user }) {
               </View>
               <View style={{width : '80%' }}>
 
-            <Text style={[s`text-black text-lg p-2` , {fontFamily : 'Quicksand-Bold'}]}>{user.fname}</Text>
+            <Text allowFontScaling={false} style={[s`text-black text-lg p-2` , {fontFamily : 'Quicksand-Bold'}]}>{user.fname}</Text>
               </View>
             </View>
             <View style={s`flex-row items-center p-4`}>
@@ -66,7 +66,7 @@ export default function UserDrawer({ user }) {
             <Icon name='phone' color={'black'}/>
             </View>
             <View style={{width : '80%'}}>
-            <Text style={[s`text-black text-lg p-2` , {fontFamily : 'Quicksand-Bold'}]}>{user.mob}</Text>
+            <Text allowFontScaling={false} style={[s`text-black text-lg p-2` , {fontFamily : 'Quicksand-Bold'}]}>{user.mob}</Text>
 
             </View>
             </View>
@@ -78,7 +78,7 @@ export default function UserDrawer({ user }) {
               <Icon name='logout' size={18} color={'white'} />
             </View>
             <View>
-              <Text style={s`text-white italic font-bold pt-1`}>Sign Out</Text>
+              <Text allowFontScaling={false} style={s`text-white italic font-bold pt-1`}>Sign Out</Text>
             </View>
           </View>
         </TouchableOpacity>

@@ -14,7 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Logo from '../src/assets/MEDICARE.png'
+import Logo from '../src/assets/Medicare_logo_screen.png'
 import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, TouchableOpacity } from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import { useAuth } from '../components/authContext/AuthContext';
@@ -203,6 +203,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
                 <View style={[{ width: '85%', alignItems: 'center' }]}>
 
                   <TextInput
+                    allowFontScaling={false}
                     onBlur={handleInput}
                     placeholderTextColor={'black'}
                     placeholder='Enter Your Mobile Number'
@@ -218,7 +219,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
               </View>
             </Animated.View>
 
-            {numMsg ? <Text style={[s`text-red-600`, { fontSize: Dimensions.get('window').height < 804 ? 10 : 14 }]}>{numError}</Text> : ''}
+            {numMsg ? <Text allowFontScaling={false} style={[s`text-red-600`, { fontSize: Dimensions.get('window').height < 804 ? 10 : 14 }]}>{numError}</Text> : ''}
             <Animated.View style={s`flex`} entering={BounceInDown.duration(1600)} exiting={FadeOut} >
               <View style={[s`flex flex-row rounded-md  justify-around border-red-300 p-1 items-center`, styles.InputView]}>
 
@@ -227,6 +228,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
                 </View>
                 <View style={[{ width: '65%', alignItems: 'center', paddingLeft: '12%' }]}>
                   <TextInput
+                    allowFontScaling={false}
                     placeholder='Enter Your Password'
                     placeholderTextColor={'black'}
                     style={[s`text-black `, { fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}
@@ -253,7 +255,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
                   <View style={[s`mt-8`, { width: "100%" }]}>
 
                     <TouchableOpacity disabled={isButtonDisable()} onPress={handleLogin} style={[s`rounded p-2  `, { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 30, backgroundColor: isButtonDisable() ? 'lightgray' : 'red', elevation: 10, width: '100%' }]}>
-                      <Text style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
+                      <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
                         Login
                       </Text>
                     </TouchableOpacity>
@@ -274,7 +276,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
 
               <View style={s`w-36`}>
                 <TouchableOpacity onPress={() => navigation.push('Registration')} style={[s`rounded p-2  items-center`, { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 20, backgroundColor: '#313594', elevation: 10, width: '100%' }]}>
-                  <Text style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
+                  <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
                     Registration
                   </Text>
                 </TouchableOpacity>

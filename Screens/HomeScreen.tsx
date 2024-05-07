@@ -20,7 +20,7 @@ import {
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { s } from 'react-native-wind';
 import LottieView from 'lottie-react-native';
-import Logo from '../src/assets/MEDICARE.png'
+import Logo from '../src/assets/Medicare_logo_screen.png'
 import Woman from '../src/assets/woman.png'
 import Man from '../src/assets/man.png'
 import Services from '../components/services/OfferedServices';
@@ -64,6 +64,9 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
   const [checkedData, setCheckedData] = useState<checkedData>()
   const [backPressed, setBackPressed] = useState<any>(0);
   const [visible, setVisible] = useState(false);
+
+  console.log("home Height" , Dimensions.get('screen').height);
+  
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
@@ -192,8 +195,8 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
         <Avatar ImageUrl={item.opaT_SEX === 'M' ? Man : Woman} width={20} height={20}/>
 
         <View style={[s`flex justify-between pl-4`, {}]}>
-          <Text style={[s`text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 11 : 13 }]}>{item.opaT_ID}</Text>
-          <Text style={[s`text-blue-900`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 13 : 15 }]}>{item.opaT_PNAME.length > 20 ? item.opaT_PNAME.slice(0, 20) + '..' : item.opaT_PNAME}</Text>
+          <Text allowFontScaling={false} style={[s`text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 11 : 13 }]}>{item.opaT_ID}</Text>
+          <Text allowFontScaling={false} style={[s`text-blue-900`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 13 : 15 }]}>{item.opaT_PNAME.length > 20 ? item.opaT_PNAME.slice(0, 20) + '..' : item.opaT_PNAME}</Text>
         </View>
         </View>
 
@@ -231,6 +234,7 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
   const onDismissSnackBar = () => setVisible(false);
   console.log("screen" , Dimensions.get("screen").height)
   console.log("window" , Dimensions.get("window").height)
+  console.log("window width" , Dimensions.get("window").width)
   
 
   return (
@@ -279,7 +283,7 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
 
                   {/* <Avatar ImageUrl={user.gender === 'M' ? Man : Woman} width={20} height={20} /> */}
                   <Avatar ImageUrl={user.gender === 'M' ? Man : Woman} width={20} height={20} />
-                  <Text style={[s`text-black pt-1 text-sm`, { fontSize: Dimensions.get('window').height < 604 ? 10 : 14, fontFamily: 'Quicksand-Bold' }]}>{user.pname?.slice(0, 7)}</Text>
+                  <Text allowFontScaling={false} style={[s`text-black pt-1 text-sm`, { fontSize: Dimensions.get('window').height < 604 ? 10 : 14, fontFamily: 'Quicksand-Bold' }]}>{user.pname?.slice(0, 7)}</Text>
 
                 </TouchableOpacity>
 
@@ -340,7 +344,7 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
               </View>
 
               <View style={[s`pl-8`, { width: Dimensions.get('window').width <= 600 ? '70%' : '60%' }]}>
-                <Text style={s`text-white text-medium italic font-semibold`}>
+                <Text allowFontScaling={false} style={s`text-white text-medium italic font-semibold`}>
                   Create New MR #
                 </Text>
               </View>
@@ -369,13 +373,13 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
             {
               bottomSheetData == 0 ?
                 (
-                  <Text style={[s`text-sm font-medium m-12 items-center justify-center italic text-center text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}>
+                  <Text allowFontScaling={false} style={[s`text-sm font-medium m-12 items-center justify-center italic text-center text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}>
                     No MR Number is Registered with this Mobile Number! Please Click below button to create MR #.
                   </Text>
                 )
                 :
                 (
-                  <Text style={[s`text-sm font-medium mx-4 italic text-center text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}>
+                  <Text allowFontScaling={false} style={[s`text-sm font-medium mx-4 italic text-center text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}>
                     Following MR # are registered on your mobile number kindly select one for service.
                   </Text>
                 )
@@ -427,7 +431,7 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
 
           style={{ alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
@@ -499,8 +503,10 @@ const styles = StyleSheet.create({
 
     // width: 400,
     // height: 400,
-    width: Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
-    height: Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
+    // width: Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 400 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
+    // height: Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 350 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
+    width: Dimensions.get('screen').height <= 640 ? 250 : 400 || Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 400 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
+    height: Dimensions.get('screen').height <= 640 ? 250 : 400 || Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 350 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
     zIndex: 0,
 
   },

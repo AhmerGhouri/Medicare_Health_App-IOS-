@@ -1,10 +1,10 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import Modal from 'react-native-modal'
 import React from 'react'
 import LottieView from 'lottie-react-native'
 import { s } from 'react-native-wind'
 
-const CashDeliveryModal = ({ modalVisible , onClose , navigation}) : JSX.Element => {
+const CashDeliveryModal = ({ modalVisible, onClose, navigation }): JSX.Element => {
 
     const handlePress = () => {
         onClose()
@@ -25,7 +25,7 @@ const CashDeliveryModal = ({ modalVisible , onClose , navigation}) : JSX.Element
 
 
                 <View
-                    style={{ justifyContent : 'center' , height: '38%', backgroundColor: 'white', borderTopWidth: 8, borderTopColor: 'blue' }}
+                    style={{ justifyContent: 'center', height: '38%', backgroundColor: 'white', borderTopWidth: 8, borderTopColor: 'blue' }}
                 >
 
                     <View style={[s`flex shrink-0 w-full items-center`, styles.lottieContainer]}>
@@ -40,16 +40,26 @@ const CashDeliveryModal = ({ modalVisible , onClose , navigation}) : JSX.Element
                     </View>
                     <View style={[s`flex w-full justify-center items-center`, styles.lottieContainer]}>
 
-                        <Text style={s`text-center text-black`}>Our Contact Person will call you back in next working hours.</Text>
+                        <Text allowFontScaling={false} style={s`text-center text-black`}>Our Contact Person will call you back in next working hours.</Text>
 
                     </View>
 
 
                 </View>
 
-                <View>
+                {/* <View>
 
                     <Button title="Close" color={'red'} onPress={handlePress} />
+
+                </View> */}
+
+                <View style={s`flex justify-between bg-blue-500`}>
+
+                    <Pressable
+                        onPress={handlePress}
+                    >
+                        <Text allowFontScaling={false} style={s`text-white text-center p-4`}>Close</Text>
+                    </Pressable>
 
                 </View>
 

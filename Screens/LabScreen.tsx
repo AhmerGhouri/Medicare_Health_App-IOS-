@@ -71,7 +71,7 @@ function LabScreen({ navigation, route }: LabScreenProps) {
   const _renderItem = item => {
       return (
       <View style={styles.item}>
-          <Text style={styles.textItem}>{item.label}</Text>
+          <Text allowFontScaling={false} style={styles.textItem}>{item.label}</Text>
           <Image style={styles.icon} source={require('../src/assets/check-mark.png')} />
       </View>
       );
@@ -229,14 +229,14 @@ function LabScreen({ navigation, route }: LabScreenProps) {
 
               <View style={[s`flex-row justify-around items-center `, { width: '25%' }]}>
                 <FontIcon name='calendar-day' color={'grey'} />
-                <Text style={{ fontFamily: 'Quicksand-Regular', color: 'gray' }}>Date :</Text>
+                <Text allowFontScaling={false} style={{ fontFamily: 'Quicksand-Regular', color: 'gray' }}>Date :</Text>
               </View>
 
               <TouchableOpacity style={[s`flex-row`, { width: '75%' }]} onPress={OpenCloseDatePicker}>
                 
                 <View style={[s`justify-center items-center`, { width: '80%' }]}>
                   {/* <TextInput style={{ padding: 5, color: 'black' }} value={formattedDate} /> */}
-                  <Text style={{ padding: 5, color: 'black' }}>{formattedDate}</Text>
+                  <Text allowFontScaling={false} style={{ padding: 5, color: 'black' }}>{formattedDate}</Text>
                 </View>
 
                 <View style={[s` justify-center items-center`, { width: '30%' }]}>
@@ -272,12 +272,16 @@ function LabScreen({ navigation, route }: LabScreenProps) {
                     style={styles.dropdown}
                     containerStyle={styles.shadow}
                     data={timeSlotData}
+                    activeColor='#fb4d4d'
                     // search
                     searchPlaceholder="Search"
                     labelField="label"
                     valueField="value"
                     // label="Dropdown"
                     placeholder="Select Time Slot"
+                    placeholderStyle={{
+                      
+                    }}
                     value={dropdown}
                     onChange={item => {
                     setDropdown(item.value);
@@ -307,7 +311,7 @@ function LabScreen({ navigation, route }: LabScreenProps) {
               setItems={setTimeSlot}
             /> */}
           </View>
-          {errorMsg ? <View style={s`items-center justify-center`}><Text style={s`text-red-400 text-xs`}>Please Select a Preferred Time Slot</Text></View> : null}
+          {errorMsg ? <View style={s`items-center justify-center`}><Text  allowFontScaling={false} style={s`text-red-400 text-xs`}>Please Select a Preferred Time Slot</Text></View> : null}
 
           <View style={s`m-2`}>
             <Search onChange={handleFilter} />
@@ -340,7 +344,7 @@ function LabScreen({ navigation, route }: LabScreenProps) {
                 onPress={toggleModal}
                 style={[s`bg-red-500 items-center justify-center m-4 p-4`, { borderRadius: 100 }]}>
                 <Icon name='forward' color={'white'} size={25} />
-                <Text style={s`text-white italic font-bold`}>Cart</Text>
+                <Text allowFontScaling={false} style={s`text-white italic font-bold`}>Cart</Text>
               </TouchableOpacity>
               : null
             }

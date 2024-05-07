@@ -30,19 +30,29 @@ export default function SelectedTestsModals({ visible, navigation }) {
                     <View style={{ justifyContent: 'center', height: '50%', backgroundColor: 'white'}}
                     >
                         <View style={[s`flex w-full justify-center items-center`]}>
-                            <Text style={[s`text-center text-black`, { fontFamily: 'Quicksand-Regular' }]}>This Service is already in Your Cart. Kindly Check Your Cart and proceed further</Text>
+                            <Text allowFontScaling={false} style={[s`text-center text-black`, { fontFamily: 'Quicksand-Regular' }]}>This Service is already in Your Cart. Kindly Check Your Cart and proceed further</Text>
                         </View>
                     </View>
                 </View>
 
                 <View style={s`flex justify-between bg-blue-500`}>
 
-                    <Button title="Go To Cart" onPress={() => {
+                    {/* <Button title="Go To Cart" onPress={() => {
                         dispatch(closeModal())
                         setTimeout(() => {
                             navigation.navigate('CartScreen')
                         }, 1000)
-                    }} />
+                    }} /> */}
+                    <Pressable 
+                    onPress={() => {
+                        dispatch(closeModal())
+                        setTimeout(() => {
+                            navigation.navigate('CartScreen')
+                        }, 1000)
+                    }}
+                    >
+                        <Text allowFontScaling={false} style={s`text-white text-center p-4`}>Go To Cart</Text>
+                    </Pressable>
 
                 </View>
 

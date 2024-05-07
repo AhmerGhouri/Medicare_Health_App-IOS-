@@ -50,7 +50,7 @@ const ServicesDetail: React.FC<{ data: LabTestData[], opatValues: opatValuesType
                 <View style={[s`flex-row z-1 justify-between my-4`, styles.List]}>
                     
                     <View style={{ width: "60%" }}>
-                        <Text style={[s`text-blue-900 text-md`, { fontFamily: 'Quicksand-Bold' }]}>{item.ltesT_DESC}</Text>
+                        <Text allowFontScaling={false} style={[s`text-blue-900 text-md`, { fontFamily: 'Quicksand-Bold' }]}>{item.ltesT_DESC}</Text>
                     </View>
 
                     <View style={s`flex-row items-center`}>
@@ -79,7 +79,7 @@ const ServicesDetail: React.FC<{ data: LabTestData[], opatValues: opatValuesType
               autoPlay
               loop
             />
-                <Text style={{fontFamily : 'Quicksand-Bold'}}>
+                <Text allowFontScaling={false} style={{fontFamily : 'Quicksand-Bold'}}>
                     No Data Found.
                     </Text>
             </View>

@@ -424,7 +424,7 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
             {/* MR Heading */}
           <View style={s`my-6 w-full items-center`}>
 
-            <Text style={s`font-bold text-2xl tracking-wider text-blue-800 italic`}>MR Number</Text>
+            <Text allowFontScaling={false} style={s`font-bold text-2xl tracking-wider text-blue-800 italic`}>MR Number</Text>
 
           </View>
 
@@ -442,6 +442,7 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
 
                 <View style={[s`items-left`, { width: '60%' }]}>
                   <TextInput
+                    allowFontScaling={false}
                     placeholder='Mr #'
                     placeholderTextColor={'gray'}
                     style={s`text-gray-400`}
@@ -462,6 +463,7 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
 
                 <View style={[s`items-left`, { width: '60%' }]}>
                   <TextInput
+                    allowFontScaling={false}
                     placeholder='Your Mobile No'
                     keyboardType='numeric'
                     editable={false}
@@ -483,17 +485,18 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
             <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
 
 
-              <View style={[s`items-center`, { width: '30%' }]}>
+              <View style={[s`items-center`, { width: '15%' }]}>
                 <Entypo name='email' color={'grey'} />
               </View>
 
-              <View style={[s`items-left`, { width: '60%' }]}>
+              <View style={[s`items-left`, { width: '85%' }]}>
                 <TextInput
+                  allowFontScaling={false}
                   placeholder='Enter Your email address'
                   keyboardType='default'
                   testID='email'
                   placeholderTextColor={'gray'}
-                  style={s`text-black`}
+                  style={s`text-black text-center`}
                   secureTextEntry={false}
                   editable={disableFields}
                   onBlur={validateEmail}
@@ -503,22 +506,23 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
               </View>
 
             </View>
-            {error ? <Text style={s`text-red-600 text-sm`}>{emailErr}</Text> : null}
+            {error ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{emailErr}</Text> : null}
 
             {/* Full Name Input Field */}
             <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
 
 
-              <View style={[s`items-center`, { width: '30%' }]}>
+              <View style={[s`items-center`, { width: '15%' }]}>
                 <Icon name='address-card' color={'grey'} />
               </View>
 
-              <View style={[s`items-left`, { width: '60%' }]}>
+              <View style={[s`items-left`, { width: '85%' }]}>
                 <TextInput
+                  allowFontScaling={false}
                   placeholder='Enter Your Full Name'
                   testID="FullName"
                   placeholderTextColor={'gray'}
-                  style={s`text-black`}
+                  style={s`text-black text-center`}
                   onBlur={() => fullName === '' ? setErrors({ ...errors, nametype: true }) : setErrors({ nametype: false })}
                   keyboardType='name-phone-pad'
                   onChangeText={(text: string) => setFullName(text)}
@@ -528,21 +532,22 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
               </View>
 
             </View>
-            {errors?.nametype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.name}</Text> : null}
+            {errors?.nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.name}</Text> : null}
 
             {/* Father Name Input Field */}
             <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
 
-              <View style={[s`items-center`, { width: '30%' }]}>
+              <View style={[s`items-center`, { width: '15%' }]}>
                 <Material name='human-male-child' color={'grey'} />
               </View>
 
-              <View style={[s`items-left`, { width: '60%' }]}>
+              <View style={[s`items-left`, { width: '85%' }]}>
                 <TextInput
+                  allowFontScaling={false}
                   placeholder='Enter Your Father Name'
                   keyboardType='default'
                   placeholderTextColor={'gray'}
-                  style={s`text-black`}
+                  style={s`text-black text-center`}
                   testID="FatherName"
                   onBlur={() => fatherName !== '' ? setErrors({ ...errors, father_nametype: false }) : setErrors({ father_nametype: true })}
                   onChangeText={(text: string) => setFatherName(text)}
@@ -552,18 +557,18 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
               </View>
 
             </View>
-            {errors?.father_nametype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.father_name}</Text> : null}
+            {errors?.father_nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.father_name}</Text> : null}
 
             {/* Gender Radio Button */}
             <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
 
-              <View style={[s`items-center`, { width: '30%' }]}>
+              <View style={[s`items-center`, { width: '15%' }]}>
                 <Icon name='restroom' color={'grey'} />
               </View>
 
-              <View style={[s`items-left`, { width: '60%' }]}>
+              <View style={[s`items-left`, { width: '85%' }]}>
                 <TouchableOpacity
-                  style={s`flex-column`}
+                  style={s`flex-column items-center`}
                   disabled={disableFields ? false : true}
                   onBlur={() => selectedId !== '' ? setErrors({ ...errors, gendertype: false }) : setErrors({ gendertype: true })}
                 >
@@ -586,14 +591,14 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
               </View>
 
             </View>
-            {errors?.gendertype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.gender}</Text> : null}
+            {errors?.gendertype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.gender}</Text> : null}
 
             {/* Date Of Birth Input Field */}
             <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-between items-center`, styles.InputViewDOB]}>
 
               <View style={[s`flex-row justify-around items-center `, { width: '30%' }]}>
                 <Icon name='calendar-day' color={'grey'} />
-                <Text>D.O.B</Text>
+                <Text allowFontScaling={false}>D.O.B</Text>
               </View>
 
               <TouchableOpacity style={[s`flex-row`, { width: '85%' }]} onPress={() => setOpen(true)}>
@@ -602,7 +607,7 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
                     placeholderTextColor={'gray'}
                     style={s`text-black`}
                     value={dateOfBirth || date_to_string} /> */}
-                  <Text style={s`text-black`}>{dateOfBirth || date_to_string}</Text>
+                  <Text allowFontScaling={false} style={s`text-black`}>{dateOfBirth || date_to_string}</Text>
                 </View>
 
               <View style={[s` justify-center items-left`, { width: '30%' }]}>
@@ -630,7 +635,7 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
 
 
             </View>
-            {errors?.dateOfBirthtype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.dateOfBirth}</Text> : null}
+            {errors?.dateOfBirthtype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.dateOfBirth}</Text> : null}
 
           </View>
 
@@ -679,7 +684,7 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           disabled={isButtonDisable() || disableForEmpty()}
           style={[s`rounded p-2  items-center`,
           { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 20, backgroundColor: isButtonDisable() || disableForEmpty() ? 'lightgray' : '#313594', elevation: 10, width: '100%' }]}>
-          <Text style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
+          <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
             Create
           </Text>
         </TouchableOpacity>

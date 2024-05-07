@@ -1,7 +1,7 @@
 import {ScrollView, StyleSheet, Text, View , Image} from 'react-native';
 import React, { useEffect } from 'react';
 import { s } from 'react-native-wind';
-import Logo from '../../src/assets/MEDICARE.png'
+import Logo from '../../src/assets/Medicare_logo_screen.png'
 import Animated , { useSharedValue, withRepeat, withSpring, withTiming } from 'react-native-reanimated';
 
 
@@ -18,8 +18,8 @@ export default function LogoAnimation() {
     ring1padding.value = 0
     ring2padding.value = 0
 
-    setTimeout(() => ring1padding.value = withRepeat(withTiming((withSpring(ring1padding.value+ 40) , 60), { duration: 1500 }),-1,true))
-    setTimeout(() => ring2padding.value = withRepeat(withTiming((withSpring(ring2padding.value+ 50), 150), { duration: 1500 }),-1,true))
+    setTimeout(() => ring1padding.value = withRepeat(withTiming((withSpring(ring1padding.value+ 20) , 40), { duration: 1500 }),-1,true))
+    setTimeout(() => ring2padding.value = withRepeat(withTiming((withSpring(ring2padding.value+ 30), 90), { duration: 1500 }),-1,true))
     // setTimeout(() => ring1padding.value = withSpring(ring1padding.value+ 40) , 5)
     // setTimeout(() => ring2padding.value = withSpring(ring2padding.value+ 50) , 5)
 
@@ -33,7 +33,7 @@ export default function LogoAnimation() {
     <Animated.View style={[s`bg-red-400  rounded-full  justify-center`,  { margin : ring2padding}]}>
       <Animated.View style={[s`bg-red-100 w-72 h-72 rounded-full items-center  justify-center ` , { margin : ring1padding}] }>
 
-        <Image  source={Logo} style={s`m-8`} width={80} height={90}/>
+        <Image  source={Logo} style={s`m-4 w-40 h-24`}/>
 
       </Animated.View>
       </Animated.View>

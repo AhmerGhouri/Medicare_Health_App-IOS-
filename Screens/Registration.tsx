@@ -534,7 +534,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
             {/* Registration Heading */}
             <View style={s`my-6 w-full items-center`}>
               <Animated.View style={s`flex`} entering={ZoomIn.duration(1600)} exiting={FadeOut} >
-                <Text style={s`font-bold text-2xl tracking-wider text-blue-800 italic`}>Registration</Text>
+                <Text allowFontScaling={false} style={s`font-bold text-2xl tracking-wider text-blue-800 italic`}>Registration</Text>
               </Animated.View>
             </View>
 
@@ -546,16 +546,17 @@ export default function Registraion({ navigation }: RegistrationProps) {
 
                   <View style={[s`flex z-0 flex-row rounded-md  p-0 border-blue-300 justify-around items-center`, styles.InputViewNum, error ? { borderColor: 'red' } : { borderColor: 'skyblue' }]}>
 
-                    <View style={[s`items-center`, { width: '30%' }]}>
+                    <View style={[s`items-end`, { width: '15%' }]}>
                       <Icon name='phone' color={'grey'} />
                     </View>
-                    <View style={[s`items-left`, { width: '60%' }]}>
+                    <View style={[s`items-left`, { width: '85%' }]}>
                       <TextInput
+                        allowFontScaling={false}
                         placeholder='Enter Your Mobile No'
                         keyboardType='numeric'
                         // style={s`text-left`}
                         placeholderTextColor={'gray'}
-                        style={s`text-black`}
+                        style={s`text-black text-center`}
                         testID="MobileNo"
                         maxLength={11}
                         onBlur={() => {
@@ -572,22 +573,23 @@ export default function Registraion({ navigation }: RegistrationProps) {
 
                 </View>
               </Animated.View>
-              {error ? <Text style={s`text-red-600 text-sm`}>{numError}</Text> : ''}
+              {error ? <Text  allowFontScaling={false} style={s`text-red-600 text-sm`}>{numError}</Text> : ''}
 
               {/*  Full Name Input Field */}
               <Animated.View style={s`flex`} entering={BounceInDown.duration(1200)} exiting={FadeOut} >
                 <View style={[s`flex z-0 flex-row rounded-md  border-blue-300 p-0 justify-around items-center`, styles.InputView]}>
 
-                  <View style={[s`items-center`, { width: '30%' }]}>
+                  <View style={[s`items-end`, { width: '15%' }]}>
                     <Icon name='address-card' color={'grey'} />
                   </View>
 
-                  <View style={[s`items-left`, { width: '60%' }]}>
+                  <View style={[s`items-left`, { width: '85%' }]}>
                     <TextInput
+                      allowFontScaling={false}
                       placeholder='Enter Your Full Name'
                       testID="FullName"
                       placeholderTextColor={'gray'}
-                      style={s`text-black`}
+                      style={s`text-black text-center`}
                       onBlur={() => fullName === '' ? setErrors({ ...errors, nametype: true }) : setErrors({ nametype: false })}
                       keyboardType='name-phone-pad'
                       onChangeText={(text: string) => setFullName(text)}
@@ -598,22 +600,23 @@ export default function Registraion({ navigation }: RegistrationProps) {
 
                 </View>
               </Animated.View>
-              {errors?.nametype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.name}</Text> : null}
+              {errors?.nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.name}</Text> : null}
 
               {/* Father Name Input Field */}
               <Animated.View style={s`flex`} entering={BounceInDown.duration(1400)} exiting={FadeOut} >
                 <View style={[s`flex z-0 flex-row rounded-md  border-blue-300 p-0 justify-around items-center`, styles.InputView]}>
 
-                  <View style={[s`items-center`, { width: '30%' }]}>
+                  <View style={[s`items-end`, { width: '15%' }]}>
                     <Material name='human-male-child' color={'grey'} />
                   </View>
-                  <View style={[s`items-left`, { width: '60%' }]}>
+                  <View style={[s`items-left`, { width: '85%' }]}>
                     <TextInput
+                      allowFontScaling={false}
                       placeholder='Enter Your Father Name'
                       keyboardType='default'
                       testID="FatherName"
                       placeholderTextColor={'gray'}
-                      style={s`text-black`}
+                      style={s`text-black text-center`}
                       onBlur={() => fatherName !== '' ? setErrors({ ...errors, father_nametype: false }) : setErrors({ father_nametype: true })}
                       onChangeText={(text: string) => setFatherName(text)}
                       editable={disableFields}
@@ -622,22 +625,23 @@ export default function Registraion({ navigation }: RegistrationProps) {
                   </View>
                 </View>
               </Animated.View>
-              {errors?.father_nametype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.father_name}</Text> : null}
+              {errors?.father_nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.father_name}</Text> : null}
 
               {/* Password Input Field */}
               <Animated.View style={s`flex`} entering={BounceInDown.duration(1600)} exiting={FadeOut} >
                 <View style={[s`flex z-0 flex-row rounded-md  border-blue-300 p-0 justify-around items-center`, styles.InputView]}>
 
-                  <View style={[s`items-center`, { width: '30%' }]}>
+                  <View style={[s`items-end`, { width: '15%' }]}>
                     <Entypo name='lock' color={'grey'} />
                   </View>
-                  <View style={[s`items-left`, { width: '60%' }]}>
+                  <View style={[s`items-left`, { width: '85%' }]}>
                     <TextInput
+                      allowFontScaling={false}
                       placeholder='Enter Your Password'
                       keyboardType='default'
                       testID='Password'
                       placeholderTextColor={'gray'}
-                      style={s`text-black`}
+                      style={s`text-black text-center`}
                       secureTextEntry={true}
                       // onBlur={() => weB_PASSWORD !== '' ? setErrors({ ...errors, passwordtype: false }) : setErrors({ passwordtype: true })}
                       editable={disableFields}
@@ -654,13 +658,13 @@ export default function Registraion({ navigation }: RegistrationProps) {
               <Animated.View style={s`flex`} entering={BounceInDown.duration(1800)} exiting={FadeOut} >
                 <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md  border-blue-300 p-0 justify-around items-center`, styles.InputView]}>
 
-                  <View style={[s`items-center`, { width: '30%' }]}>
+                  <View style={[s`items-end`, { width: '15%' }]}>
                     <Icon name='restroom' color={'grey'} />
                   </View>
 
-                  <View style={[s`items-left`, { width: '60%' }]}>
+                  <View style={[s`items-left`, { width: '85%' }]}>
                     <TouchableOpacity
-                      style={s`flex-column text-black`}
+                      style={s`flex-column justify-center items-center`}
                       disabled={disableFields ? false : true}
                       onBlur={() => selectedId !== '' ? setErrors({ ...errors, gendertype: false }) : setErrors({ gendertype: true })}
                     >
@@ -669,8 +673,11 @@ export default function Registraion({ navigation }: RegistrationProps) {
                         containerStyle={{
                           flexDirection: 'row',
                           borderColor: 'lightblue',
-                          height: 40,
+                          height: 30,
+                          
+
                         }}
+                        
                         accessibilityLabel='blue'
                         radioButtons={radioButtons}
                         // editable={disableFields}
@@ -685,7 +692,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
 
                 </View>
               </Animated.View>
-              {errors?.gendertype ? <Text style={s`text-red-600 text-sm`}>{errorMsg!.gender}</Text> : null}
+              {errors?.gendertype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.gender}</Text> : null}
 
               {/* Date Of Birth Date Picker */}
               <Animated.View style={s`flex`} entering={BounceInDown.duration(1000)} exiting={FadeOut} >
@@ -693,7 +700,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
 
                   <View style={[s`flex-row justify-around items-center`, { width: '30%' }]}>
                     <Icon name='calendar-day' color={'grey'} />
-                    <Text style={s`text-grey-100`}>D.O.B</Text>
+                    <Text allowFontScaling={false} style={s`text-grey-100`}>D.O.B</Text>
                   </View>
 
                   <TouchableOpacity style={[s`flex-row `, { width: '85%' }]} onPress={() => setOpen(true)}>
@@ -702,7 +709,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
                         placeholderTextColor={'gray'}
                         style={s`text-black`}
                         value={dateOfBirth || formattedDate} /> */}
-                        <Text>{dateOfBirth || formattedDate}</Text>
+                        <Text allowFontScaling={false}>{dateOfBirth || formattedDate}</Text>
                     </View>
 
                     <View style={[s` justify-center items-center`, { width: '30%' }]}>
@@ -748,7 +755,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
                         onPress={handleRegister}
                         style={[s`rounded p-2  items-center`,
                         { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 20, backgroundColor: isButtonDisable() || disableForEmpty() ? 'lightgray' : '#313594', elevation: 10, width: '100%' }]}>
-                        <Text style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
+                        <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
                           Register
                         </Text>
                       </TouchableOpacity>

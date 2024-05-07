@@ -37,7 +37,7 @@ const CartBtn = () => {
             <TouchableOpacity >
                 <View>
                     <View  style={s`absolute right-4 bg-white w-4 items-center rounded-full`}>
-                        <Text style={s`text-xs text-red-800`}>{cartItem.length}</Text>
+                        <Text allowFontScaling={false} style={s`text-xs text-red-800`}>{cartItem.length}</Text>
                     </View>
                     <Icon name='shoppingcart' size={20} style={{ marginRight: 20, marginTop: 4, padding: 4, justifyContent: 'center', alignItems: 'center' }} color={'white'} />
                 </View>

@@ -24,10 +24,11 @@ const Search = ( { onChange } : searchProps) => {
                 <View style={[s`flex-row justify-around items-center`, { width: '30%' }]}>
 
                     <Feather name='search' color={'grey'} />
-                    <Text style={{fontFamily : 'Quicksand-Regular', color : 'gray'}}>Search :</Text>
+                    <Text allowFontScaling={false} style={{fontFamily : 'Quicksand-Regular', color : 'gray'}}>Search :</Text>
                 </View>
                 <TouchableOpacity style={[s`flex-row items-center`, { width: '80%' }]}>
                     <TextInput
+                        allowFontScaling={false}
                         style={[{ width: '100%', padding: 5, color: 'black' }]}
                         placeholder=''
                         placeholderTextColor={'black'}

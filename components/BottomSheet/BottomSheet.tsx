@@ -8,11 +8,11 @@ const BottomSheetComponent = ({ testID }) => {
 
     <View style={styles.contentContainer}>
       <View style={s`flex-row justify-between w-full p-4`}>
-        <Text style={s`text-white italic`}>{testID?.ltesT_ID} </Text>
-        <Text style={s`text-white font-bold `}>Rs. {testID?.amt}</Text>
+        <Text allowFontScaling={false} style={s`text-white italic`}>{testID?.ltesT_ID} </Text>
+        <Text allowFontScaling={false} style={s`text-white font-bold `}>Rs. {testID?.amt}</Text>
       </View>
-      <Text style={s`text-black text-lg font-bold italic text-white`}>{testID?.ltesT_DESC}</Text>
-      <Text style={s`text-white`}>{testID?.tesT_DESCRIPTION} 🎉</Text>
+      <Text allowFontScaling={false} style={s`text-black text-lg font-bold italic text-white`}>{testID?.ltesT_DESC}</Text>
+      <Text allowFontScaling={false} style={s`text-white`}>{testID?.tesT_DESCRIPTION} 🎉</Text>
     </View>
 
   );

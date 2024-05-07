@@ -49,11 +49,11 @@ const CartItem = ({ item }) => {
                             </SkeletonPlaceholder> :
                             <>
                                 <View style={{ width: '70%', justifyContent: 'center', alignItems: 'flex-start', paddingLeft: '6%' }}>
-                                    <Text style={[s`text-xs` , {fontFamily : 'Montserrat-Bold'}]}>{CartList.samplE_COL_TIME}</Text>
-                                    <Text style={[s`text-black ` , {fontFamily : 'Quicksand-Bold'} ]}>{CartList.ltesT_DESC}</Text>
-                                    <Text style={[s`text-red-500 text-xs` , {fontFamily : 'Montserrat-Medium'}]}>{CartList.samplE_COL_DATE}</Text>
+                                    <Text allowFontScaling={false} style={[s`text-xs` , {fontFamily : 'Montserrat-Bold'}]}>{CartList.samplE_COL_TIME}</Text>
+                                    <Text allowFontScaling={false} style={[s`text-black ` , {fontFamily : 'Quicksand-Bold'} ]}>{CartList.ltesT_DESC}</Text>
+                                    <Text allowFontScaling={false} style={[s`text-red-500 text-xs` , {fontFamily : 'Montserrat-Medium'}]}>{CartList.samplE_COL_DATE}</Text>
                                 </View>
-                                <Text style={s`text-blue-600`}>Rs. {CartList.amt}</Text>
+                                <Text allowFontScaling={false} style={s`text-blue-600`}>Rs. {CartList.amt}</Text>
 
                                 <View style={s`absolute -top-2 -right-2`}>
                                     <TouchableOpacity style={[s` border-2 rounded-full justify-center items-center w-6 h-6`]} 
