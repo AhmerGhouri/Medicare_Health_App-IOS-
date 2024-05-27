@@ -1,5 +1,5 @@
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { s } from 'react-native-wind'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import Icon from 'react-native-vector-icons/Entypo';
@@ -12,49 +12,86 @@ import LottieView from 'lottie-react-native';
 
 const ServicesDetail: React.FC<{ data: LabTestData[], opatValues: opatValuesType, onSetTestID: (id: testData) => void }> = ({ data, opatValues, onSetTestID }): JSX.Element => {
 
-    const dispatch = useAppDispatch()
 
-    const CheckBox = useCallback(({ item }) => {
-        return (
-            <BouncyCheckbox
-                size={25}
-                fillColor="red"
-                unfillColor="#FFFFFF"
-                iconStyle={{ borderColor: "red" }}
-                innerIconStyle={{ borderWidth: 2 }}
-                textStyle={{ fontFamily: "JosefinSans-Regular" }}
-                key={item.ltesT_ID}
-                onPress={(isChecked: boolean) => {
-                    handleCheck({
-                        ...item,
-                        isChecked
-                    })
-                }}
-            />
-        )
-    }, [])
+    console.log("opat Vlaues service detail", opatValues);
+
+    const [patient, setPatient] = useState<opatValuesType>()
+    // console.log("pappa" , patient);
+
+
+    const dispatch = useAppDispatch()
+    // const CheckBox = useCallback(({ item }) => {
+    //     return (
+    //         <BouncyCheckbox
+    //             size={25}
+    //             fillColor="red"
+    //             unfillColor="#FFFFFF"
+    //             iconStyle={{ borderColor: "red" }}
+    //             innerIconStyle={{ borderWidth: 2 }}
+    //             textStyle={{ fontFamily: "JosefinSans-Regular" }}
+    //             key={item.ltesT_ID}
+    //             onPress={(isChecked: boolean) => {
+
+    //                 handleCheck({
+    //                     ...item,
+    //                     isChecked,
+    //                 })
+    //             }}
+    //         />
+    //     )
+    // }, [opatValues, patient])
 
     const handleInfo = (test: testData) => {
         onSetTestID(test);
     }
 
     const handleCheck = (test) => {
+        console.log("pappa", patient);
         dispatch(setOpatId(opatValues))
         dispatch(addToCart(test))
+        console.log("asdadasdasd", patient);
+
     };
+
+    useEffect(() => {
+
+        // console.log("lkjljlkjk", opatValues);
+
+        setPatient(opatValues)
+        // console.log("patefaf", patient);
+
+
+    }, [opatValues, patient, handleCheck])
+
 
     const renderServices = useCallback(({ item }) => {
 
         return (
             <>
                 <View style={[s`flex-row z-1 justify-between my-4`, styles.List]}>
-                    
+
                     <View style={{ width: "60%" }}>
                         <Text allowFontScaling={false} style={[s`text-blue-900 text-md`, { fontFamily: 'Quicksand-Bold' }]}>{item.ltesT_DESC}</Text>
                     </View>
 
                     <View style={s`flex-row items-center`}>
-                        <CheckBox item={item} />
+                        {/* <CheckBox item={item} /> */}
+                        <BouncyCheckbox
+                            size={25}
+                            fillColor="red"
+                            unfillColor="#FFFFFF"
+                            iconStyle={{ borderColor: "red" }}
+                            innerIconStyle={{ borderWidth: 2 }}
+                            textStyle={{ fontFamily: "JosefinSans-Regular" }}
+                            key={item.ltesT_ID}
+                            onPress={(isChecked: boolean) => {
+
+                                handleCheck({
+                                    ...item,
+                                    isChecked,
+                                })
+                            }}
+                        />
                         <Icon name='info-with-circle' color={'black'}
                             onPress={() => handleInfo(item)}
                             size={20}
@@ -65,24 +102,24 @@ const ServicesDetail: React.FC<{ data: LabTestData[], opatValues: opatValuesType
             </>
         )
 
-    }, [])
+    }, [opatValues , patient ])
 
     const EmptyMessage = () => {
 
-        return(
+        return (
 
             <>
-            <View style={s` items-center mt-8`}>
-            <LottieView
-              style={[styles.lottie]}
-              source={require('../../src/animations/emptyCart.json')}
-              autoPlay
-              loop
-            />
-                <Text allowFontScaling={false} style={{fontFamily : 'Quicksand-Bold'}}>
-                    No Data Found.
+                <View style={s` items-center mt-8`}>
+                    <LottieView
+                        style={[styles.lottie]}
+                        source={require('../../src/animations/emptyCart.json')}
+                        autoPlay
+                        loop
+                    />
+                    <Text allowFontScaling={false} style={{ fontFamily: 'Quicksand-Bold' }}>
+                        No Data Found.
                     </Text>
-            </View>
+                </View>
             </>
 
         )
@@ -118,13 +155,6 @@ const styles = StyleSheet.create({
 
     List: {
         width: '100%',
-        // shadowColor: 'black',
-        // shadowOffset: {
-        //     width: 4,
-        //     height: 8
-        // },
-        // shadowOpacity: 1,
-        // elevation: 50
     },
     lottie: {
 
@@ -133,8 +163,8 @@ const styles = StyleSheet.create({
         zIndex: 0,
         justifyContent: 'center',
         alignItems: 'center'
-    
-      },
+
+    },
 
 })
 

@@ -12,13 +12,19 @@ export const patientSlice = createSlice({
         addPatientToStore: (state, action: PayloadAction<checkedData>) => {
 
             const patient = action.payload // Add unique
+            
             return state = patient
 
         },
+        clearPatientToStore : (state) => {
+
+            return state = initialState
+
+        }
        
 
     }
 })
 
-export const { addPatientToStore } = patientSlice.actions
+export const { addPatientToStore , clearPatientToStore} = patientSlice.actions
 export default patientSlice.reducer

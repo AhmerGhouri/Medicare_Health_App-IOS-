@@ -4,7 +4,6 @@ import {
   View,
   StyleProp,
   ViewStyle,
-  Button,
   Text,
   ActivityIndicator,
   TextInput,
@@ -12,44 +11,38 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import HeaderImg from '../src/assets/Ellipse.png'
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 import FooterImg from '../src/assets/Footer.png'
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import axios from 'axios';
-import { api, useAuth } from '../components/authContext/AuthContext';
+import { useAuth } from '../components/authContext/AuthContext';
 import { s } from 'react-native-wind';
 import Entypo from 'react-native-vector-icons/Entypo'
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { Snackbar } from 'react-native-paper';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { errors, regForm, titleMrMs, error } from '../constants';
-import { titleMrMsData } from '../DummyData/LabTests';
-import RadioGroup, { RadioButton, RadioButtonProps } from 'react-native-radio-buttons-group';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { errors, error } from '../constants';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import DatePicker from 'react-native-date-picker';
 import Foundation from 'react-native-vector-icons/Foundation'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import Animated , { BounceInDown, FadeOut } from 'react-native-reanimated';
+import Animated, { BounceInDown, FadeOut } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 
 
-type MRProps = NativeStackScreenProps<RootStackParamList , "MRScreen">
+type MRProps = NativeStackScreenProps<RootStackParamList, "MRScreen">
 
 
 
 
-export default function MRCreateScreen({ navigation , route } : MRProps) {
+export default function MRCreateScreen({ navigation, route }: MRProps) {
 
 
   const { user } = route.params
-
-  console.log("MR Screen", Dimensions.get('screen').height);
-
   const [mobileNo, setMobileNo] = useState<string>()
   const [weB_PASSWORD, setPassword] = useState<string>()
   const [fullName, setFullName] = useState<string>()
@@ -96,72 +89,41 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
     }
   ]), []);
 
-
-
   const MR_API: string = `https://local.jmc.edu.pk:82/api/Patients/GetMaxOpatId`
 
-  console.log("ID", selectedId);
-
-
-
   const OnMrNumber = async () => {
-
-
     try {
-
-
       const response = await axios.get(MR_API)
-
       const mr_data = response.data
-
-      console.log("mr data", mr_data[0].opaT_ID);
-
       setMrNumber(mr_data[0].opaT_ID)
-
-
-    } catch (err) {
-
-      console.log("Mr Error", err)
-
     }
-
-
+    catch (err) {
+      Alert.alert("Mr Error", err)
+    }
   }
 
   useEffect(() => {
-
     OnMrNumber()
     if (selectedId === 'M') {
       setTitle('MR')
-    } else {
+    }
+    else {
       setTitle('MISS')
     }
-
   }, [])
 
   const disableForEmpty = () => {
-
     return fullName === '' || fatherName === '' || selectedId === '' || date_string === currentDate || error
-
   }
-
 
   const isButtonDisable = () => {
-
     return fullName === undefined || fatherName === undefined || selectedId === undefined || date_string === currentDate || error
-
   }
 
-
   const validateEmail = () => {
-
     if (reg.test(email!) === false) {
-
-
       setEmailErr('Please Enter a valid email')
       setError(true)
-
-
     }
     else {
       setEmail(email)
@@ -170,19 +132,10 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
     }
   }
 
-
   const MrCreation = async () => {
-
     setLoading(true);
-
-
-
     try {
-
-
       if (fullName == undefined && fatherName == undefined && selectedId == undefined && date_string === currentDate) {
-
-        console.log("all Fields are Required");
         setErrors({
           ...errors,
           passwordtype: true,
@@ -199,11 +152,8 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           dateOfBirth: "Date Of Birth is Required"
 
         })
-
-
-
-      } else if (fullName == undefined && fatherName == undefined && selectedId == undefined && date_string === currentDate) {
-
+      }
+      else if (fullName == undefined && fatherName == undefined && selectedId == undefined && date_string === currentDate) {
         setErrors({
           ...errors,
           nametype: true,
@@ -219,10 +169,8 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           dateOfBirth: "Date Of Birth is Required"
 
         })
-
       }
       else if (fatherName == undefined && email == undefined && selectedId == undefined && date_string === currentDate) {
-
         setErrors({
           ...errors,
           gendertype: true,
@@ -236,10 +184,8 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           dateOfBirth: "Date Of Birth is Required"
 
         })
-
       }
       else if (selectedId == undefined && date_string === currentDate) {
-
         setErrors({
           ...errors,
           gendertype: true,
@@ -249,12 +195,9 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           ...errorMsg,
           gender: "Gender is Required",
           dateOfBirth: "Date Of Birth is Required"
-
         })
-
       }
       else if (selectedId == undefined && date_string === currentDate) {
-
         setErrors({
           ...errors,
           gendertype: true,
@@ -264,12 +207,9 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           ...errorMsg,
           gender: "Gender is Required",
           dateOfBirth: "Date Of Birth is Required"
-
         })
-
       }
       else if (date_string === currentDate) {
-
         setErrors({
           ...errors,
           dateOfBirthtype: true
@@ -279,10 +219,8 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           dateOfBirth: "Date Of Birth is Required"
 
         })
-
       }
       else if (selectedId == undefined) {
-
         setErrors({
           ...errors,
           gendertype: true,
@@ -291,10 +229,8 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           ...errorMsg,
           gender: "Gender is Required",
         })
-
       }
       else if (fullName == undefined) {
-
         setErrors({
           ...errors,
           nametype: true
@@ -306,7 +242,6 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
 
       }
       else if (fatherName == undefined) {
-
         setErrors({
           ...errors,
           father_nametype: true
@@ -315,397 +250,264 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
           ...errorMsg,
           father_name: "father name is reuired",
         })
-
       }
-
-
-    } catch (error) {
-
+    }
+    catch (error) {
       setNumError('Something went wrong, please try again later');
-
-    } finally {
-
+    }
+    finally {
       setLoading(false);
     }
-
   };
 
-
   const handleMrCreation = () => {
-
     MrCreation()
     try {
-
-
       onMrCreation!(mrNumber!, fullName!, mobileNo!, email, weB_PASSWORD, "1", "1", "KHI", mr_formattedDate, null, selectedId, title, null)
-
-
-    } catch (error) {
-
-
+    }
+    catch (error) {
       switch (error.response.status) {
         case 400:
           // handle 400 Bad Request case
-          console.log('Bad Request', error.response.data);
           Alert.alert('Bad Request', 'Something went wrong with the request.');
           break;
         case 401:
           // handle 401 Unauthorized case
-          console.log('Unauthorized', error.response.data);
           Alert.alert('Unauthorized', 'Access is denied due to invalid credentials.');
           break;
         case 404:
           // handle 404 Not Found case
-          console.log('Not Found', error.response.data);
           Alert.alert('Not Found', 'The requested resource could not be found.');
           break;
         case 500:
           // handle 500 Internal Server Error case
-          console.log('Internal Server Error', error.response.data);
           Alert.alert('Internal Server Error', 'Something went wrong on the server.');
           break;
         default:
           // handle any other error cases
-          console.log('Error', error.response.data);
           Alert.alert('Error', 'Something went wrong.');
           break;
       }
 
 
     }
-
-
   }
-
-  console.log("MR mobile", mobileNo);
-  console.log("MR fullName", fullName);
-  console.log("MR fatherName", fatherName);
-  console.log("MR weB_PASSWORD", weB_PASSWORD);
-  console.log("MR email", email);
-  console.log("MR selectedId", selectedId);
-  console.log("MR date_string", date_string);
-
 
   return (
 
-    // <KeyboardAwareScrollView>
     <KeyboardAwareScrollView
-    showsVerticalScrollIndicator={false}
-    style={s`flex-1`}
-    scrollEnabled={Dimensions.get('window').height < 804 ? true : false}
-    >
-
-    <View
-
-      style={[
-
-        styles.ScreenContainer,
-
-        {
-
-          flexDirection: 'column',
-
-        },
-
-      ]}>
-
-      <GestureHandlerRootView style={s`flex-1`}>
-
-        <View style={styles.Header}>
-
-          <Image source={HeaderImg} />
-
-        </View>
-
-
-
-        <View style={styles.Registration as StyleProp<ViewStyle>}>
+      showsVerticalScrollIndicator={false}
+      style={s`flex-1`}
+      scrollEnabled={Dimensions.get('window').height < 804 ? true : false}>
+      <View style={[styles.ScreenContainer, { flexDirection: 'column' }]}>
+        <GestureHandlerRootView style={s`flex-1`}>
+          <View>
+            <Image source={HeaderImg} />
+          </View>
+          <View style={styles.Registration as StyleProp<ViewStyle>}>
 
             {/* MR Heading */}
-          <View style={s`my-6 w-full items-center`}>
+            <View style={s`my-6 w-full items-center`}>
+              <Text allowFontScaling={false} style={s`font-bold text-2xl tracking-wider text-blue-800 italic`}>MR Number</Text>
+            </View>
+            <View style={styles.InputBox}>
 
-            <Text allowFontScaling={false} style={s`font-bold text-2xl tracking-wider text-blue-800 italic`}>MR Number</Text>
-
-          </View>
-
-
-          <View style={styles.InputBox}>
-
-            {/* MR Number & Mobile Number Input Fields */}
-            <View style={s`flex-row w-full justify-center`}>
-
-              <View style={[s`flex z-30 flex-row rounded-md mr-2 border-2 p-1 border-blue-300 justify-around items-center`, styles.InputViewMr]}>
-
-                <View style={[s`items-center`, { width: '30%' }]}>
-                  <Foundation style={s``} name='torsos-male-female' color={'grey'} />
+              {/* MR Number & Mobile Number Input Fields */}
+              <View style={s`flex-row w-full justify-center`}>
+                <View style={[s`flex z-30 flex-row rounded-md mr-2 border-2 p-1 border-blue-300 justify-around items-center`, styles.InputViewMr]}>
+                  <View style={[s`items-center`, { width: '30%' }]}>
+                    <Foundation style={s``} name='torsos-male-female' color={'grey'} />
+                  </View>
+                  <View style={[s`items-left`, { width: '60%' }]}>
+                    <TextInput
+                      allowFontScaling={false}
+                      placeholder='Mr #'
+                      placeholderTextColor={'gray'}
+                      style={s`text-gray-400`}
+                      keyboardType='default'
+                      editable={false}
+                      value={mrNumber?.toString()} />
+                  </View>
                 </View>
+                <View style={[s`flex z-0 flex-row rounded-md border-2 p-1 border-blue-300 justify-around items-center`, styles.InputViewNum]}>
+                  <View style={[s`items-center`, { width: '30%' }]}>
+                    <Icon name='phone' color={'grey'} />
+                  </View>
+                  <View style={[s`items-left`, { width: '60%' }]}>
+                    <TextInput
+                      allowFontScaling={false}
+                      placeholder='Your Mobile No'
+                      keyboardType='numeric'
+                      editable={false}
+                      placeholderTextColor={'gray'}
+                      style={s`text-gray-400`}
+                      testID="MobileNo"
+                      maxLength={11}
+                      value={user.mob}
+                      returnKeyType='done' />
+                  </View>
+                </View>
+              </View>
 
-                <View style={[s`items-left`, { width: '60%' }]}>
+              {/* Email Input Field */}
+              <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
+                <View style={[s`items-center`, { width: '15%' }]}>
+                  <Entypo name='email' color={'grey'} />
+                </View>
+                <View style={[s`items-left`, { width: '85%' }]}>
                   <TextInput
                     allowFontScaling={false}
-                    placeholder='Mr #'
-                    placeholderTextColor={'gray'}
-                    style={s`text-gray-400`}
+                    placeholder='Enter Your email address'
                     keyboardType='default'
-                    editable={false}
-                    value={mrNumber?.toString()}
+                    testID='email'
+                    placeholderTextColor={'gray'}
+                    style={s`text-black text-center`}
+                    secureTextEntry={false}
+                    editable={disableFields}
+                    onBlur={validateEmail}
+                    onChangeText={(text: string) => setEmail(text)}
+                    value={weB_PASSWORD}
                   />
                 </View>
-
               </View>
+              {error ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{emailErr}</Text> : null}
 
-              <View style={[s`flex z-0 flex-row rounded-md border-2 p-1 border-blue-300 justify-around items-center`, styles.InputViewNum]}>
-
-
-                <View style={[s`items-center`, { width: '30%' }]}>
-                  <Icon name='phone' color={'grey'} />
+              {/* Full Name Input Field */}
+              <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
+                <View style={[s`items-center`, { width: '15%' }]}>
+                  <Icon name='address-card' color={'grey'} />
                 </View>
-
-                <View style={[s`items-left`, { width: '60%' }]}>
+                <View style={[s`items-left`, { width: '85%' }]}>
                   <TextInput
                     allowFontScaling={false}
-                    placeholder='Your Mobile No'
-                    keyboardType='numeric'
-                    editable={false}
+                    placeholder='Enter Your Full Name'
+                    testID="FullName"
                     placeholderTextColor={'gray'}
-                    style={s`text-gray-400`}
-                    testID="MobileNo"
-                    maxLength={11}
-                    value={user.mob}
-                    returnKeyType='done'
+                    style={s`text-black text-center`}
+                    onBlur={() => fullName === '' ? setErrors({ ...errors, nametype: true }) : setErrors({ nametype: false })}
+                    keyboardType='name-phone-pad'
+                    onChangeText={(text: string) => setFullName(text)}
+                    editable={disableFields}
+                    value={fullName}
                   />
                 </View>
-
               </View>
+              {errors?.nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.name}</Text> : null}
 
-
-            </View>
-
-            {/* Email Input Field */}
-            <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
-
-
-              <View style={[s`items-center`, { width: '15%' }]}>
-                <Entypo name='email' color={'grey'} />
-              </View>
-
-              <View style={[s`items-left`, { width: '85%' }]}>
-                <TextInput
-                  allowFontScaling={false}
-                  placeholder='Enter Your email address'
-                  keyboardType='default'
-                  testID='email'
-                  placeholderTextColor={'gray'}
-                  style={s`text-black text-center`}
-                  secureTextEntry={false}
-                  editable={disableFields}
-                  onBlur={validateEmail}
-                  onChangeText={(text: string) => setEmail(text)}
-                  value={weB_PASSWORD}
-                />
-              </View>
-
-            </View>
-            {error ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{emailErr}</Text> : null}
-
-            {/* Full Name Input Field */}
-            <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
-
-
-              <View style={[s`items-center`, { width: '15%' }]}>
-                <Icon name='address-card' color={'grey'} />
-              </View>
-
-              <View style={[s`items-left`, { width: '85%' }]}>
-                <TextInput
-                  allowFontScaling={false}
-                  placeholder='Enter Your Full Name'
-                  testID="FullName"
-                  placeholderTextColor={'gray'}
-                  style={s`text-black text-center`}
-                  onBlur={() => fullName === '' ? setErrors({ ...errors, nametype: true }) : setErrors({ nametype: false })}
-                  keyboardType='name-phone-pad'
-                  onChangeText={(text: string) => setFullName(text)}
-                  editable={disableFields}
-                  value={fullName}
-                />
-              </View>
-
-            </View>
-            {errors?.nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.name}</Text> : null}
-
-            {/* Father Name Input Field */}
-            <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
-
-              <View style={[s`items-center`, { width: '15%' }]}>
-                <Material name='human-male-child' color={'grey'} />
-              </View>
-
-              <View style={[s`items-left`, { width: '85%' }]}>
-                <TextInput
-                  allowFontScaling={false}
-                  placeholder='Enter Your Father Name'
-                  keyboardType='default'
-                  placeholderTextColor={'gray'}
-                  style={s`text-black text-center`}
-                  testID="FatherName"
-                  onBlur={() => fatherName !== '' ? setErrors({ ...errors, father_nametype: false }) : setErrors({ father_nametype: true })}
-                  onChangeText={(text: string) => setFatherName(text)}
-                  editable={disableFields}
-                  value={fatherName}
-                />
-              </View>
-
-            </View>
-            {errors?.father_nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.father_name}</Text> : null}
-
-            {/* Gender Radio Button */}
-            <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
-
-              <View style={[s`items-center`, { width: '15%' }]}>
-                <Icon name='restroom' color={'grey'} />
-              </View>
-
-              <View style={[s`items-left`, { width: '85%' }]}>
-                <TouchableOpacity
-                  style={s`flex-column items-center`}
-                  disabled={disableFields ? false : true}
-                  onBlur={() => selectedId !== '' ? setErrors({ ...errors, gendertype: false }) : setErrors({ gendertype: true })}
-                >
-
-                  <RadioGroup
-                    containerStyle={{
-                      flexDirection: 'row',
-                      borderColor: 'lightblue'
-                    }}
-                    accessibilityLabel='blue'
-                    radioButtons={radioButtons}
-                    onPress={setSelectedId}
-                    testID='Radio'
-                    selectedId={selectedId}
-
+              {/* Father Name Input Field */}
+              <View style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
+                <View style={[s`items-center`, { width: '15%' }]}>
+                  <Material name='human-male-child' color={'grey'} />
+                </View>
+                <View style={[s`items-left`, { width: '85%' }]}>
+                  <TextInput
+                    allowFontScaling={false}
+                    placeholder='Enter Your Father Name'
+                    keyboardType='default'
+                    placeholderTextColor={'gray'}
+                    style={s`text-black text-center`}
+                    testID="FatherName"
+                    onBlur={() => fatherName !== '' ? setErrors({ ...errors, father_nametype: false }) : setErrors({ father_nametype: true })}
+                    onChangeText={(text: string) => setFatherName(text)}
+                    editable={disableFields}
+                    value={fatherName}
                   />
+                </View>
+              </View>
+              {errors?.father_nametype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.father_name}</Text> : null}
 
+              {/* Gender Radio Button */}
+              <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-around items-center`, styles.InputView]}>
+                <View style={[s`items-center`, { width: '15%' }]}>
+                  <Icon name='restroom' color={'grey'} />
+                </View>
+                <View style={[s`items-left`, { width: '85%' }]}>
+                  <TouchableOpacity
+                    style={s`flex-column items-center`}
+                    disabled={disableFields ? false : true}
+                    onBlur={() => selectedId !== '' ? setErrors({ ...errors, gendertype: false }) : setErrors({ gendertype: true })}>
+                    <RadioGroup
+                      containerStyle={{
+                        flexDirection: 'row',
+                        borderColor: 'lightblue'
+                      }}
+                      accessibilityLabel='blue'
+                      radioButtons={radioButtons}
+                      onPress={setSelectedId}
+                      testID='Radio'
+                      selectedId={selectedId}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {errors?.gendertype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.gender}</Text> : null}
+
+              {/* Date Of Birth Input Field */}
+              <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-between items-center`, styles.InputViewDOB]}>
+                <View style={[s`flex-row justify-around items-center `, { width: '30%' }]}>
+                  <Icon name='calendar-day' color={'grey'} />
+                  <Text allowFontScaling={false}>D.O.B</Text>
+                </View>
+                <TouchableOpacity style={[s`flex-row`, { width: '85%' }]} onPress={() => setOpen(true)}>
+                  <View style={[s`justify-right items-center`, { width: '75%' }]}>
+                    <Text allowFontScaling={false} style={s`text-black`}>{dateOfBirth || date_to_string}</Text>
+                  </View>
+                  <View style={[s` justify-center items-left`, { width: '30%' }]}>
+                    <Icon name='calendar' color={'grey'} />
+                    <DatePicker
+                      open={open}
+                      modal
+                      textColor='red'
+                      date={date} mode='date'
+                      testID='dob'
+                      onDateChange={setDate}
+                      maximumDate={new Date()}
+                      onConfirm={(date) => {
+                        setOpen(false)
+                        setDate(date)
+                        date_to_string === currentDate ? setErrors({ ...errors, dateOfBirthtype: true }) : setErrors({ ...errors, dateOfBirthtype: false })
+                      }}
+                      onCancel={() => setOpen(false)}
+                    />
+                  </View>
                 </TouchableOpacity>
-
               </View>
+              {errors?.dateOfBirthtype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.dateOfBirth}</Text> : null}
 
+              <View style={s`w-full justify-center items-center`}>
+
+                {/* If loading is true  show a spinner instead of the button */}
+                <Animated.View style={s`flex`} entering={BounceInDown.duration(1600)} exiting={FadeOut} >
+                  {loading ?
+                    (
+                      <View style={s`bg-red-600 px-4 mt-8 w-36`}>
+                        <ActivityIndicator size="large" color="#00ff00" />
+                      </View>
+                    )
+                    :
+                    (
+                      <View style={s`w-36 mt-8`}>
+                        <TouchableOpacity
+                          onPress={handleMrCreation}
+                          disabled={isButtonDisable() || disableForEmpty()}
+                          style={[s`rounded p-2  items-center`,
+                          { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 20, backgroundColor: isButtonDisable() || disableForEmpty() ? 'lightgray' : '#313594', elevation: 10, width: '100%' }]}>
+                          <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
+                            Create
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  }
+                </Animated.View>
+              </View>
             </View>
-            {errors?.gendertype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.gender}</Text> : null}
-
-            {/* Date Of Birth Input Field */}
-            <View pointerEvents={disableFields ? 'auto' : 'none'} style={[s`flex z-0 flex-row rounded-md border-2 border-blue-300 p-1 justify-between items-center`, styles.InputViewDOB]}>
-
-              <View style={[s`flex-row justify-around items-center `, { width: '30%' }]}>
-                <Icon name='calendar-day' color={'grey'} />
-                <Text allowFontScaling={false}>D.O.B</Text>
-              </View>
-
-              <TouchableOpacity style={[s`flex-row`, { width: '85%' }]} onPress={() => setOpen(true)}>
-                <View style={[s`justify-right items-center`, { width: '75%' }]}>
-                  {/* <TextInput
-                    placeholderTextColor={'gray'}
-                    style={s`text-black`}
-                    value={dateOfBirth || date_to_string} /> */}
-                  <Text allowFontScaling={false} style={s`text-black`}>{dateOfBirth || date_to_string}</Text>
-                </View>
-
-              <View style={[s` justify-center items-left`, { width: '30%' }]}>
-                <Icon name='calendar' color={'grey'} />
-                <DatePicker
-                  open={open}
-                  modal
-                  textColor='red'
-                  date={date} mode='date'
-                  testID='dob'
-                  onDateChange={setDate}
-                  maximumDate={new Date()}
-                  // editable={disableFields}
-                  onConfirm={(date) => {
-                    setOpen(false)
-                    setDate(date)
-                    // setErrors({ ...errors, dateOfBirthtype: false })
-                    date_to_string === currentDate ? setErrors({ ...errors, dateOfBirthtype: true }) : setErrors({ ...errors, dateOfBirthtype: false })
-                  }}
-                  onCancel={() => setOpen(false)}
-                />
-
-              </View>
-              </TouchableOpacity>
-
-
-            </View>
-            {errors?.dateOfBirthtype ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{errorMsg!.dateOfBirth}</Text> : null}
-
           </View>
-
-          {/* MR Create Button */}
-          {/* <View style={s`w-full justify-center items-center`}>
-
-            {loading ?
-              (
-                <View style={s`bg-red-600 px-4 mt-8 w-36`}>
-                  <ActivityIndicator size="large" color="#00ff00" />
-                </View>
-              )
-              :
-              (
-
-                <View style={s`w-36 mt-8`}>
-                  <Button
-                    title="Create"
-                    color="skyblue"
-                    accessibilityLabel="Learn more about this purple button"
-                    onPress={handleMrCreation}
-                    disabled={isButtonDisable() || disableForEmpty()}
-                  />
-                </View>
-
-              )
-            }
-
-          </View> */}
-
-<View style={s`w-full justify-center items-center`}>
-
-{/* If loading is true  show a spinner instead of the button */}
-<Animated.View style={s`flex`} entering={BounceInDown.duration(1600)} exiting={FadeOut} >
-  {loading ?
-    (
-      <View style={s`bg-red-600 px-4 mt-8 w-36`}>
-        <ActivityIndicator size="large" color="#00ff00" />
+          <View style={styles.Footer}>
+            <Image source={FooterImg} />
+          </View>
+        </GestureHandlerRootView>
       </View>
-    )
-    :
-    (
-      <View style={s`w-36 mt-8`}>
-        <TouchableOpacity
-          onPress={handleMrCreation}
-          disabled={isButtonDisable() || disableForEmpty()}
-          style={[s`rounded p-2  items-center`,
-          { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 20, backgroundColor: isButtonDisable() || disableForEmpty() ? 'lightgray' : '#313594', elevation: 10, width: '100%' }]}>
-          <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
-            Create
-          </Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-</Animated.View>
-
-</View>
-
-        </View>
-
-        <View style={styles.Footer}>
-
-          <Image source={FooterImg} />
-
-        </View>
-
-
-      </GestureHandlerRootView>
-    </View>
     </KeyboardAwareScrollView>
 
   );
@@ -713,25 +515,17 @@ export default function MRCreateScreen({ navigation , route } : MRProps) {
 
 const styles = StyleSheet.create({
   ScreenContainer: {
-
     flex: 1,
     backgroundColor: '#ffffff',
-
-  },
-  Header: {
-    //   flex: 1,
   },
   Registration: {
-
     color: 'black',
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     gap: 28,
-
   },
   InputView: {
-
     shadowColor: 'black',
     backgroundColor: 'white',
     shadowRadius: 5,
@@ -743,7 +537,6 @@ const styles = StyleSheet.create({
     elevation: 15,
     padding: Platform.OS === 'ios' ? Dimensions.get('window').height > 704 ? 18 : 16 : Dimensions.get('screen').height <= 704 ? 0 : 4,
     width: Dimensions.get('screen').width <= 600 ? "85%" : "50%",
-
   },
   InputViewDOB: {
     shadowColor: 'black',
@@ -759,7 +552,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width <= 600 ? "85%" : "50%",
   },
   InputViewNum: {
-
     shadowColor: 'black',
     backgroundColor: 'white',
     shadowRadius: 10,

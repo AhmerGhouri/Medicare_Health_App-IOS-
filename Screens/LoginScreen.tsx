@@ -2,9 +2,6 @@ import {
   Image,
   StyleSheet,
   View,
-  StyleProp,
-  ViewStyle,
-  Button,
   Text,
   TextInput,
   ActivityIndicator,
@@ -13,9 +10,9 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../src/assets/Medicare_logo_screen.png'
-import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, TouchableOpacity } from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import { useAuth } from '../components/authContext/AuthContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -71,6 +68,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
   const fetchRegData = async () => {
 
     try {
+
       const baseURL = `https://local.jmc.edu.pk:82/api/UserRegData/GetUserRegData?mob=${mobileNo}`;
       const response = await axios.get(baseURL);
       setErrorMsg('');
@@ -91,7 +89,6 @@ export default function LoginScreen({ navigation }: LoginProps) {
   const login = async () => {
     setLoading(true);
     try {
-
       const result = await onLogin!(mobileNo, weB_PASSWORD);
       const user = result.data[0]
       dispatch(addUserToStore(user))
@@ -166,42 +163,24 @@ export default function LoginScreen({ navigation }: LoginProps) {
 
   return (
 
-    <View
-
-      style={[styles.ScreenContainer, { flexDirection: 'column' }]}>
-
+    <View style={[styles.ScreenContainer, { flexDirection: 'column' }]}>
       <GestureHandlerRootView style={s`flex-1`}>
-
         <View>
-
           <Header />
-
         </View>
-
         <View style={styles.CredentialsInput}>
-
           <Animated.View style={s`flex`} entering={BounceInDown.duration(1000)} exiting={FadeOut} >
             <View style={s`my-8`}>
-
-              {/* <Image source={Logo}
-              width={10} height={10} /> */}
-              <Image source={Logo} style={{ width: Dimensions.get('window').height < 804 ? 150 : 180, height: Dimensions.get('window').height <= 804 ? 70 : 70 }}
-              />
-
+              <Image source={Logo} style={{ width: Dimensions.get('window').height < 804 ? 150 : 180, height: Dimensions.get('window').height <= 804 ? 70 : 70 }} />
             </View>
           </Animated.View>
-
           <View style={styles.InputBox}>
-
             <Animated.View style={s`flex`} entering={BounceInDown.duration(1300)} exiting={FadeOut} >
               <View style={[s`flex flex-row rounded-md border-red-300 p-1 justify-around items-center`, styles.InputView]}>
-
                 <View style={[s`items-center`, { width: '15%' }]}>
                   <Icon name='phone' color={'grey'} size={Dimensions.get('window').height < 804 ? 12 : 14} />
                 </View>
-
                 <View style={[{ width: '85%', alignItems: 'center' }]}>
-
                   <TextInput
                     allowFontScaling={false}
                     onBlur={handleInput}
@@ -213,16 +192,12 @@ export default function LoginScreen({ navigation }: LoginProps) {
                     onChangeText={(text: string) => setMobileNo(text)}
                     value={mobileNo}
                   />
-
                 </View>
-
               </View>
             </Animated.View>
-
             {numMsg ? <Text allowFontScaling={false} style={[s`text-red-600`, { fontSize: Dimensions.get('window').height < 804 ? 10 : 14 }]}>{numError}</Text> : ''}
             <Animated.View style={s`flex`} entering={BounceInDown.duration(1600)} exiting={FadeOut} >
               <View style={[s`flex flex-row rounded-md  justify-around border-red-300 p-1 items-center`, styles.InputView]}>
-
                 <View style={[s`items-center`, { width: '15%' }]}>
                   <Icon name='lock' color={'grey'} size={Dimensions.get('window').height < 804 ? 12 : 14} />
                 </View>
@@ -235,84 +210,48 @@ export default function LoginScreen({ navigation }: LoginProps) {
                     keyboardType='default'
                     secureTextEntry={showPassword}
                     onChangeText={(text: string) => setPassword(text)}
-                    value={weB_PASSWORD}
-                  />
+                    value={weB_PASSWORD} />
                 </View>
                 <View style={[{ width: '20%', alignItems: 'center' }]}>
                   <Icon name={showPassword ? 'eye-slash' : 'eye'} color={'grey'} onPress={showhidePass} size={Dimensions.get('window').height < 804 ? 12 : 16} />
                 </View>
-
               </View>
             </Animated.View>
             <Animated.View style={s`flex`} entering={BounceInDown.duration(1800)} exiting={FadeOut} >
-
               {loading ?
                 (
-                    <View style={[s`mt-8 rounded px-6 py-0` , {elevation : 10 , backgroundColor : 'red'}]}>
-                      <ActivityIndicator size="large" color="white" />
-                    </View>
+                  <View style={[s`mt-8 rounded px-6 py-0`, { elevation: 10, backgroundColor: 'red' }]}>
+                    <ActivityIndicator size="large" color="white" />
+                  </View>
                 ) : (
                   <View style={[s`mt-8`, { width: "100%" }]}>
-
                     <TouchableOpacity disabled={isButtonDisable()} onPress={handleLogin} style={[s`rounded p-2  `, { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 30, backgroundColor: isButtonDisable() ? 'lightgray' : 'red', elevation: 10, width: '100%' }]}>
                       <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
                         Login
                       </Text>
                     </TouchableOpacity>
-
-                    {/* <Button
-                    title="Login"
-                    color="red"
-                    accessibilityLabel="Learn more about this purple button"
-                    onPress={handleLogin}
-                    disabled={isButtonDisable()}
-                  /> */}
                   </View>
                 )
               }
             </Animated.View>
-
             <Animated.View style={s`flex`} entering={BounceInDown.duration(2000)} exiting={FadeOut} >
-
               <View style={s`w-36`}>
                 <TouchableOpacity onPress={() => navigation.push('Registration')} style={[s`rounded p-2  items-center`, { paddingHorizontal: Dimensions.get('window').height < 804 ? 16 : 20, backgroundColor: '#313594', elevation: 10, width: '100%' }]}>
                   <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').height < 804 ? 12 : 16 }]}>
                     Registration
                   </Text>
                 </TouchableOpacity>
-
               </View>
-              </Animated.View>
-
-            {/* <Button
-                title="Registration"
-                color="skyblue"
-                accessibilityLabel="Learn more about this purple button"
-                onPress={() => navigation.push('Registration')}
-              /> */}
-            {/* {errorMsg ? <Text style={styles.errorMsg}>{errorMsg}</Text> : null} */}
-
+            </Animated.View>
           </View>
-
         </View>
-
         <View>
-
           <Footer />
-
         </View>
-
-
         <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
           action={{
-            // label: errorMsg === 'Number' ? 'Register' : 'Set Password',
-            // onPress: () => {
-            //   {
-            //     errorMsg === 'Number' ? navigation.navigate('Registration') : navigation.navigate('PasswordGenerator')
-            //   }
-            // },
             label: 'Register',
             onPress: () => {
               {
@@ -323,8 +262,6 @@ export default function LoginScreen({ navigation }: LoginProps) {
         >
           {numError}
         </Snackbar>
-
-
       </GestureHandlerRootView>
     </View>
 
@@ -344,7 +281,6 @@ const styles = StyleSheet.create({
       width: 5,
       height: 5,
     },
-    // padding: Dimensions.get("window").height <= 804 ? Platform.OS === 'ios' ? 18 : 0 : 6,
     padding: Platform.OS === 'ios' ? Dimensions.get('window').height > 704 ? 18 : 16 : Dimensions.get('screen').height <= 704 ? 0 : 4,
     shadowOpacity: 0.3,
     elevation: 15,
@@ -397,11 +333,8 @@ const styles = StyleSheet.create({
     width: 60
   },
   errorMsg: {
-    //  display : 'flex',
-    //  flexWrap : 'wrap',
     color: 'red',
     marginTop: 10,
-    //  width : 60,
   },
   footerImg: {
     width: 250,

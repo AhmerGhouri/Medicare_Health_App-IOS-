@@ -82,18 +82,20 @@ export default function Services({ mob, bottomSheetRef, handleSetBottomSheetData
   }, [])
 
   const handleServicePress = async (service) => {
+    console.log("service" , service.servicE_ID);
+    
     switch (service.servicE_DESC) {
       case 'Nursing Services':
-        dispatch(addSerShortCodeToStore('ER'))
+        dispatch(addSerShortCodeToStore({shortCode : 'ER' , serviceID : service.servicE_ID}))
         break;
       case 'Lab Test Request':
-        dispatch(addSerShortCodeToStore('LB'))
+        dispatch(addSerShortCodeToStore({shortCode : 'LB' , serviceID : service.servicE_ID}))
         break;
       case 'Radiology Request':
-        dispatch(addSerShortCodeToStore('XR'))
+        dispatch(addSerShortCodeToStore({shortCode : 'XR' , serviceID : service.servicE_ID}))
         break;
       case 'Physiotherapy':
-        dispatch(addSerShortCodeToStore('PO'))
+        dispatch(addSerShortCodeToStore({shortCode : 'PO' , serviceID : service.servicE_ID}))
         break;
       default:
         break;

@@ -1,6 +1,4 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
-import { Alert } from "react-native";
-import { act } from "react-test-renderer";
 
 
 
@@ -44,14 +42,11 @@ export const Cart = createSlice({
 
             const statecart = action.payload // Add unique
             // state.cartItem = action.payload
-            console.log("statecart ", statecart)
 
             const checked = statecart.isChecked
             // const findTests = state.cartItem.findIndex(e => e.id === statecart.id && e.isChecked);
 
             // console.log("Same Tests", findTests);
-
-            console.log("checked", checked);
             if (checked) {
 
                 const cartvalues = {
@@ -68,9 +63,6 @@ export const Cart = createSlice({
                 const findTests = state.cartItem.findIndex(e => e.ltesT_ID === cartvalues.ltesT_ID && e.isChecked === cartvalues.isChecked 
                     && e.opaT_ID === cartvalues.opaT_ID && e.samplE_COL_TIME === cartvalues.samplE_COL_TIME 
                     && e.samplE_COL_DATE === cartvalues.samplE_COL_DATE);
-                
-                console.log("Same test" , findTests);
-                
 
                 if (findTests >= 0) {
                     
@@ -78,10 +70,6 @@ export const Cart = createSlice({
                     // Alert.alert('' ,'This Service is already exists in Cart. Kindly Check Your Cart and proceed further')
                     
                 }else{
-
-                    console.log("opat Values from Slice", state.currentOpatId);
-                    console.log("cart Values from Slice", cartvalues);
-                    
                     
                     state.cartItem.push(cartvalues)
                 }
@@ -95,15 +83,6 @@ export const Cart = createSlice({
 
             }
 
-
-
-
-            console.log("cart Item from Slice", state.cartItem);
-
-
-            // console.log("action cart" , statecart)
-            // state.cartItem.push( statecart  );
-
         },
         removeFromCart: (state, action: PayloadAction<string | undefined | CartItem>) => {
             let updatedCart = state.cartItem.filter((item) => item.ltesT_ID !== action.payload)
@@ -114,9 +93,6 @@ export const Cart = createSlice({
         },
         setOpatId: (state, action: PayloadAction<opatDataType>) => {
             state.currentOpatId = action.payload;
-            console.log("setOpatId Action ", action.payload);
-            console.log("setOpatId State ", state.currentOpatId);
-            console.log("setOpatId State ", state.cartItem);
 
         },
         removeAllFromCart: (state) => {

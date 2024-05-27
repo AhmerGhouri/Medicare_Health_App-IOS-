@@ -1,27 +1,27 @@
-import { Labtests, timeSlotData } from '../DummyData/LabTests';
+import { timeSlotData } from '../DummyData/LabTests';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, ActivityIndicator, FlatList, Pressable, BackHandler, Image, Linking, Alert, AppState, EmitterSubscription, NativeEventSubscription } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert, AppState } from 'react-native';
 import BottomSheet, { BottomSheetBackdrop, TouchableOpacity } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { s } from 'react-native-wind'
 import DatePicker from 'react-native-date-picker';
-import {Dropdown} from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/Entypo';
 import FontIcon from 'react-native-vector-icons/FontAwesome6';
 import axios from 'axios';
-import { opatValuesType, selectedTest } from '../constants';
-import { testData, timeSlots, LabTestData, postDatatype } from '../constants';
+import { testData, LabTestData } from '../constants';
 import LottieView from 'lottie-react-native';
 import Search from '../components/searchBox/Search';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import { useAppDispatch, useAppSelector } from '../app/hooks/hooks';
-import { addToCart, CartItem, removeFromCart } from '../app/slices/cartSlice';
-import { setOpatId } from '../app/slices/cartSlice';
-import Animated, { FadeOut, ZoomIn, ZoomInRight, ZoomInUp, ZoomOutEasyUp } from 'react-native-reanimated';
+import { useAppSelector } from '../app/hooks/hooks';
+import Animated, { FadeOut, ZoomIn } from 'react-native-reanimated';
 import SelectedTestsModals from '../components/Modals/SelectedTestsModals';
 import ServicesDetail from '../components/services/ServicesDetail';
 import BottomSheetComponent from '../components/BottomSheet/BottomSheet';
+import { DropDownPicker, dataProp } from '../components/DropDownPicker/DropDownPicker';
+import { AreaDropDownPicker } from '../components/DropDownPicker/AreaDropDown';
+import { Input } from '../components/Input/Input';
 
 
 
@@ -32,10 +32,11 @@ type LabScreenProps = NativeStackScreenProps<RootStackParamList, 'LabTestRequest
 function LabScreen({ navigation, route }: LabScreenProps) {
 
 
-
-
-  const code = useAppSelector(state => state.code);
+  const code = useAppSelector(state => state.code.serviceDetail.shortCode);
+  const serviceID = useAppSelector(state => state.code.serviceDetail.serviceID)
   const API = `https://local.jmc.edu.pk:82/api/WebReqServices/GetSelectServiceData?Class=${code}&Panel=PVT`
+  const TIMESLOTAPI = `https://local.jmc.edu.pk:82/api/ServiceLocation/GetAllServiceSlot?ServiceID=${serviceID}`
+  const AREAAPI = `https://local.jmc.edu.pk:82/api/ServiceLocation/GetAllocation?ServiceID=${serviceID}`
 
 
   // All State Which Manages
@@ -44,48 +45,51 @@ function LabScreen({ navigation, route }: LabScreenProps) {
   const [testsData, setTestData] = useState<LabTestData[]>([])
   const [filterData, setFilterData] = useState<LabTestData[]>([]);
   const [open, setOpen] = useState(false);
-  const [openPicker, setOpenPicker] = useState(false);
-  const [value, setValue] = useState<string | null>(null);
-  const [selectedTests, setSelectedTests] = useState<selectedTest>()
-  const [timeSlot, setTimeSlot] = useState<timeSlots[]>(timeSlotData);
   const [testID, setTestId] = useState<testData>()
-  const [externalLinkOpened, setExternalLinkOpened] = useState(false)
-  const appStateSubscriptionRef = useRef<NativeEventSubscription | null>(null);
-  const [appClosed, setAppClosed] = useState(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [errorMsg, setErrorMsg] = useState<boolean>(false)
   let formattedDate = date.getDate() + '-' + date.toLocaleString("en-US", { month: 'short' }) + '-' + date.getFullYear();
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  const [isPaymentModalVisible, setPaymentModalVisible] = useState(false)
-  const [updatedpostData, setUpdatedPostData] = useState<postDatatype>({});
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
   // variables
-  const snapPoints = useMemo(() => ['1%' , '50%'], []);
+  const snapPoints = useMemo(() => ['1%', '50%'], []);
   const { cartItem } = useAppSelector(state => state.cart);
   const { errorMessage } = useAppSelector((state => state.cart))
-  const [dropdown, setDropdown] = useState<string | null>(null);
-  const [selected, setSelected] = useState([]);
+  const timeSlot = useAppSelector(state => state.code.timeSlot)
+  const serviceArea = useAppSelector(state => state.code.serviceArea)
+  const [timeSlotData, setTimeSlotData] = useState<dataProp[]>([])
+  const [serviceAreaData, setServiceAreaData] = useState<dataProp[]>([])
+  const [address , setAddress] = useState<string>()
+  console.log("Time SLOT " , timeSlot);
+  console.log("Service Area " , serviceArea);
+  
 
-  const _renderItem = item => {
-      return (
-      <View style={styles.item}>
-          <Text allowFontScaling={false} style={styles.textItem}>{item.label}</Text>
-          <Image style={styles.icon} source={require('../src/assets/check-mark.png')} />
-      </View>
-      );
-  };
+  const getTimeSlot = async () => {
+    try {
+      const res = await axios.get(TIMESLOTAPI);
+      console.log("data", res.data);
+      setTimeSlotData(res.data)
+    } catch (err) {
+      console.log("error", err);
+    }
+  }
 
-  console.log("col", value);
-  // console.log("error" , errorMessage);
-
+  const getServiceArea = async () => {
+    try {
+      const res = await axios.get(AREAAPI);
+      console.log("data", res.data);
+      setServiceAreaData(res.data)
+    } catch (err) {
+      console.log("error", err);
+    }
+  }
 
   const opatValues = {
     opaT_ID: checkedData.opaT_ID!.toString(),
-    currentaddress: "KARACHI",
+    currentaddress: address,
     samplE_COL_DATE: formattedDate,
-    samplE_COL_TIME: dropdown,
+    samplE_COL_TIME: timeSlot,
+    areaID : serviceArea
 
   };
 
@@ -131,19 +135,19 @@ function LabScreen({ navigation, route }: LabScreenProps) {
 
   useEffect(() => {
     fetchData()
+    getTimeSlot()
+    getTimeSlot()
+    getServiceArea()
   }, [])
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
-
     console.log('handleSheetChanges', index);
-
   }, []);
 
   // BackDrop
   const renderBackdrop = useCallback(
-
-    (props: any) => <BottomSheetBackdrop {...props} disappearsOnIndex={0} appearsOnIndex={2} />
+    (props: any) => <BottomSheetBackdrop style={{zIndex : 9999}} {...props} disappearsOnIndex={0} appearsOnIndex={2} />
     , []
   )
 
@@ -151,31 +155,14 @@ function LabScreen({ navigation, route }: LabScreenProps) {
     (searchText: string) => {
 
       const filteredData = testsData!.filter(({ ltesT_DESC }) =>
+
         ltesT_DESC!.toUpperCase().includes(searchText.toUpperCase())
 
       );
+
       setFilterData(filteredData);
 
     }, [testsData, setFilterData])
-
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
-        console.log('App has come to the foreground!');
-      }
-
-      appState.current = nextAppState;
-      setAppStateVisible(appState.current);
-      console.log('AppState', appState.current);
-    });
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 
   const OpenCloseDatePicker = () => {
 
@@ -184,7 +171,7 @@ function LabScreen({ navigation, route }: LabScreenProps) {
   }
 
   const toggleModal = async () => {
-    if (dropdown === null) {
+    if (timeSlot === '' || serviceArea === '') {
       setErrorMsg(true);
     } else {
       try {
@@ -195,21 +182,28 @@ function LabScreen({ navigation, route }: LabScreenProps) {
 
       } catch (error) {
         // Handle error if needed
-        console.error('Error navigating to CartScreen:', error);
+        Alert.alert('Error', 'Error navigating to CartScreen:', error);
       }
     }
   };
 
   const handleSetTestID = useCallback((id: testData) => {
+   
     setTestId(id);
     bottomSheetRef.current?.expand();
-  }, [bottomSheetRef]); 
+
+  }, [bottomSheetRef]);
+
+  const handleAddress = useCallback((text) => {
+
+    setAddress(text)
+
+  } , [address])
 
   return (
 
     <View style={styles.container}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-
         {isLoading && (
           <View style={styles.overlay}>
             <LottieView
@@ -220,27 +214,18 @@ function LabScreen({ navigation, route }: LabScreenProps) {
             />
           </View>
         )}
-
         <View style={s`flex-1 p-8`}>
-
           <View style={s`m-3`}>
-
             <View style={[s`flex z-0 flex-row rounded-md justify-between border-2  border-blue-300 p-1 items-center`, styles.InputView]}>
-
               <View style={[s`flex-row justify-around items-center `, { width: '25%' }]}>
                 <FontIcon name='calendar-day' color={'grey'} />
                 <Text allowFontScaling={false} style={{ fontFamily: 'Quicksand-Regular', color: 'gray' }}>Date :</Text>
               </View>
-
               <TouchableOpacity style={[s`flex-row`, { width: '75%' }]} onPress={OpenCloseDatePicker}>
-                
                 <View style={[s`justify-center items-center`, { width: '80%' }]}>
-                  {/* <TextInput style={{ padding: 5, color: 'black' }} value={formattedDate} /> */}
                   <Text allowFontScaling={false} style={{ padding: 5, color: 'black' }}>{formattedDate}</Text>
                 </View>
-
                 <View style={[s` justify-center items-center`, { width: '30%' }]}>
-
                   <FontIcon name='calendar' color={'grey'} />
                   <DatePicker
                     open={open}
@@ -263,63 +248,24 @@ function LabScreen({ navigation, route }: LabScreenProps) {
                 </View>
               </TouchableOpacity>
             </View>
-
           </View>
-
-          <View style={s`m-2 items-center`}>
-            {/* <Text style={s`text-black font-bold pb-2`}>Time Slot</Text> */}
-            <Dropdown
-                    style={styles.dropdown}
-                    containerStyle={styles.shadow}
-                    data={timeSlotData}
-                    activeColor='#fb4d4d'
-                    // search
-                    searchPlaceholder="Search"
-                    labelField="label"
-                    valueField="value"
-                    // label="Dropdown"
-                    placeholder="Select Time Slot"
-                    placeholderStyle={{
-                      
-                    }}
-                    value={dropdown}
-                    onChange={item => {
-                    setDropdown(item.value);
-                    setErrorMsg(false)
-                        // console.log('selected', item);
-                    }}
-                    // renderLeftIcon={() => (
-                    //     <Image style={styles.icon} source={require('./assets/account.png')} />
-                    // )}
-                    renderItem={item => _renderItem(item)}
-                    // textError="Error"
-                />
-            {/* <DropDownPicker
-              open={openPicker}
-              value={value}
-              style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10, marginHorizontal: 0, }}
-              items={timeSlot}
-              showArrowIcon={true}
-              onChangeValue={() => setErrorMsg(false)}
-              ActivityIndicatorComponent={() => {
-                return (
-                  <ActivityIndicator color="#999" animating={true} />
-                )
-              }}
-              setOpen={setOpenPicker}
-              setValue={setValue}
-              setItems={setTimeSlot}
-            /> */}
+          <View style={[s`m-2 items-center `, {zIndex : 0}]}>
+            <DropDownPicker data={timeSlotData} placeholder='Select Your Time Slot' />
           </View>
-          {errorMsg ? <View style={s`items-center justify-center`}><Text  allowFontScaling={false} style={s`text-red-400 text-xs`}>Please Select a Preferred Time Slot</Text></View> : null}
-
-          <View style={s`m-2`}>
+          {errorMsg ? <View style={s`items-center justify-center`}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{timeSlot === '' ?  'Please select a Preferred time slot' : null}</Text></View> : null}
+          <View style={[s`m-2 items-center` , {zIndex : -1}]}>
+            <AreaDropDownPicker data={serviceAreaData} placeholder='Select Your Area' />
+          </View>
+          {errorMsg ? <View style={s`items-center justify-center`}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{serviceArea === '' ?  'Please select a Service area' : null}</Text></View> : null}
+          <View style={[s`m-2 items-center`, {zIndex : -2}]}>
+            <Input placeholder='Enter Your Address' onChange={handleAddress}/>
+          </View>
+          {errorMsg ? <View style={s`items-center justify-center`}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{serviceArea === '' ?  'Please select a Service area' : null}</Text></View> : null}
+          <View style={[s`m-2` , {zIndex : -3}]}>
             <Search onChange={handleFilter} />
             <ServicesDetail data={filterData} opatValues={opatValues} onSetTestID={handleSetTestID} />
           </View>
-
         </View>
-
         <BottomSheet
           ref={bottomSheetRef}
           index={-1}
@@ -327,16 +273,15 @@ function LabScreen({ navigation, route }: LabScreenProps) {
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
           enablePanDownToClose={true}
+          style={{zIndex : 9999}}
           backdropComponent={renderBackdrop}
           detached={true}
           backgroundStyle={{
             backgroundColor: '#fb4d4d'
           }}
         >
-          <BottomSheetComponent testID={testID}/>        
+          <BottomSheetComponent testID={testID} />
         </BottomSheet>
-
-
         <Animated.View style={s`flex`} entering={ZoomIn.duration(1000)} exiting={FadeOut} >
           <View style={[s`justify-center items-center absolute bottom-0 -z-1 -left-0`, { width: '100%' }]}>
             {cartItem.length !== 0 ?
@@ -385,15 +330,15 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     backgroundColor: 'white',
     shadowRadius: 5,
-    justifyContent : 'center',
-    alignItems : 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowOffset: {
       width: 5,
       height: 5,
     },
     shadowOpacity: 0.2,
     elevation: 15,
-    padding : 10,
+    padding: 10,
     width: "100%"
   },
   input: {
@@ -418,50 +363,49 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     padding: 40,
-},
-dropdown: {
+  },
+  dropdown: {
     backgroundColor: 'white',
-    borderWidth : 1,
-    borderRadius : 6,
+    borderWidth: 1,
+    borderRadius: 6,
     borderColor: 'lightblue',
-    // borderBottomWidth: 0.5,
     marginTop: 10,
-    width : '96%',
-    padding : 8,
+    width: '96%',
+    padding: 8,
     shadowOffset: {
       width: 0,
       height: 1,
-      },
-      shadowOpacity: 0.2,
-      shadowRadius: 5,
-      elevation: 15,
-},
-icon: {
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 15,
+  },
+  icon: {
     marginRight: 5,
     width: 18,
     height: 18,
-},
-item: {
+  },
+  item: {
     paddingVertical: 17,
     paddingHorizontal: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-},
-textItem: {
+  },
+  textItem: {
     flex: 1,
     fontSize: 16,
-},
-shadow: {
+  },
+  shadow: {
     shadowColor: '#000',
     shadowOffset: {
-    width: 0,
-    height: 1,
+      width: 0,
+      height: 1,
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
-},
+  },
 });
 
 export default LabScreen;

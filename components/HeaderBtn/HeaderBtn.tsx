@@ -4,15 +4,18 @@ import { s } from 'react-native-wind'
 import { Button } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
 
 
 
-const HeaderBtn = ({navigation}) => {
+const HeaderBtn = () => {
+
+  // const navigation = useNavigation()
 
   const navigateToHomeScreen = () => {
 
-    navigation.goBack()
+    // navigation.goBack()
 
   }
 

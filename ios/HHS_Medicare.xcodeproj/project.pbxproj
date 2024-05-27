@@ -32,11 +32,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1A6C35DE1B054C8385F887BF /* FONTAWESOME6.md in Resources */ = {isa = PBXBuildFile; fileRef = 3BB67EB6D42B46928C8C16D4 /* FONTAWESOME6.md */; };
 		1A9B531E57924BE0B4017DA2 /* hi.json in Resources */ = {isa = PBXBuildFile; fileRef = 0342A67BE411459E91FCA228 /* hi.json */; };
-		1E6DC59BF7CD4133B32917C4 /* results.bin in Resources */ = {isa = PBXBuildFile; fileRef = 4D163910060543ADAEB595DF /* results.bin */; };
-		201A489A916449C189D43A19 /* package-aware-r.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7C5E05648C3249508B40710C /* package-aware-r.txt */; };
 		208ECA3152724824B56AA212 /* which-module.js in Resources */ = {isa = PBXBuildFile; fileRef = BD8114E6996D4997931C71D7 /* which-module.js */; };
 		20DCCCF716964EE49F0F194E /* generate-fontawesome5-metadata.js in Resources */ = {isa = PBXBuildFile; fileRef = 985E1D3B245245929B966C85 /* generate-fontawesome5-metadata.js */; };
-		212D8B4C6FD643E9801935AF /* annotationProcessors.json in Resources */ = {isa = PBXBuildFile; fileRef = A2986F98559441E6BF997E53 /* annotationProcessors.json */; };
 		218CB76548954FF698024D78 /* generate-ionicons.js in Resources */ = {isa = PBXBuildFile; fileRef = 35926E149FE8438E84B1E725 /* generate-ionicons.js */; };
 		21CA741429224BC18598BE3B /* build.gradle in Resources */ = {isa = PBXBuildFile; fileRef = B73D343A1F1140D3BF449342 /* build.gradle */; };
 		2486F258C0C04FA9991C6A5D /* browser.mjs in Resources */ = {isa = PBXBuildFile; fileRef = AB17473B84774B428807E5A6 /* browser.mjs */; };
@@ -52,9 +49,7 @@
 		2F28C24C1A9C42009C499FBB /* yargs in Resources */ = {isa = PBXBuildFile; fileRef = D7E02FC933504308A1A035D7 /* yargs */; };
 		304437AA7C04492BB54BD7BE /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1EBC65F7C894145B6A8BC19 /* Montserrat-Italic.ttf */; };
 		319FFB0D618A49E3B76FC6E6 /* yargs-parser-types.js in Resources */ = {isa = PBXBuildFile; fileRef = B60B47C3E699405DB6B29646 /* yargs-parser-types.js */; };
-		3359E155EFEB45039088EED5 /* BuildConfig.class in Resources */ = {isa = PBXBuildFile; fileRef = 4337DD2679A9478BB318B574 /* BuildConfig.class */; };
 		33D58E177B664815832B0656 /* apply-extends.js in Resources */ = {isa = PBXBuildFile; fileRef = ED66301815834497A38617BC /* apply-extends.js */; };
-		38FB4B63D0A84A33850A431D /* AndroidManifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74C5C52F841F4351A3D434BC /* AndroidManifest.xml */; };
 		395ACE1073D84F7F8055718F /* RNVectorIconsManager.mm in Resources */ = {isa = PBXBuildFile; fileRef = B5E93B5C4F3045C5BD187907 /* RNVectorIconsManager.mm */; };
 		3A0DEF93B12D41ACBC672915 /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1259F7CFB15740C885C7C44A /* Montserrat-ExtraLight.ttf */; };
 		3AF38895C28140FEBA2BBFF2 /* de.json in Resources */ = {isa = PBXBuildFile; fileRef = 995F5A3572F04B98B032E787 /* de.json */; };
@@ -68,7 +63,6 @@
 		4695618D16AE4EC48F78042B /* string-utils.js in Resources */ = {isa = PBXBuildFile; fileRef = 83FB931F2E0C4DAC9CF43C7D /* string-utils.js */; };
 		470B0894C9764917B280CD93 /* NativeRNVectorIcons.web.js in Resources */ = {isa = PBXBuildFile; fileRef = D95E1BA85FBC41C68F121FA9 /* NativeRNVectorIcons.web.js */; };
 		47AE98DFF8B04FF6926E963E /* FontAwesome6.js in Resources */ = {isa = PBXBuildFile; fileRef = A45F79F9C970491C84B060FB /* FontAwesome6.js */; };
-		4DD26C2FE2D74DB99E2B366C /* previous-compilation-data.bin in Resources */ = {isa = PBXBuildFile; fileRef = 33CBC72A8BD142D3992E947B /* previous-compilation-data.bin */; };
 		5071913161E54CFD9FB3260C /* parse-command.js in Resources */ = {isa = PBXBuildFile; fileRef = 70184C6653BF4E9A917CDAC1 /* parse-command.js */; };
 		50AB95F8305D4B618567B2CB /* Octicons.js.flow in Resources */ = {isa = PBXBuildFile; fileRef = 54617C1C125E4059A10F7496 /* Octicons.js.flow */; };
 		515F672B8169490DAABB4280 /* pt.json in Resources */ = {isa = PBXBuildFile; fileRef = 73B803F7BE2F4919820D4609 /* pt.json */; };
@@ -80,12 +74,10 @@
 		5A2429BD90B14BF0B4D03C38 /* SimpleLineIcons.js.flow in Resources */ = {isa = PBXBuildFile; fileRef = E50B744C73EA4E05A6A96A41 /* SimpleLineIcons.js.flow */; };
 		5A403B5D3EC441D0AA310B17 /* create-icon-source-cache.js in Resources */ = {isa = PBXBuildFile; fileRef = 9BFE30CC323F4092ADDDBD09 /* create-icon-source-cache.js */; };
 		5A51D81791824679AB1DA6C9 /* es.json in Resources */ = {isa = PBXBuildFile; fileRef = 283A5C26AD3C4E589F077E3C /* es.json */; };
-		5BEF5CF72EBE4553907BD708 /* merger.xml in Resources */ = {isa = PBXBuildFile; fileRef = 170F41D8A5F640AEA8CFEABF /* merger.xml */; };
 		5EE23251E4244C50B91E4B09 /* package.json in Resources */ = {isa = PBXBuildFile; fileRef = A434F978865C4C68944659CC /* package.json */; };
 		5F5992C846384BAB90F978BB /* FontAwesome5Free_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = FA373A71CA2248CC9800F874 /* FontAwesome5Free_meta.json */; };
 		5F83854A70884190B59BF80C /* id.json in Resources */ = {isa = PBXBuildFile; fileRef = E3DF7703846C4B17988DEA95 /* id.json */; };
 		6161D3D4FD55433EB618F21D /* Montserrat-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73CA2C793CC945EE8785E3C6 /* Montserrat-ExtraLightItalic.ttf */; };
-		61BB95740CFD47EDBBD493A8 /* R-def.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BB28225C8DB4063AAA9C55B /* R-def.txt */; };
 		628E7883BD8B4DCF8ADB9156 /* AntDesign.js in Resources */ = {isa = PBXBuildFile; fileRef = 1DC95408F40A4AA789B47A88 /* AntDesign.js */; };
 		65513788774148E1BA1D9E86 /* generate-fontawesome6-metadata.js in Resources */ = {isa = PBXBuildFile; fileRef = 014A36D3CA354D8F99AE4175 /* generate-fontawesome6-metadata.js */; };
 		65D547CD820B4217BFF1273D /* levenshtein.js in Resources */ = {isa = PBXBuildFile; fileRef = 44C1B22F54F946888EC70A7B /* levenshtein.js */; };
@@ -94,7 +86,6 @@
 		68BFDF05DD41463B9FABA965 /* Ionicons.js.flow in Resources */ = {isa = PBXBuildFile; fileRef = 4402761B54A64796A7BA76C0 /* Ionicons.js.flow */; };
 		6A4343B070AA4FAEB4B184B5 /* tr.json in Resources */ = {isa = PBXBuildFile; fileRef = 977D5DEE00A243F09E6C3A19 /* tr.json */; };
 		6B9C354D6324483892A61D67 /* MaterialCommunityIcons.js in Resources */ = {isa = PBXBuildFile; fileRef = 81098D065D7846E9A4DB3B27 /* MaterialCommunityIcons.js */; };
-		6C446B66F94E492CA2866D27 /* aar-metadata.properties in Resources */ = {isa = PBXBuildFile; fileRef = 31ECB5E4E3FD47CB9FBCF7AE /* aar-metadata.properties */; };
 		6DAB3B4574E24BA6BE919EBA /* Ionicons.json in Resources */ = {isa = PBXBuildFile; fileRef = D85F3B1642544D47B31A4A9D /* Ionicons.json */; };
 		6E18AD2E837F4ABA9DC4AE17 /* nl.json in Resources */ = {isa = PBXBuildFile; fileRef = DA0FB6FB7734469BB53842B9 /* nl.json */; };
 		6E39F33E8A7B4417AAC2D003 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D2B796955134CF98125E700 /* LICENSE.txt */; };
@@ -108,18 +99,13 @@
 		7C0ED76E789F4833820A7DC4 /* FONTAWESOME5.md in Resources */ = {isa = PBXBuildFile; fileRef = AD89585F98DF4D3CB1100C43 /* FONTAWESOME5.md */; };
 		7F8E636890654EF39CB85550 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EE08A8C3964998A712E4F5 /* Quicksand-Regular.ttf */; };
 		7FBA0BB9F7274A3B9AC4D201 /* Ionicons.js in Resources */ = {isa = PBXBuildFile; fileRef = 269ACE1E99D8465EBA4FF7BB /* Ionicons.js */; };
-		817C48CCA6854B10953EE94A /* BuildConfig.java in Resources */ = {isa = PBXBuildFile; fileRef = 2873ACE9F5F04121B94198F9 /* BuildConfig.java */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		86AF0910A8E047A584E64A2D /* FontAwesome5Pro.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A8C3AA34842415A9417BCC2 /* FontAwesome5Pro.json */; };
 		88322C2BD08847698E5B7E00 /* UserInterfaceState.xcuserstate in Resources */ = {isa = PBXBuildFile; fileRef = 3D47AF3B9970436385DEAB46 /* UserInterfaceState.xcuserstate */; };
-		89ABEEBA9D2540CDB8EED3E1 /* VectorIconsModuleImpl.class in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A98561C794D7D9A611FC5 /* VectorIconsModuleImpl.class */; };
-		8A4349C2B53B4C8B80855400 /* classes.jar in Resources */ = {isa = PBXBuildFile; fileRef = A0A9ED7D1255485DB3D7C0B0 /* classes.jar */; };
 		8D9E2CA9E1114AD88444AB58 /* Quicksand-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F1F1BF6FCE24AEB8D99D2B0 /* Quicksand-SemiBold.ttf */; };
 		8DD69A99877C49C9846DF773 /* completion-templates.js in Resources */ = {isa = PBXBuildFile; fileRef = 4D2FCFDE085F45A8B87079F3 /* completion-templates.js */; };
 		8E5C68AEFFAD424C80ADB950 /* create-icon-set-from-icomoon.js in Resources */ = {isa = PBXBuildFile; fileRef = 5BD6E85DC264478FA43E7CB7 /* create-icon-set-from-icomoon.js */; };
-		8F68D7303A534B959032E0BF /* output-metadata.json in Resources */ = {isa = PBXBuildFile; fileRef = B5D1DB26290343208C9A4FD6 /* output-metadata.json */; };
 		908B500E51A84C72AAA34CBF /* Zocial.js in Resources */ = {isa = PBXBuildFile; fileRef = 5723CF6BE64B43A98D68B399 /* Zocial.js */; };
-		9343C3DC4D434BC9895014BD /* navigation.json in Resources */ = {isa = PBXBuildFile; fileRef = 62D85BA72D644FAF82877112 /* navigation.json */; };
 		93F640E441D848718576F531 /* helpers.mjs in Resources */ = {isa = PBXBuildFile; fileRef = B20FE06E016B40A7A42C2D12 /* helpers.mjs */; };
 		986BEE9B44B7483F93EFE787 /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = D4FEAE1ACE534EC083E4727F /* en.json */; };
 		992BEAA603564F96ACE08089 /* IDEWorkspaceChecks.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1161F94DA434A2FAA2C4A96 /* IDEWorkspaceChecks.plist */; };
@@ -135,7 +121,6 @@
 		A4CFFCDB35104DABB39520BA /* FontAwesome5Free.json in Resources */ = {isa = PBXBuildFile; fileRef = 73F26381BF6246B6856BF343 /* FontAwesome5Free.json */; };
 		A87F20FFA13C41C7B5DA6A6B /* FontAwesome5Pro.js in Resources */ = {isa = PBXBuildFile; fileRef = 9FDEF95E297A46D18EABA4EA /* FontAwesome5Pro.js */; };
 		AB39D887D9984F88B0D1C7A7 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBFFF1A4CFB94880B8F45D7D /* Montserrat-Black.ttf */; };
-		AB595477D1FC453EBE60A650 /* VectorIconsPackage.class in Resources */ = {isa = PBXBuildFile; fileRef = DC042DD5DB594CEBAD147481 /* VectorIconsPackage.class */; };
 		AB7AB6DD12244995BF5A3FCC /* tokenize-arg-string.js in Resources */ = {isa = PBXBuildFile; fileRef = AA988C8F3DF545C4BD30587C /* tokenize-arg-string.js */; };
 		AD103E78A4A149AAB9728FB9 /* create-icon-set-from-fontawesome6.js in Resources */ = {isa = PBXBuildFile; fileRef = D6F2E1B3EB1A4351B9649608 /* create-icon-set-from-fontawesome6.js */; };
 		AE519A8716714E91BA0A2041 /* fa5-upgrade.sh in Resources */ = {isa = PBXBuildFile; fileRef = FA7F3631E0B347F5BC0AE5DF /* fa5-upgrade.sh */; };
@@ -145,12 +130,10 @@
 		B4A2169FD06E4353B62C2ADF /* Montserrat-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1333B799B1F4136A1557B50 /* Montserrat-ExtraBoldItalic.ttf */; };
 		B508B608407C4FD9B5160F45 /* FontAwesome6Free_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 81245A6BE9C244B89300CC14 /* FontAwesome6Free_meta.json */; };
 		B991EC2E626D4162B776F00F /* MaterialIcons.json in Resources */ = {isa = PBXBuildFile; fileRef = 710A0A691EA046A2885ED8B5 /* MaterialIcons.json */; };
-		BCE1F17438E64687984B6D82 /* compile-file-map.properties in Resources */ = {isa = PBXBuildFile; fileRef = 9692857207B44D528BE49353 /* compile-file-map.properties */; };
 		BD63079A8E904C3691F00900 /* icon-button.js in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA65B7B9F3466881446E8B /* icon-button.js */; };
 		BE2C7861A73349BEAC67C7EC /* ko.json in Resources */ = {isa = PBXBuildFile; fileRef = 610AFDE9FF6C4D7C998C3F86 /* ko.json */; };
 		BE68FAA4D9C44BAFBADB1CA0 /* fa6-upgrade.sh in Resources */ = {isa = PBXBuildFile; fileRef = D00DA79B8BF04DF899B1ADB5 /* fa6-upgrade.sh */; };
 		C106E5DF1A184EB1BFA98CBD /* nn.json in Resources */ = {isa = PBXBuildFile; fileRef = ABFC1049AE814E4DB6CE6DD1 /* nn.json */; };
-		C112EE50D62343A3AE5DAD47 /* R.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9F11F5DA6AA545BC8E294D3F /* R.txt */; };
 		C1D39CB60795447284192AD8 /* yerror.js in Resources */ = {isa = PBXBuildFile; fileRef = BCF0466692DD43B18367EF8E /* yerror.js */; };
 		C2B934BF3D4245569B181F67 /* FontAwesome6Pro_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 5FFAE852A79B4CDBBF840D77 /* FontAwesome6Pro_meta.json */; };
 		C2E4ADA54645460B8F3B466A /* FontAwesome5Pro_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 18509DBE751E4B5287D0B35F /* FontAwesome5Pro_meta.json */; };
@@ -160,7 +143,6 @@
 		C62CCE77224843D195288DF1 /* pirate.json in Resources */ = {isa = PBXBuildFile; fileRef = E627BF0DF9224EF88E63D699 /* pirate.json */; };
 		C6C02F9332FE4AD889F06AD2 /* usage.js in Resources */ = {isa = PBXBuildFile; fileRef = 7281F57434BF4EC09494967A /* usage.js */; };
 		C830DB25B0C94D21A087DF90 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3414238EA6044E10B7C06230 /* Montserrat-Thin.ttf */; };
-		C89F335A35A54AA69A3A347E /* R.jar in Resources */ = {isa = PBXBuildFile; fileRef = FCFF966C53EA48AD93C7BE0A /* R.jar */; };
 		C8CAA0F25F974E23BC821A7F /* th.json in Resources */ = {isa = PBXBuildFile; fileRef = 0201B4DA1E884CEB9FD72ABC /* th.json */; };
 		CA5AC5DE486346ED965627C8 /* is-promise.js in Resources */ = {isa = PBXBuildFile; fileRef = 20C6D179DDB744B19EEF1E48 /* is-promise.js */; };
 		CA8944593601485E9017847E /* VectorIconsModuleImpl.java in Resources */ = {isa = PBXBuildFile; fileRef = E24B31E032FC44E5B19F5953 /* VectorIconsModuleImpl.java */; };
@@ -168,15 +150,12 @@
 		CABEFDB0CC9E48B488B2BCE3 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5108A26C8EE43CEA6C981BD /* Montserrat-MediumItalic.ttf */; };
 		CBF27914D8CE4B8B9FE14C95 /* it.json in Resources */ = {isa = PBXBuildFile; fileRef = B97C6D9D023E48E1B2D3FE40 /* it.json */; };
 		D05FCB77F21F4C39B16C9460 /* Octicons.js in Resources */ = {isa = PBXBuildFile; fileRef = E87D70C1A78244B18C1556E6 /* Octicons.js */; };
-		D08C7A38C6AC45FCB9902D53 /* classes.dex in Resources */ = {isa = PBXBuildFile; fileRef = 7E10E783E9864856B0E4842B /* classes.dex */; };
 		D0DEEA80C2084185B329B3E2 /* completion.js in Resources */ = {isa = PBXBuildFile; fileRef = 202A86013D084728B39A4010 /* completion.js */; };
-		D1047FE1F7094EE39EF2B9B9 /* manifest-merger-blame-debug-report.txt in Resources */ = {isa = PBXBuildFile; fileRef = EB57D328456E4C6BAAAC3AF5 /* manifest-merger-blame-debug-report.txt */; };
 		D1F8B522EF124FDBAFE715B4 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2682E6A8FCAA4EA9B2A7790F /* Montserrat-Bold.ttf */; };
 		D255D7B8B8BA4372A482B490 /* EvilIcons.js.flow in Resources */ = {isa = PBXBuildFile; fileRef = B9B73BF059C7456CB8686DC5 /* EvilIcons.js.flow */; };
 		D2D7D8E7CD454FBD83922F6D /* argsert.js in Resources */ = {isa = PBXBuildFile; fileRef = CF3491BAF5CC4735A6E49B2C /* argsert.js */; };
 		D2E616A72B724D09A6871BB0 /* Octicons.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F556A454C944878A6B51D04 /* Octicons.json */; };
 		D33BD408D2C54E4E84700244 /* FontAwesome.js.flow in Resources */ = {isa = PBXBuildFile; fileRef = CDEFDB5F71F94F208005A5E5 /* FontAwesome.js.flow */; };
-		D42DEB1998A44916A7B5DC97 /* VectorIconsModule.class in Resources */ = {isa = PBXBuildFile; fileRef = 4ECDD6CE320342B6928F00E8 /* VectorIconsModule.class */; };
 		D5769BDB21204341B48374A3 /* Foundation.js in Resources */ = {isa = PBXBuildFile; fileRef = 6FADC4B5D3044A3BAA5D4D83 /* Foundation.js */; };
 		D5F99DA38A15474FA2EBC2ED /* create-icon-set.js in Resources */ = {isa = PBXBuildFile; fileRef = BC97B25930A94595915EA977 /* create-icon-set.js */; };
 		D6EDBDE82EAE4C8DB083E90C /* FontAwesome.json in Resources */ = {isa = PBXBuildFile; fileRef = D10DD500165C449BB63B181D /* FontAwesome.json */; };
@@ -186,7 +165,6 @@
 		DD68591AD6ED4B468C8310C5 /* esm.mjs in Resources */ = {isa = PBXBuildFile; fileRef = 23AA12B17DA04A40890C64B7 /* esm.mjs */; };
 		DF6C6A03553D43128FE2AE41 /* MaterialIcons.js.flow in Resources */ = {isa = PBXBuildFile; fileRef = C90930B9B9AC4F2CBEE62A79 /* MaterialIcons.js.flow */; };
 		DF86255D99B64B7CA531DD17 /* Montserrat-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6DA57B92B7B4A5A900BE56A /* Montserrat-BlackItalic.ttf */; };
-		E005940DCE3944EFBD2B0839 /* VectorIconsModule$Errors.class in Resources */ = {isa = PBXBuildFile; fileRef = FFDB3E10A4934A1FA906836C /* VectorIconsModule$Errors.class */; };
 		E0431BBF1E194C8AB02F8B1A /* pt_BR.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D739FA3903B4C92A7439E07 /* pt_BR.json */; };
 		E10B6BC35E9F4A0F9D6E9A10 /* FontAwesome6Free.json in Resources */ = {isa = PBXBuildFile; fileRef = 0167A38DAE0447998210CAB8 /* FontAwesome6Free.json */; };
 		E2F4356625374300BB2A1653 /* index.js in Resources */ = {isa = PBXBuildFile; fileRef = 251F9BDDC23A44E493740D3C /* index.js */; };
@@ -197,7 +175,6 @@
 		E65C857A56E64CB1AE6D41F6 /* MaterialCommunityIcons.json in Resources */ = {isa = PBXBuildFile; fileRef = EAE1FDDF481A4BF182951D79 /* MaterialCommunityIcons.json */; };
 		E7F7C7429CA74113919A318C /* separated-icon-set.tpl in Resources */ = {isa = PBXBuildFile; fileRef = 6D2AB8948AB14831A652A73E /* separated-icon-set.tpl */; };
 		E83B882AF0FA4983A11722F7 /* FontAwesome.js in Resources */ = {isa = PBXBuildFile; fileRef = 50DAA1ED470149A484C99953 /* FontAwesome.js */; };
-		EA4958919A864638B999F17A /* manifest-merger-debug-report.txt in Resources */ = {isa = PBXBuildFile; fileRef = 28CB4A26BC8448C58E2E94A2 /* manifest-merger-debug-report.txt */; };
 		EB24977F65EC43A38C3D984C /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D414F95EC51447E49D13B408 /* Montserrat-ThinItalic.ttf */; };
 		EBB8F4F05588437B8DBE7316 /* be.json in Resources */ = {isa = PBXBuildFile; fileRef = AF071F478148473689A3C093 /* be.json */; };
 		EBE8878808A1430E86F806C5 /* fi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D58A59177D248D789BA7887 /* fi.json */; };
@@ -465,7 +442,7 @@
 		FCFF966C53EA48AD93C7BE0A /* R.jar */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = R.jar; path = "../node_modules/react-native-vector-icons/android/build/intermediates/compile_r_class_jar/debug/R.jar"; sourceTree = "<group>"; };
 		FE363BB4822347CB86D08511 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LICENSE; path = "../node_modules/react-native-vector-icons/LICENSE"; sourceTree = "<group>"; };
 		FF59E83D9DD44AD094509436 /* EvilIcons.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.json; path = "../node_modules/react-native-vector-icons/dist/glyphmaps/EvilIcons.json"; sourceTree = "<group>"; };
-		FFDB3E10A4934A1FA906836C /* VectorIconsModule$Errors.class */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "VectorIconsModule$Errors.class"; path = "../node_modules/react-native-vector-icons/android/build/intermediates/javac/debug/classes/com/oblador/vectoricons/VectorIconsModule$Errors.class"; sourceTree = "<group>"; };
+		FFDB3E10A4934A1FA906836C /* VectorIconsModule$Errors.class */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = VectorIconsModule$Errors.class; path = "../node_modules/react-native-vector-icons/android/build/intermediates/javac/debug/classes/com/oblador/vectoricons/VectorIconsModule$Errors.class"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -964,29 +941,6 @@
 				5A2429BD90B14BF0B4D03C38 /* SimpleLineIcons.js.flow in Resources */,
 				908B500E51A84C72AAA34CBF /* Zocial.js in Resources */,
 				ED218051FEE0494688982518 /* Zocial.js.flow in Resources */,
-				1E6DC59BF7CD4133B32917C4 /* results.bin in Resources */,
-				D08C7A38C6AC45FCB9902D53 /* classes.dex in Resources */,
-				817C48CCA6854B10953EE94A /* BuildConfig.java in Resources */,
-				38FB4B63D0A84A33850A431D /* AndroidManifest.xml in Resources */,
-				8F68D7303A534B959032E0BF /* output-metadata.json in Resources */,
-				6C446B66F94E492CA2866D27 /* aar-metadata.properties in Resources */,
-				212D8B4C6FD643E9801935AF /* annotationProcessors.json in Resources */,
-				8A4349C2B53B4C8B80855400 /* classes.jar in Resources */,
-				C89F335A35A54AA69A3A347E /* R.jar in Resources */,
-				C112EE50D62343A3AE5DAD47 /* R.txt in Resources */,
-				BCE1F17438E64687984B6D82 /* compile-file-map.properties in Resources */,
-				5BEF5CF72EBE4553907BD708 /* merger.xml in Resources */,
-				3359E155EFEB45039088EED5 /* BuildConfig.class in Resources */,
-				E005940DCE3944EFBD2B0839 /* VectorIconsModule$Errors.class in Resources */,
-				D42DEB1998A44916A7B5DC97 /* VectorIconsModule.class in Resources */,
-				89ABEEBA9D2540CDB8EED3E1 /* VectorIconsModuleImpl.class in Resources */,
-				AB595477D1FC453EBE60A650 /* VectorIconsPackage.class in Resources */,
-				61BB95740CFD47EDBBD493A8 /* R-def.txt in Resources */,
-				D1047FE1F7094EE39EF2B9B9 /* manifest-merger-blame-debug-report.txt in Resources */,
-				9343C3DC4D434BC9895014BD /* navigation.json in Resources */,
-				201A489A916449C189D43A19 /* package-aware-r.txt in Resources */,
-				EA4958919A864638B999F17A /* manifest-merger-debug-report.txt in Resources */,
-				4DD26C2FE2D74DB99E2B366C /* previous-compilation-data.bin in Resources */,
 				21CA741429224BC18598BE3B /* build.gradle in Resources */,
 				CA8944593601485E9017847E /* VectorIconsModuleImpl.java in Resources */,
 				09D3CCA250CE4356B3C0C93D /* VectorIconsPackage.java in Resources */,
@@ -1456,10 +1410,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -1534,10 +1485,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

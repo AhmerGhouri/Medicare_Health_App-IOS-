@@ -5,16 +5,12 @@ import {
   View,
   Image,
   TouchableOpacity,
-  PermissionsAndroid,
   SafeAreaView,
   FlatList,
   Pressable,
   Dimensions,
   LogBox,
-  Button,
-  Alert,
   BackHandler,
-  ToastAndroid,
   Platform,
 } from 'react-native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -29,20 +25,17 @@ import { Drawer } from 'react-native-drawer-layout';
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../App';
 import UserDrawer from '../components/drawer/Drawer';
-import Geolocation from '@react-native-community/geolocation';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { RadioButton } from 'react-native-paper';
 import IconButton from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { bottomSheetDataType } from '../constants';
 import { checkedData } from '../constants';
 import { useAppDispatch } from '../app/hooks/hooks';
 import { addPatientToStore } from '../app/slices/patientSlice';
 import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { FadeOut, ZoomInRight } from 'react-native-reanimated';
 import { Snackbar } from 'react-native-paper';
+import { useResponsiveDimensions } from '../app/hooks/useDimension';
 
 
 
@@ -54,7 +47,6 @@ type HomeProps = NativeStackScreenProps<RootStackParamList, "HomeScreen">
 
 export default function HomeScreen({ route, navigation }: HomeProps): JSX.Element {
 
-  // const { user } = useAuth();
   // const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const { user } = route.params
   const [checked, setChecked] = useState('')
@@ -64,93 +56,59 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
   const [checkedData, setCheckedData] = useState<checkedData>()
   const [backPressed, setBackPressed] = useState<any>(0);
   const [visible, setVisible] = useState(false);
+  const { hp , wp } = useResponsiveDimensions()
 
-  console.log("home Height" , Dimensions.get('screen').height);
-  
+  const styles = useMemo(() => {
+   return StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 16,
+    },
+    navigationContainer: {
+      backgroundColor: '#ecf0f1',
+    },
+    contentContainer: {
+      padding: 10,
+    },
+    List: {
+      width: '97%',
+    },
+    servicesSection: {
+      marginTop: -50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 30,
+      borderWidth: 0,
+    },
+    lottieContainer: {
+      zIndex: 0,
+    },
+    lottie: {
+      // width: Dimensions.get('screen').height <= 640 ? 250 : 400 || Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 400 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
+      // height: Dimensions.get('screen').height <= 640 ? 250 : 400 || Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 350 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
+      width : wp(450),
+      height : hp(380),
+      zIndex: 0,
+    },
+    paragraph: {
+      padding: 16,
+      fontSize: 15,
+      textAlign: 'center',
+    },
+    radio: {
+      borderWidth: 1,
+      borderRadius: 50,
+      borderColor: 'red'
+    }
+  });
+}, [hp , wp]);
+
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
   }, [])
-
-  // const centerLongitude = 67.06346625170369;
-  // const centerLatitude = 24.881140447614683;
-  // const radius = 1000; // in kilometers
-
-  // const requestLocationPermission = async () => {
-  //   try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         title: 'Geolocation Permission',
-  //         message: 'Can we access your location?',
-  //         buttonNeutral: 'Ask Me Later',
-  //         buttonNegative: 'Cancel',
-  //         buttonPositive: 'OK',
-  //       },
-  //     );
-  //     return granted === PermissionsAndroid.RESULTS.GRANTED;
-  //   } catch (err) {
-  //     console.warn('Error requesting location permission:', err);
-  //     return false;
-  //   }
-  // };
-
-  // const getUserLocation = (): Promise<{ longitude, latitude }> => {
-  //   return new Promise((resolve, reject) => {
-  //     Geolocation.getCurrentPosition(
-  //       position => {
-  //         resolve({
-  //           latitude: position.coords.latitude,
-  //           longitude: position.coords.longitude,
-  //         });
-  //       },
-  //       error => {
-  //         reject(error);
-  //       },
-  //       { maximumAge: 0 },
-  //     );
-  //   });
-  // };
-
-  // const haversineDistance = (lat1, lon1, lat2, lon2) => {
-  //   const R = 6371e3; // meters
-  //   const φ1 = toRadians(lat1);
-  //   const φ2 = toRadians(lat2);
-  //   const Δφ = toRadians(lat2 - lat1);
-  //   const Δλ = toRadians(lon2 - lon1);
-  //   const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-  //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  //   return R * c;
-  // };
-
-  // const toRadians = angle => (angle * Math.PI) / 180;
-
-  // const isWithin1Km = (longitude, latitude) => {
-  //   const distance = haversineDistance(latitude, longitude, centerLatitude, centerLongitude);
-  //   return distance <= radius;
-  // };
-
-  // const checkUserLocation = async () => {
-  //   const hasPermission = await requestLocationPermission();
-  //   if (!hasPermission) {
-  //     console.warn('No permission for geolocation');
-  //     return;
-  //   }
-
-  //   try {
-  //     const location = await getUserLocation();
-  //     if (isWithin1Km(location.longitude, location.latitude)) {
-  //       Alert.alert('', 'User is inside 1 Km premises');
-  //     } else {
-  //       Alert.alert('Ineligible', 'You are not eligible to take these services outside of our premises.')
-  //     }
-  //   } catch (error) {
-  //     console.warn('Error getting geolocation:', error.message);
-  //     Alert.alert('Location Error', 'Failed to retrieve your location. Please make sure location services are enabled.');
-  //   }
-  // };
-
-
 
   // For Drawer Opening and closing
   const [open, setOpen] = React.useState(false);
@@ -192,12 +150,12 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
     return (
       <Pressable style={[s`flex-row z-1 justify-between items-center my-4 mx-2`, styles.List]}>
         <View style={[s`flex-row items-center justify-between`, {}]}>
-        <Avatar ImageUrl={item.opaT_SEX === 'M' ? Man : Woman} width={20} height={20}/>
+          <Avatar ImageUrl={item.opaT_SEX === 'M' ? Man : Woman} width={20} height={20} />
 
-        <View style={[s`flex justify-between pl-4`, {}]}>
-          <Text allowFontScaling={false} style={[s`text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 11 : 13 }]}>{item.opaT_ID}</Text>
-          <Text allowFontScaling={false} style={[s`text-blue-900`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 13 : 15 }]}>{item.opaT_PNAME.length > 20 ? item.opaT_PNAME.slice(0, 20) + '..' : item.opaT_PNAME}</Text>
-        </View>
+          <View style={[s`flex justify-between pl-4`, {}]}>
+            <Text allowFontScaling={false} style={[s`text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 11 : 13 }]}>{item.opaT_ID}</Text>
+            <Text allowFontScaling={false} style={[s`text-blue-900`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 13 : 15 }]}>{item.opaT_PNAME.length > 20 ? item.opaT_PNAME.slice(0, 20) + '..' : item.opaT_PNAME}</Text>
+          </View>
         </View>
 
         <View style={[Platform.OS === 'ios' ? styles.radio : s`flex-row`]}>
@@ -232,71 +190,43 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
   }, [backPressed]);
 
   const onDismissSnackBar = () => setVisible(false);
-  console.log("screen" , Dimensions.get("screen").height)
-  console.log("window" , Dimensions.get("window").height)
-  console.log("window width" , Dimensions.get("window").width)
-  
+
 
   return (
 
     // For whole screen drawer
     <Drawer
       open={open}
-      style={s`flex-1` }
+      style={s`flex-1`}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
       renderDrawerContent={() => {
         return <UserDrawer user={user} />;
-      }}
-    >
-
+      }}>
       <SafeAreaView style={s`flex-1 `} >
-
-
         <View style={s`flex-1 bg-red-50 rounded-xl`}>
-
-      <StatusBar barStyle={'dark-content'} backgroundColor='#fb4d4d' />
-          {/* <StatusBar barStyle={'dark-content'} /> */}
-
+          <StatusBar barStyle={'dark-content'} backgroundColor='#fb4d4d' />
           <View style={s`flex shrink-0 z-30`}>
-
             <View style={s`absolute top-0 left-0`}>
-              {/* <Image source={HeaderImg} /> */}
               <Header />
             </View>
-
             <View style={s`flex-row mb-2 pt-8 px-6 justify-between items-center`}>
-              {/* <Image
-                source={Logo}
-                style={[s`w-24 h-12`]}
-              /> */}
-              <Image source={Logo} style={{ width: Dimensions.get('window').height < 604 ? 100 : 130, height: Dimensions.get('window').height <= 804 ? 40 : 50 }}
-              />
+              <Image source={Logo} style={{ width: Dimensions.get('window').height < 604 ? 100 : 130, height: Dimensions.get('window').height <= 804 ? 40 : 50 }} />
+              {/* <Image source={Logo} width={100} height={100} /> */}
               <View>
-
                 {/* For Opening and Closing */}
                 <TouchableOpacity
                   style={s`items-center align-center`}
                   onPress={() => {
                     setOpen((prevOpen) => !prevOpen)
                   }}>
-
-                  {/* <Avatar ImageUrl={user.gender === 'M' ? Man : Woman} width={20} height={20} /> */}
                   <Avatar ImageUrl={user.gender === 'M' ? Man : Woman} width={20} height={20} />
                   <Text allowFontScaling={false} style={[s`text-black pt-1 text-sm`, { fontSize: Dimensions.get('window').height < 604 ? 10 : 14, fontFamily: 'Quicksand-Bold' }]}>{user.pname?.slice(0, 7)}</Text>
-
                 </TouchableOpacity>
-
               </View>
-
             </View>
-
           </View>
-
-          {/* <Button title='Get Location' onPress={() => checkUserLocation()} /> */}
-
           <View style={s`flex-1 z-0 grow justify-top z-30`}>
-
             <View style={[s`flex shrink-0 w-full items-center`, styles.lottieContainer]}>
               <LottieView
                 style={[styles.lottie]}
@@ -305,22 +235,11 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
                 loop
               />
             </View>
-
-
-            {/* <View style={[s``, {height : Dimensions.get('window').height <= 592 ? 200 : 'auto' } ,styles.servicesSection]}> */}
             <View style={[s``, , styles.servicesSection]}>
               <Services navigation={navigation} mob={user.mob} bottomSheetRef={bottomSheetRef} handleSetBottomSheetData={handleSetBottomSheetData} />
             </View>
-
           </View>
-
-          <View style={s`flex-1  absolute bottom-0 right-0 z-1`}>
-            {/* <<Image style={s`z-1`} source={FooterImg} />> */}
-            {/* <Footer /> */}
-          </View>
-
         </View>
-
         <BottomSheet
           ref={bottomSheetRef}
           style={s`z-999`}
@@ -329,46 +248,22 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
           index={-1}
           enablePanDownToClose={true}
           backdropComponent={renderBackdrop}
-          // backgroundStyle= {{backgroundColor: '#fb4d4d'}}
           handleIndicatorStyle={{ backgroundColor: 'white', backfaceVisibility: 'hidden' }}
-          handleStyle={{ backgroundColor: '#fb4d4d', borderTopRightRadius: 15, borderTopLeftRadius: 15 }}
-        >
-
-<View style={s`flex-column w-full `}>
+          handleStyle={{ backgroundColor: '#fb4d4d', borderTopRightRadius: 15, borderTopLeftRadius: 15 }}>
+          <View style={s`flex-column w-full `}>
             <Pressable
               onPress={() => navigation.push('MRScreen', { user })}
-              style={[s`flex-row p-4 items-center justify-around w-full ` , {elevation : 20 , backgroundColor : '#fb4d4d'}]}>
-
+              style={[s`flex-row p-4 items-center justify-around w-full `, { elevation: 20, backgroundColor: '#fb4d4d' }]}>
               <View style={[s` items-center`, { width: '30%' }]}>
                 <Icon name='plus' color={'white'} size={20} />
               </View>
-
               <View style={[s`pl-8`, { width: Dimensions.get('window').width <= 600 ? '70%' : '60%' }]}>
                 <Text allowFontScaling={false} style={s`text-white text-medium italic font-semibold`}>
                   Create New MR #
                 </Text>
               </View>
-
             </Pressable>
-            {/* <Pressable
-              onPress={() => navigation.push('MRScreen', { user })}
-              style={[s`flex-row pb-4 justify-around w-full `, { width: '100%' }]}>
-              
-              <View style={s`bg-blue-600 p-4 rounded-full items-center justify-center`}>
-                <View style={[s``]}>
-                  <Icon name='plus' color={'white'} size={20} />
-                </View>
-
-                <View style={[s``]}>
-                  <Text style={s`text-white text-medium italic font-semibold`}>
-                    MR #
-                  </Text>
-                </View>
-              </View>
-
-            </Pressable> */}
           </View>
-
           <View style={s`my-2 p-2`}>
             {
               bottomSheetData == 0 ?
@@ -385,28 +280,16 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
                 )
             }
           </View>
-
-         
-
           <BottomSheetScrollView nestedScrollEnabled={true} contentContainerStyle={styles.contentContainer}>
             <FlatList
               numColumns={1}
               data={bottomSheetData}
               removeClippedSubviews={false}
-              // ItemSeparatorComponent={() => {
-              //   return (
-              //     <View style={{ borderWidth: 0.5, borderColor: 'lightgray' }}></View>
-              //   )
-              // }}
               keyExtractor={item => item.opaT_ID}
-              renderItem={({ item }) => renderList(item)}
-
-            />
+              renderItem={({ item }) => renderList(item)} />
           </BottomSheetScrollView>
-
           <View>
             {checkedData && (
-
               <Animated.View style={s`flex`} entering={ZoomInRight.duration(1000)} exiting={FadeOut} >
                 <Pressable onPress={() => handleNavigateToLabScreen(checkedData)} style={[s`absolute bg-red-500 rounded-full left-40 bottom-5  m-4 p-4`, { elevation: 25 }]}>
                   <IconButton
@@ -416,19 +299,13 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
                   />
                 </Pressable>
               </Animated.View>
-            )
-            }
+            )}
           </View>
-
-        
-
         </BottomSheet>
-
         <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
           duration={2000}
-
           style={{ alignItems: 'center', justifyContent: 'center' }}
         >
           <Text allowFontScaling={false} style={{
@@ -441,84 +318,11 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
             Press back again to exit
           </Text>
         </Snackbar>
-
       </SafeAreaView>
-
     </Drawer>
 
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  navigationContainer: {
-    backgroundColor: '#ecf0f1',
-  },
-  contentContainer: {
 
-    padding: 10,
-    // alignItems: 'center',
-    // justifyContent: 'center'
-  },
-  List: {
-
-    width: '97%',
-    // // shadowColor: 'black',
-    // // shadowOffset: {
-    // //   width: 4,
-    // //   height: 8
-    // // },
-    // // shadowOpacity: 1,
-    // elevation: 50
-
-  },
-  servicesSection: {
-
-    // flex : 1,
-    // height : 280,
-    marginTop: -50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 30,
-    borderWidth: 0,
-    // borderColor : 'red',
-    // borderRadius : 50,
-    // borderLeftWidth : 0,
-    // borderRightWidth : 0,
-    // borderBottomWidth : 0,
-
-
-  },
-  lottieContainer: {
-
-    zIndex: 0,
-
-  },
-  lottie: {
-
-    // width: 400,
-    // height: 400,
-    // width: Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 400 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
-    // height: Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 350 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
-    width: Dimensions.get('screen').height <= 640 ? 250 : 400 || Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 400 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
-    height: Dimensions.get('screen').height <= 640 ? 250 : 400 || Platform.OS === 'ios' ? Dimensions.get('screen').height <= 680 ? 280 : 350 : Dimensions.get('window').height <= 704 ? 330 : 400 && Dimensions.get('screen').width >= 800 && Dimensions.get('screen').width <= 1080 ? 700 : 400 && Dimensions.get('screen').width >= 1080 ? 400 : 400,
-    zIndex: 0,
-
-  },
-  paragraph: {
-    padding: 16,
-    fontSize: 15,
-    textAlign: 'center',
-  },
-  radio : {
-    borderWidth : 1,
-    borderRadius : 50,
-    borderColor : 'red'
-  }
-});
 

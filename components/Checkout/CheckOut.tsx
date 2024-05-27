@@ -1,5 +1,5 @@
-import { Alert, Button, FlatList, ScrollView, Image, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Pressable, Linking, Dimensions } from 'react-native'
-import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { Alert, FlatList, ScrollView, Image, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Pressable, Dimensions } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import BottomSheet from '@gorhom/bottom-sheet'
 import { s } from 'react-native-wind'
 import Modal from 'react-native-modal'
@@ -7,16 +7,14 @@ import Logo from '../../src/assets/Medicare_logo_screen.png'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks'
 import axios from 'axios'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { opatValuesType, postDatatype } from '../../constants'
 import LottieView from 'lottie-react-native'
-
-// interface CheckOutProps {
-//     values: opatValuesType;
-// }
+import { setPaymentURL } from '../../app/slices/paymentURLSlice'
 
 
-const CheckOut = ({ handleClick }) => {
-    // const CheckOut = (opatValues: CheckOutProps) => {
+
+
+
+const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
 
     const BILL_POST_API = 'https://local.jmc.edu.pk:82/api/WebReqServices/PostSelectServiceDataInBill'
     const MAX_TRANS_API = 'https://local.jmc.edu.pk:82/api/LabTest/GetMaxTransId'
@@ -31,10 +29,10 @@ const CheckOut = ({ handleClick }) => {
     const [PoLoading, setPoLoading] = useState<boolean>(false)
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(true)
+    const dispatch = useAppDispatch()
+    const paymentURL = useAppSelector(state => state.url)
     const { cartItem } = useAppSelector(state => state.cart);
-    const { ...patient } = useAppSelector(state => state.patient);
     const { ...user } = useAppSelector(state => state.user);
-    const [collectionTime, setCollectionTime] = useState('')
 
 
     const amount = cartItem.map((item) => {
@@ -56,50 +54,19 @@ const CheckOut = ({ handleClick }) => {
 
             const trans_response = await axios.get(MAX_TRANS_API)
 
-            console.log("trans_response 3" , trans_response)
-
-            console.log(trans_response.status)
-
             if (trans_response.status === 200) {
 
                 const result = trans_response.data
                 const transId = result[0].ltesT_ID
                 const transIdToNum = +transId
-
-                // setTransId(transIdToNum + 1)
-
                 return transIdToNum
 
             } else {
-
                 Alert.alert("Network Error", "Check Your Internet Connection")
-
             }
 
         } catch (error) {
-            Alert.alert("Error" , error)
-            // switch (error) {
-            //     case 400:
-            //         // handle 400 Bad Request case
-            //         Alert.alert('Bad Request', 'Something went wrong with the request.');
-            //         break;
-            //     case 401:
-            //         // handle 401 Unauthorized case
-            //         Alert.alert('Unauthorized', 'Access is denied due to invalid credentials.');
-            //         break;
-            //     case 404:
-            //         // handle 404 Not Found case
-            //         Alert.alert('Not Found', 'The requested resource could not be found.');
-            //         break;
-            //     case 500:
-            //         // handle 500 Internal Server Error case
-            //         Alert.alert('Internal Server Error', 'Something went wrong on the server.');
-            //         break;
-            //     default:
-            //         // handle any other error cases
-            //         Alert.alert('Error', 'Something went wrong.');
-            //         break;
-            // }
+            Alert.alert("Error", error)
         }
     }
 
@@ -108,35 +75,12 @@ const CheckOut = ({ handleClick }) => {
             const response = await axios.post(BILL_POST_API, updatedObject)
             if (response.status === 200) {
                 console.log("Bill Posted Successfully");
-                // navigation.navigate("HomeScreen")
             } else {
                 Alert.alert("Error", "Bill has not been generated, Something went wrong!")
             }
             return response
         } catch (error) {
             Alert.alert("Error", "Bill has not been generated, Something went wrong!")
-            // switch (error.response.status) {
-            //     case 400:
-            //         // handle 400 Bad Request case
-            //         Alert.alert('Bad Request', 'Something went wrong with the request.');
-            //         break;
-            //     case 401:
-            //         // handle 401 Unauthorized case
-            //         Alert.alert('Unauthorized', 'Access is denied due to invalid credentials.');
-            //         break;
-            //     case 404:
-            //         // handle 404 Not Found case
-            //         Alert.alert('Not Found', 'The requested resource could not be found.');
-            //         break;
-            //     case 500:
-            //         // handle 500 Internal Server Error case
-            //         Alert.alert('Internal Server Error', 'Something went wrong on the server.');
-            //         break;
-            //     default:
-            //         // handle any other error cases
-            //         Alert.alert('Error', 'Something went wrong.');
-            //         break;
-            // }
         }
     }
 
@@ -157,38 +101,40 @@ const CheckOut = ({ handleClick }) => {
     }
 
     const handleSubmit = async (voucherID) => {
-        axios.post((PAYMENT_POST_API), {
-            "app_id": "0000",
-            "Query": `select m.vc_mst_tran_id,w.entryid as app_id,w.patientlname as name,w.email,'0'||w.contactno as mobile,m.voucherid,d.VC_DTL_DTL_VOUCHER_AMT as adm_fees,TO_CHAR(SYSDATE,'YYYY-MON-DD') as coursevalid,c.api_app_id,c.api_app_key  from CONSL_APP_T_WEB w inner join stdc_jmdc_vc_mst_t m on m.vc_mst_rollno = w.entryid and m.vc_mst_catg_id = 'Consultation Fee'  inner join stdc_jmdc_vc_dtl_t d on d.voucherid = m.voucherid left join aass.GL_COMBINE_COMPANY c on c.mastercode = 'MED' where m.voucherid = ${voucherID} order by 1 desc `,
-            "FeeTYPECode": "CONSULTATIONFEE",
-            "FeeDesc": "CONSULTATIONFEE",
-            "AfterPaymentURL": "http://localhost:53744/frmOnlinePaymentStatusMCGH.aspx",
-            "Email": "YES",
-            "SMS": "YES",
-            "SMSReqType": "MyMedicareHealth",
-            "SMSMask": "MEDICARE"
-        }).then((res) => {
 
-
-            const Status = res.status
-            const data = res.data
-            const paymentURL = data.redirect_url
-
-            if (Status === 200) {
-                Linking.openURL(paymentURL)
+        try {
+            const response = await axios.post((PAYMENT_POST_API), {
+                "app_id": "0000",
+                "Query": `select m.vc_mst_tran_id,w.entryid as app_id,w.patientlname as name,w.email,'0'||w.contactno as mobile,m.voucherid,d.VC_DTL_DTL_VOUCHER_AMT as adm_fees,TO_CHAR(SYSDATE,'YYYY-MON-DD') as coursevalid,c.api_app_id,c.api_app_key  from CONSL_APP_T_WEB w inner join stdc_jmdc_vc_mst_t m on m.vc_mst_rollno = w.entryid and m.vc_mst_catg_id = 'Consultation Fee'  inner join stdc_jmdc_vc_dtl_t d on d.voucherid = m.voucherid left join aass.GL_COMBINE_COMPANY c on c.mastercode = 'MED' where m.voucherid = ${voucherID} order by 1 desc `,
+                "FeeTYPECode": "CONSULTATIONFEE",
+                "FeeDesc": "CONSULTATIONFEE",
+                "AfterPaymentURL": "http://localhost:53744/frmOnlinePaymentStatusMCGH.aspx",
+                "Email": "YES",
+                "SMS": "YES",
+                "SMSReqType": "MyMedicareHealth",
+                "SMSMask": "MEDICARE"
+            })
+            const Status = response.status
+               if (Status === 200) {
+                const data = await response.data
+                dispatch(setPaymentURL(data.redirect_url))
             } else {
                 Alert.alert("Connection Error", "Somthing went wrong, Check Your Internet Connection!")
             }
 
-        }).catch((err) => {
-            Alert.alert("Error", err);
-        })
+        } catch (error) {
+
+            Alert.alert("Error", error)
+
+        }
+
     }
 
-    const handleModal = async (value) => {
+    const handleInvoiceModal = async (value) => {
 
         const trans = await GetMaxTransId()
         const transID = trans! + 1
+      
         return new Promise<void>(async (resolve) => {
             const response = await axios.post(VOUCHER_API, {
                 p_ENTRYID: transID.toString(),
@@ -199,40 +145,66 @@ const CheckOut = ({ handleClick }) => {
                 p_ACCTITLE: "MedicareAcc",
                 p_CNIC: "000000000",
                 p_Pname: user.pname,
-                p_PaymentLink: "#",
+                p_PaymentLink: `${paymentURL}`,
                 p_FeeTYPECode: "CONSL_FEE",
                 p_TotalAmount: totalAmount?.toString(),
                 v_VOUCHER_NO: "null"
+   
             }).then((res) => {
+   
                 const response = res.data
+   
                 return response
+   
             }).catch((error) => {
+   
                 Alert.alert("Error", error);
+   
             })
-
+            
             const updatedObject = [...cartItem].map((item) => {
                 // Create a new object with updated `tranS_ID`
                 return {
                     ...item,
-                    tranS_ID: transID.toString()
+                    tranS_ID: transID.toString(),
+                    paymenT_TYPE : value
                 };
             });
 
-            if (value == 'COD') {
+            console.log("updated Object" , updatedObject)
+
+            if (value == 'C') {
+               
                 const billing = await billPosting(updatedObject)
+               
                 if (billing?.status === 200) {
-                    handleClick(true)
+      
+                    handleCOD(true)
                     setModalVisible(false)
+      
                 } else {
+                    
                     Alert.alert('Error', 'Something went wrong while processing your order')
                 }
             } else {
+
                 const billing = await billPosting(updatedObject)
+                
                 if (billing?.status === 200) {
+                
                     handleSubmit(response)
-                    handleClick(true)
+                    handlePO(true)
+
+                    setTimeout(() => {
+                
+                        handleWebView(response)
+                
+                    }, 2000)
+                
                     setModalVisible(false)
+     
                 } else {
+                    
                     Alert.alert('Error', 'Something went wrong while processing your order')
                 }
             }
@@ -243,7 +215,7 @@ const CheckOut = ({ handleClick }) => {
     useEffect(() => {
         bottomSheetRef.current?.expand()
     }, [])
-   
+
     useEffect(() => {
 
         const totalAmount = addArrayValues(amount)
@@ -261,7 +233,6 @@ const CheckOut = ({ handleClick }) => {
         <>
             <BottomSheet
                 ref={bottomSheetRef}
-                // topInset={50}
                 detached={true}
                 animateOnMount={true}
                 bottomInset={2}
@@ -286,37 +257,6 @@ const CheckOut = ({ handleClick }) => {
                 }}
             >
                 <View style={s`m-8 justify-center `}>
-
-                    <View style={[s`flex-row justify-between items-center gap-x-3`,
-                    { marginVertical: Dimensions.get('window').height < 704 ? 2 : 12 }]}>
-
-                        {loader ? (
-
-                            <SkeletonPlaceholder borderRadius={4}>
-                                <SkeletonPlaceholder.Item flexDirection="row" justifyContent='space-around'
-                                    gap={50} alignItems="center">
-                                    <SkeletonPlaceholder.Item width={Dimensions.get('window').width < 390 ? '50%' : '70%'}
-                                        height={Dimensions.get('window').width < 390 ? 20 : 30} />
-                                    <SkeletonPlaceholder.Item marginTop={6} width={80} height={20} />
-                                </SkeletonPlaceholder.Item>
-                            </SkeletonPlaceholder>
-
-                        ) :
-                            <>
-                                <Text allowFontScaling={false} style={[s` text-black `,
-                                { fontSize: Dimensions.get('window').width < 390 ? 14 : 18, fontFamily: 'Quicksand-Bold' }]}>
-                                    Home Collection Charges
-                                </Text>
-
-                                <Text allowFontScaling={false} style={[s` text-red-600 `,
-                                { fontSize: Dimensions.get('window').width < 390 ? 14 : 18, fontFamily: 'Quicksand-Bold' }]}>
-                                    Rs. {totalAmount?.toFixed(2)}
-                                </Text>
-                            </>
-                        }
-
-                    </View>
-
                     <View style={[s`flex-row justify-between items-center gap-x-3`,
                     { marginVertical: Dimensions.get('window').height < 704 ? 2 : 12 }]}>
                         {loader ? (
@@ -327,13 +267,11 @@ const CheckOut = ({ handleClick }) => {
                                     <SkeletonPlaceholder.Item marginTop={6} width={80} height={20} />
                                 </SkeletonPlaceholder.Item>
                             </SkeletonPlaceholder>
-
                         ) : <>
                             <Text allowFontScaling={false} style={[s`text-black `,
                             { fontSize: Dimensions.get('window').width < 390 ? 14 : 18, fontFamily: 'Quicksand-Bold' }]}>
                                 Total Amount
                             </Text>
-
                             <Text allowFontScaling={false} style={[s` text-red-600 `,
                             { fontSize: Dimensions.get('window').width < 390 ? 14 : 18, fontFamily: 'Quicksand-Bold' }]}>
                                 Rs. {totalAmount?.toFixed(2)}
@@ -481,24 +419,13 @@ const CheckOut = ({ handleClick }) => {
                             <TouchableOpacity style={[s`rounded p-2  `, { paddingHorizontal: Dimensions.get('window').width < 390 ? 12 : 15, backgroundColor: '#313594', elevation: 10 }]}
                                 onPress={() => {
                                     setCoLoading(true)
-                                    handleModal('COD').finally(() => setCoLoading(false))
+                                    handleInvoiceModal('C').finally(() => setCoLoading(false))
                                 }}
-                                >
+                            >
                                 <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').width < 390 ? 12 : 16 }]}>
                                     Cash On Collection
                                 </Text>
                             </TouchableOpacity>
-
-                            // <TouchableOpacity style={[s`rounded p-2  `, { paddingHorizontal: Dimensions.get('window').width < 390 ? 12 : 15, backgroundColor: '#313594', elevation: 10 }]}
-                            //    onPress={() => {
-                            //     console.log("hogaya")
-                            //     GetMaxTransId()
-                            //    }}
-                            //     >
-                            //     <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').width < 390 ? 12 : 16 }]}>
-                            //         Cash On Collection
-                            //     </Text>
-                            // </TouchableOpacity>
 
                         }
 
@@ -515,14 +442,13 @@ const CheckOut = ({ handleClick }) => {
                             <Pressable style={[s`rounded p-2  `, { paddingHorizontal: Dimensions.get('window').width < 390 ? 12 : 15, backgroundColor: '#313594', elevation: 10 }]}
                                 onPress={() => {
                                     setPoLoading(true)
-                                    handleModal('PO').finally(() => setPoLoading(false))
+                                    handleInvoiceModal('O').finally(() => setPoLoading(false))
                                 }}
-                                >
+                            >
                                 <Text allowFontScaling={false} style={[s`font-bold italic`, { color: 'white', fontSize: Dimensions.get('window').width < 390 ? 12 : 16 }]}>
                                     Pay Online
                                 </Text>
                             </Pressable>
-
                         }
                     </View>
 
@@ -539,17 +465,11 @@ export default CheckOut
 const styles = StyleSheet.create({
 
     lottieContainer: {
-
         zIndex: 0,
-
     },
     lottie: {
-
-        // width: 200,
-        // height: 150,
         width: Dimensions.get('window').height < 704 ? 150 : 200,
         height: Dimensions.get('window').height < 704 ? 100 : 150,
-
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,

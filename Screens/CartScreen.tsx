@@ -10,29 +10,53 @@ import CartItem from '../components/cartItemList/CartItemList';
 import CheckOut from '../components/Checkout/CheckOut';
 import CashDeliveryModal from '../components/Modals/CashDeliveryModal';
 import { removeAllFromCart } from '../app/slices/cartSlice';
+import { clearPatientToStore } from '../app/slices/patientSlice';
 
 
 type cartScreenProps = NativeStackScreenProps<RootStackParamList, 'CartScreen'>
 
 
 
-const CartScreen = ({ route , navigation }: cartScreenProps) => {
+const CartScreen = ({ route, navigation }: cartScreenProps) => {
 
 
   const { cartItem } = useAppSelector(state => state.cart);
   const [delLoading, setDelLoading] = useState(false)
   const dispatch = useAppDispatch()
-  const [cashModalVisible , setCashModalVisible] = useState(false)
+  const [cashModalVisible, setCashModalVisible] = useState(false)
 
-  const handleClick = (value) => {
+  const handleCOD = (value) => {
 
     setDelLoading(value)
+
     setTimeout(() => {
+
       setDelLoading(false)
-      // navigation.popToTop()
       dispatch(removeAllFromCart())
+      dispatch(clearPatientToStore())
       setCashModalVisible(true)
-    } , 6000)
+
+    }, 6000)
+
+  }
+
+  const handlePO = (value) => {
+
+    setDelLoading(value)
+
+    setTimeout(() => {
+
+      setDelLoading(false)
+
+    }, 6000)
+
+  }
+
+  const handleWebView = (obj) => {
+
+    setTimeout(() => {
+      navigation.navigate('Password', obj)
+    }, 2000)
 
   }
 
@@ -41,73 +65,73 @@ const CartScreen = ({ route , navigation }: cartScreenProps) => {
     setCashModalVisible(false)
 
   }
-  
+
 
   return (
     <>
-    <SafeAreaView style={s`flex-1`}>
-    {delLoading && (
-                <View style={styles.overlay}>
-                    {/* <ActivityIndicator size="large" color="red" /> */}
-                    <LottieView
-                        style={[styles.lottie]}
-                        source={require('../src/animations/Delivery.json')}
-                        autoPlay
-                        loop
-                    />
-                </View>
-            )}
-      <GestureHandlerRootView style={s`flex-1`}>
-        {cartItem.length === 0 ?
-          <View style={[s`flex shrink-0 w-full justify-center items-center`, styles.lottieContainer]}>
-
+      <SafeAreaView style={s`flex-1`}>
+        {delLoading && (
+          <View style={styles.overlay}>
+            {/* <ActivityIndicator size="large" color="red" /> */}
             <LottieView
               style={[styles.lottie]}
-              source={require('../src/animations/emptyCart.json')}
+              source={require('../src/animations/Delivery.json')}
               autoPlay
               loop
             />
-
-            <Text allowFontScaling={false} style={[s`text-lg text-red-500` , { fontFamily : 'Quicksand-Bold' }]}>Your Cart is Empty</Text>
-
           </View>
-          :
-          <>
-          <SafeAreaView style={s`flex-1`}>
-            <View style={s`flex-1`}>
+        )}
+        <GestureHandlerRootView style={s`flex-1`}>
+          {cartItem.length === 0 ?
+            <View style={[s`flex shrink-0 w-full justify-center items-center`, styles.lottieContainer]}>
 
-              <View style={[s`flex-2 grow-0`, { height: '70%' }]}>
+              <LottieView
+                style={[styles.lottie]}
+                source={require('../src/animations/emptyCart.json')}
+                autoPlay
+                loop
+              />
 
-
-                <FlatList
-                  data={cartItem}
-                  keyExtractor={(item) => item.ltesT_ID!}
-                  scrollEnabled={true}
-                  style={{marginTop : Platform.OS === 'android' ? 60 : 0}}
-                  renderItem={({ item }) => (
-                    <CartItem
-                      item={item}
-                    />
-                  )}
-
-                />
-              </View>
-
-              <View style={[s`flex-1 grow-0`, { height: '30%' }]}>
-
-                <CheckOut handleClick={handleClick}/>
-
-              </View>
+              <Text allowFontScaling={false} style={[s`text-lg text-red-500`, { fontFamily: 'Quicksand-Bold' }]}>Your Cart is Empty</Text>
 
             </View>
+            :
+            <>
+              <SafeAreaView style={s`flex-1`}>
+                <View style={s`flex-1`}>
 
-            </SafeAreaView>
+                  <View style={[s`flex-2 grow-0`, { height: '70%' }]}>
 
-          </>
-        }
-        <CashDeliveryModal modalVisible={cashModalVisible} onClose={handleClose} navigation={navigation}/>
 
-      </GestureHandlerRootView>
+                    <FlatList
+                      data={cartItem}
+                      keyExtractor={(item) => item.ltesT_ID!}
+                      scrollEnabled={true}
+                      style={{ marginTop: Platform.OS === 'android' ? 60 : 0 }}
+                      renderItem={({ item }) => (
+                        <CartItem
+                          item={item}
+                        />
+                      )}
+
+                    />
+                  </View>
+
+                  <View style={[s`flex-1 grow-0`, { height: '30%' }]}>
+
+                    <CheckOut handleCOD={handleCOD} handlePO={handlePO} handleWebView={handleWebView} />
+
+                  </View>
+
+                </View>
+
+              </SafeAreaView>
+
+            </>
+          }
+          <CashDeliveryModal modalVisible={cashModalVisible} onClose={handleClose} navigation={navigation} />
+
+        </GestureHandlerRootView>
       </SafeAreaView>
     </>
   )
@@ -121,7 +145,7 @@ const styles = StyleSheet.create({
 
     zIndex: 0,
     width: '100%',
-    flex  : 1
+    flex: 1
 
   },
   lottie: {

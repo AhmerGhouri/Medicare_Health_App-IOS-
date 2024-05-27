@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
-import { appUser, checkedData } from "../../constants";
+import { appUser } from "../../constants";
 
 
 const initialState: appUser = {};
@@ -12,7 +12,6 @@ export const userSlice = createSlice({
         addUserToStore: (state, action: PayloadAction<appUser>) => {
 
             const user = action.payload // Add unique
-            console.log("user store" , user);
             
             return state = user
 

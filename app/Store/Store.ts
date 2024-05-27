@@ -3,6 +3,7 @@ import  cartReducer  from '../slices/cartSlice'
 import patientReducer from '../slices/patientSlice'
 import userReducer from '../slices/userSlice'
 import serviceReducer from '../slices/serviceSlice'
+import urlReducer from '../slices/paymentURLSlice'
 // ...
 
 export const store = configureStore({
@@ -10,7 +11,8 @@ export const store = configureStore({
     cart : cartReducer,
     patient : patientReducer,
     user : userReducer,
-    code : serviceReducer
+    code : serviceReducer,
+    url : urlReducer
   },
   devTools : process.env.NODE_ENV !== 'production'
 })
