@@ -9,15 +9,17 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 
 
-const CartItem = ({ item }) => {
+const CartItem = ( {item} ) => {
 
 
     const dispatch = useAppDispatch()
     const handleRemoveFromCart = (id) => dispatch(removeFromCart(id))
     const [loader , setLoader] = useState<boolean>(true)
-    const CartList = item
 
-    console.log("id" , item.ltesT_ID);
+    console.log("Item" , item);
+
+    
+
     useEffect(() => {
         setTimeout(() => {
             setLoader(false)
@@ -28,7 +30,7 @@ const CartItem = ({ item }) => {
 
         <>
         <SafeAreaView style={s`flex-1`}>
-            <GestureHandlerRootView style={[s`items-center`]} key={CartList.id}>
+            <GestureHandlerRootView style={[s`items-center`]} key={item.id}>
                 <View style={[s`flex-row mt-3 mb-3 justify-between rounded-lg items-center`,
                 {
                     width: '90%',
@@ -49,15 +51,15 @@ const CartItem = ({ item }) => {
                             </SkeletonPlaceholder> :
                             <>
                                 <View style={{ width: '70%', justifyContent: 'center', alignItems: 'flex-start', paddingLeft: '6%' }}>
-                                    <Text allowFontScaling={false} style={[s`text-xs` , {fontFamily : 'Montserrat-Bold'}]}>{CartList.samplE_COL_TIME}</Text>
-                                    <Text allowFontScaling={false} style={[s`text-black ` , {fontFamily : 'Quicksand-Bold'} ]}>{CartList.ltesT_DESC}</Text>
-                                    <Text allowFontScaling={false} style={[s`text-red-500 text-xs` , {fontFamily : 'Montserrat-Medium'}]}>{CartList.samplE_COL_DATE}</Text>
+                                    <Text allowFontScaling={false} style={[s`text-xs` , {fontFamily : 'Montserrat-Bold'}]}>{item.samplE_COL_TIME}</Text>
+                                    <Text allowFontScaling={false} style={[s`text-black ` , {fontFamily : 'Quicksand-Bold'} ]}>{item.ltesT_DESC}</Text>
+                                    <Text allowFontScaling={false} style={[s`text-red-500 text-xs` , {fontFamily : 'Montserrat-Medium'}]}>{item.samplE_COL_DATE}</Text>
                                 </View>
-                                <Text allowFontScaling={false} style={s`text-blue-600`}>Rs. {CartList.amt}</Text>
+                                <Text allowFontScaling={false} style={s`text-blue-600`}>Rs. {item.amt}</Text>
 
                                 <View style={s`absolute -top-2 -right-2`}>
                                     <TouchableOpacity style={[s` border-2 rounded-full justify-center items-center w-6 h-6`]} 
-                                    onPress={() => handleRemoveFromCart(CartList.ltesT_ID)}>
+                                    onPress={() => handleRemoveFromCart(item.ltesT_ID)}>
                                         <Icon
                                             name='cross'
                                             size={15}
@@ -65,7 +67,7 @@ const CartItem = ({ item }) => {
                                             color={'red'} />
 
                                     </TouchableOpacity>
-                                </View>
+                                </View> 
                             </>
                     }
 

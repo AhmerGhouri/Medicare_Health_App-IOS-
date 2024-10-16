@@ -62,6 +62,8 @@ function LabScreen({ navigation, route }: LabScreenProps) {
   const [address , setAddress] = useState<string>()
   console.log("Time SLOT " , timeSlot);
   console.log("Service Area " , serviceArea);
+  console.log("adreess" , address);
+  
   
 
   const getTimeSlot = async () => {
@@ -171,7 +173,7 @@ function LabScreen({ navigation, route }: LabScreenProps) {
   }
 
   const toggleModal = async () => {
-    if (timeSlot === '' || serviceArea === '') {
+    if (timeSlot === '' || serviceArea === '' || address === undefined) {
       setErrorMsg(true);
     } else {
       try {
@@ -199,6 +201,118 @@ function LabScreen({ navigation, route }: LabScreenProps) {
     setAddress(text)
 
   } , [address])
+
+  const styles = useMemo(() => {
+
+    return StyleSheet.create({
+      container: {
+        flex: 1,
+        position: 'relative',
+      },
+      overlay: {
+        ...StyleSheet.absoluteFillObject,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        zIndex: 999,
+      },
+      contentContainer: {
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      InputBox: {
+        gap: 16,
+      },
+      lottie: {
+        width: 200,
+        height: 200,
+        zIndex: 0,
+      },
+      InputView: {
+        shadowColor: 'black',
+        backgroundColor: 'white',
+        shadowRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowOffset: {
+          width: 5,
+          height: 5,
+        },
+        shadowOpacity: 0.2,
+        elevation: 15,
+        padding: 10,
+        width: "100%"
+      },
+      input: {
+        borderWidth: 0,
+        width: '100%',
+        textAlign: 'center'
+      },
+      List: {
+        width: '100%',
+        shadowColor: 'black',
+        shadowOffset: {
+          width: 4,
+          height: 8
+        },
+        shadowOpacity: 1,
+        elevation: 50
+      },
+      Footer: {
+        alignItems: 'flex-end',
+      },
+      dropDowncontainer: {
+        flex: 1,
+        backgroundColor: 'white',
+        padding: 40,
+      },
+      dropdown: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderRadius: 6,
+        borderColor: 'lightblue',
+        marginTop: 10,
+        width: '96%',
+        padding: 8,
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 15,
+      },
+      icon: {
+        marginRight: 5,
+        width: 18,
+        height: 18,
+      },
+      item: {
+        paddingVertical: 17,
+        paddingHorizontal: 4,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
+      textItem: {
+        flex: 1,
+        fontSize: 16,
+      },
+      shadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1.41,
+        elevation: 2,
+      },
+    });
+
+  }  , []) 
+  
 
   return (
 
@@ -252,15 +366,15 @@ function LabScreen({ navigation, route }: LabScreenProps) {
           <View style={[s`m-2 items-center `, {zIndex : 0}]}>
             <DropDownPicker data={timeSlotData} placeholder='Select Your Time Slot' />
           </View>
-          {errorMsg ? <View style={s`items-center justify-center`}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{timeSlot === '' ?  'Please select a Preferred time slot' : null}</Text></View> : null}
+          {errorMsg ? <View style={[s`items-center justify-center` , {zIndex : -1}]}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{timeSlot === '' ?  'Please select a Preferred time slot' : null}</Text></View> : null}
           <View style={[s`m-2 items-center` , {zIndex : -1}]}>
             <AreaDropDownPicker data={serviceAreaData} placeholder='Select Your Area' />
           </View>
-          {errorMsg ? <View style={s`items-center justify-center`}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{serviceArea === '' ?  'Please select a Service area' : null}</Text></View> : null}
+          {errorMsg ? <View style={[s`items-center justify-center` , {zIndex : -2}]}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{serviceArea === '' ?  'Please select a Service area' : null}</Text></View> : null}
           <View style={[s`m-2 items-center`, {zIndex : -2}]}>
             <Input placeholder='Enter Your Address' onChange={handleAddress}/>
           </View>
-          {errorMsg ? <View style={s`items-center justify-center`}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{serviceArea === '' ?  'Please select a Service area' : null}</Text></View> : null}
+          {errorMsg ? <View style={[s`items-center justify-center` , {zIndex : -2}]}><Text allowFontScaling={false} style={s`text-red-400 text-xs`}>{address === undefined ?  'Please Enter your  address' : null}</Text></View> : null}
           <View style={[s`m-2` , {zIndex : -3}]}>
             <Search onChange={handleFilter} />
             <ServicesDetail data={filterData} opatValues={opatValues} onSetTestID={handleSetTestID} />
@@ -301,111 +415,6 @@ function LabScreen({ navigation, route }: LabScreenProps) {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    zIndex: 999,
-  },
-  contentContainer: {
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  InputBox: {
-    gap: 16,
-  },
-  lottie: {
-    width: 200,
-    height: 200,
-    zIndex: 0,
-  },
-  InputView: {
-    shadowColor: 'black',
-    backgroundColor: 'white',
-    shadowRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowOpacity: 0.2,
-    elevation: 15,
-    padding: 10,
-    width: "100%"
-  },
-  input: {
-    borderWidth: 0,
-    width: '100%',
-    textAlign: 'center'
-  },
-  List: {
-    width: '100%',
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 4,
-      height: 8
-    },
-    shadowOpacity: 1,
-    elevation: 50
-  },
-  Footer: {
-    alignItems: 'flex-end',
-  },
-  dropDowncontainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 40,
-  },
-  dropdown: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderRadius: 6,
-    borderColor: 'lightblue',
-    marginTop: 10,
-    width: '96%',
-    padding: 8,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 15,
-  },
-  icon: {
-    marginRight: 5,
-    width: 18,
-    height: 18,
-  },
-  item: {
-    paddingVertical: 17,
-    paddingHorizontal: 4,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textItem: {
-    flex: 1,
-    fontSize: 16,
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-  },
-});
+
 
 export default LabScreen;

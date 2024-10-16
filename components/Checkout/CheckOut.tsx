@@ -9,16 +9,18 @@ import axios from 'axios'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import LottieView from 'lottie-react-native'
 import { setPaymentURL } from '../../app/slices/paymentURLSlice'
+import { useNavigation } from '@react-navigation/native'
 
 
 
 
 
-const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
+const CheckOut = ({ handleCOD, handleWebView, handlePO }) => {
 
     const BILL_POST_API = 'https://local.jmc.edu.pk:82/api/WebReqServices/PostSelectServiceDataInBill'
     const MAX_TRANS_API = 'https://local.jmc.edu.pk:82/api/LabTest/GetMaxTransId'
     const PAYMENT_POST_API = 'https://local.sohailuniversity.edu.pk:90/Handlers/PaymnetAPICall.ashx'
+    // const PAYMENT_POST_API = 'https://local.jmc.edu.pk:90/Handlers/PaymnetAPICall.ashx'
     const VOUCHER_API = 'https://local.jmc.edu.pk:82/api/PostDataInVoucherMasterDetail'
     // variables
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -30,9 +32,15 @@ const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(true)
     const dispatch = useAppDispatch()
-    const paymentURL = useAppSelector(state => state.url)
+    const url = useAppSelector(state => state.url)
+    console.log("data", url)
+
+    const navigation = useNavigation()
+    const [invoicePaymentURL, setInvoicePaymentURL] = useState<string>()
     const { cartItem } = useAppSelector(state => state.cart);
     const { ...user } = useAppSelector(state => state.user);
+    // added 
+    const [maxransID, getmaxTransID] = useState<string>()
 
 
     const amount = cartItem.map((item) => {
@@ -100,12 +108,46 @@ const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
         setModalVisible(!isModalVisible)
     }
 
-    const handleSubmit = async (voucherID) => {
+    const handleSubmit = async (response) => {
+
+        console.log("Response recieved:", response);
+        console.log("Recieved types:" , typeof response);
+        const voucherId = +response
+        
+
+        // const query = `select m.vc_mst_tran_id,w.trans_id as app_id,o.opat_pname as name,o.email,o.opat_phone as mobile,m.voucherid,d.VC_DTL_DTL_VOUCHER_AMT as adm_fees,TO_CHAR(SYSDATE,'YYYY-MON-DD') as coursevalid,c.api_app_id,c.api_app_key from aass.MMH_PRE_LABTEST w inner join aass.stdc_jmdc_vc_mst_t m on m.vc_mst_rollno = w.trans_id and m.vc_mst_catg_id = 'Consultation Fee' inner join aass.stdc_jmdc_vc_dtl_t d on d.voucherid = m.voucherid left join aass.GL_COMBINE_COMPANY c on c.mastercode = 'MED' inner join opat_t o on o.opat_id = w.opat_id where m.voucherid = '0000095724'`
+        // const payload = {
+        //     "app_id": "0000",
+        //     "Query": query,
+        //     "FeeTypeCode": "CONSULTATIONFEE",
+        //     "AfterPaymentURL": "http://localhost:53744/frmOnlinePaymentStatusMCGH.aspx",
+        //     "Email": "YES",
+        //     "SMS": "YES",
+        //     "SMSReqType": "MyMedicareHealth",
+        //     "SMSMask": "MEDICARE"
+        // }
+
+
 
         try {
-            const response = await axios.post((PAYMENT_POST_API), {
+            // console.log("resssss" , response);
+
+            //  const res = await axios.post((PAYMENT_POST_API), {
+            //      "app_id": "0000",
+            //      // "app_id": `${maxransID}`,
+            //      "Query": `select m.vc_mst_tran_id,w.entryid as app_id,w.patientlname as name,w.email,'0'||w.contactno as mobile,m.voucherid,d.VC_DTL_DTL_VOUCHER_AMT as adm_fees,TO_CHAR(SYSDATE,'YYYY-MON-DD') as coursevalid,c.api_app_id,c.api_app_key  from CONSL_APP_T_WEB w inner join stdc_jmdc_vc_mst_t m on m.vc_mst_rollno = w.entryid and m.vc_mst_catg_id = 'Consultation Fee'  inner join stdc_jmdc_vc_dtl_t d on d.voucherid = m.voucherid left join aass.GL_COMBINE_COMPANY c on c.mastercode = 'MED' where m.voucherid = ${response} order by 1 desc `,
+            //      "FeeTYPECode": "CONSULTATIONFEE",
+            //      "FeeDesc": "CONSULTATIONFEE",
+            //      "AfterPaymentURL": "http://localhost:53744/frmOnlinePaymentStatusMCGH.aspx",
+            //      "Email": "YES",
+            //      "SMS": "YES",
+            //      "SMSReqType": "MyMedicareHealth",
+            //      "SMSMask": "MEDICARE"
+            //  })
+
+            const res = await axios.post((PAYMENT_POST_API), {
                 "app_id": "0000",
-                "Query": `select m.vc_mst_tran_id,w.entryid as app_id,w.patientlname as name,w.email,'0'||w.contactno as mobile,m.voucherid,d.VC_DTL_DTL_VOUCHER_AMT as adm_fees,TO_CHAR(SYSDATE,'YYYY-MON-DD') as coursevalid,c.api_app_id,c.api_app_key  from CONSL_APP_T_WEB w inner join stdc_jmdc_vc_mst_t m on m.vc_mst_rollno = w.entryid and m.vc_mst_catg_id = 'Consultation Fee'  inner join stdc_jmdc_vc_dtl_t d on d.voucherid = m.voucherid left join aass.GL_COMBINE_COMPANY c on c.mastercode = 'MED' where m.voucherid = ${voucherID} order by 1 desc `,
+                "Query": `select m.vc_mst_tran_id,w.trans_id as app_id,o.opat_pname as name,o.email,o.opat_phone as mobile,m.voucherid,d.VC_DTL_DTL_VOUCHER_AMT as adm_fees,TO_CHAR(SYSDATE,'YYYY-MON-DD') as coursevalid,c.api_app_id,c.api_app_key from aass.MMH_PRE_LABTEST w left join aass.stdc_jmdc_vc_mst_t m on m.vc_mst_rollno = w.trans_id and m.vc_mst_catg_id = 'Consultation Fee' left join aass.stdc_jmdc_vc_dtl_t d on d.voucherid = m.voucherid left join aass.GL_COMBINE_COMPANY c on c.mastercode = 'MED' left join opat_t o on o.opat_id = w.opat_id where m.voucherid = ${voucherId}`,
                 "FeeTYPECode": "CONSULTATIONFEE",
                 "FeeDesc": "CONSULTATIONFEE",
                 "AfterPaymentURL": "http://localhost:53744/frmOnlinePaymentStatusMCGH.aspx",
@@ -114,13 +156,15 @@ const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
                 "SMSReqType": "MyMedicareHealth",
                 "SMSMask": "MEDICARE"
             })
-            const Status = response.status
-               if (Status === 200) {
-                const data = await response.data
-                dispatch(setPaymentURL(data.redirect_url))
-            } else {
-                Alert.alert("Connection Error", "Somthing went wrong, Check Your Internet Connection!")
-            }
+
+            // const res = await axios.post(PAYMENT_POST_API, payload)
+
+            const data = res.data
+
+            console.log("data recieved:", data)
+
+            dispatch(setPaymentURL(data.redirect_url))
+            setInvoicePaymentURL(data.redirect_url)
 
         } catch (error) {
 
@@ -134,9 +178,13 @@ const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
 
         const trans = await GetMaxTransId()
         const transID = trans! + 1
-      
+        // added 
+        getmaxTransID(transID.toString())
+
         return new Promise<void>(async (resolve) => {
+
             const response = await axios.post(VOUCHER_API, {
+
                 p_ENTRYID: transID.toString(),
                 p_ACCNO: "0010",
                 p_FeeCAT: "Consultation Fee",
@@ -145,68 +193,74 @@ const CheckOut = ({ handleCOD, handleWebView , handlePO }) => {
                 p_ACCTITLE: "MedicareAcc",
                 p_CNIC: "000000000",
                 p_Pname: user.pname,
-                p_PaymentLink: `${paymentURL}`,
+                p_PaymentLink: "#",
                 p_FeeTYPECode: "CONSL_FEE",
                 p_TotalAmount: totalAmount?.toString(),
                 v_VOUCHER_NO: "null"
-   
+
             }).then((res) => {
-   
+
                 const response = res.data
-   
+                console.log("Voucher", response);
                 return response
-   
+
             }).catch((error) => {
-   
+
                 Alert.alert("Error", error);
-   
+
             })
-            
+
             const updatedObject = [...cartItem].map((item) => {
                 // Create a new object with updated `tranS_ID`
                 return {
                     ...item,
                     tranS_ID: transID.toString(),
-                    paymenT_TYPE : value
+                    paymenT_TYPE: value
                 };
             });
 
-            console.log("updated Object" , updatedObject)
-
             if (value == 'C') {
-               
+
                 const billing = await billPosting(updatedObject)
-               
+
                 if (billing?.status === 200) {
-      
+
                     handleCOD(true)
                     setModalVisible(false)
-      
+
                 } else {
-                    
+
                     Alert.alert('Error', 'Something went wrong while processing your order')
                 }
             } else {
 
-                const billing = await billPosting(updatedObject)
-                
-                if (billing?.status === 200) {
-                
-                    handleSubmit(response)
+                try {
+
+
+                    
+                    setTimeout(async () => {
+                        handleSubmit(response)
+                        await billPosting(updatedObject)
+                    }, 3000)
+
                     handlePO(true)
 
                     setTimeout(() => {
-                
+
                         handleWebView(response)
-                
-                    }, 2000)
-                
+
+                    }, 4000)
+
                     setModalVisible(false)
-     
-                } else {
-                    
-                    Alert.alert('Error', 'Something went wrong while processing your order')
+
+
+                } catch (err) {
+
+                    Alert.alert("Error", err)
+                    console.log("Error", err)
+
                 }
+
             }
             resolve()
         })

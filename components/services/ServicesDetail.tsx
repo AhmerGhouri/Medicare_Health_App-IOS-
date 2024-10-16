@@ -12,14 +12,9 @@ import LottieView from 'lottie-react-native';
 
 const ServicesDetail: React.FC<{ data: LabTestData[], opatValues: opatValuesType, onSetTestID: (id: testData) => void }> = ({ data, opatValues, onSetTestID }): JSX.Element => {
 
-
-    console.log("opat Vlaues service detail", opatValues);
-
     const [patient, setPatient] = useState<opatValuesType>()
-    // console.log("pappa" , patient);
-
-
     const dispatch = useAppDispatch()
+ 
     // const CheckBox = useCallback(({ item }) => {
     //     return (
     //         <BouncyCheckbox
@@ -46,23 +41,14 @@ const ServicesDetail: React.FC<{ data: LabTestData[], opatValues: opatValuesType
     }
 
     const handleCheck = (test) => {
-        console.log("pappa", patient);
+        
         dispatch(setOpatId(opatValues))
         dispatch(addToCart(test))
-        console.log("asdadasdasd", patient);
-
     };
 
     useEffect(() => {
-
-        // console.log("lkjljlkjk", opatValues);
-
         setPatient(opatValues)
-        // console.log("patefaf", patient);
-
-
     }, [opatValues, patient, handleCheck])
-
 
     const renderServices = useCallback(({ item }) => {
 
@@ -157,13 +143,11 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     lottie: {
-
         width: 200,
         height: 200,
         zIndex: 0,
         justifyContent: 'center',
         alignItems: 'center'
-
     },
 
 })

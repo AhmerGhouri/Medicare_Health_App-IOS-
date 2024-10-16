@@ -10,18 +10,18 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
+import Modal from 'react-native-modal'
 import React, { useMemo, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
-import  { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import { useAuth } from '../components/authContext/AuthContext';
 import { s } from 'react-native-wind';
 import Entypo from 'react-native-vector-icons/Entypo'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { errors, titleMrMs, error } from '../constants';
-import { titleMrMsData } from '../DummyData/LabTests';
-import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { errors, error } from '../constants';
+import { RadioButtonProps } from 'react-native-radio-buttons-group';
 import DatePicker from 'react-native-date-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -29,6 +29,8 @@ import { RootStackParamList } from '../App';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Animated, { BounceInDown, FadeOut, ZoomIn } from 'react-native-reanimated';
+import { RadioButton } from 'react-native-paper'
+import LottieView from 'lottie-react-native';
 
 
 
@@ -68,18 +70,19 @@ export default function Registraion({ navigation }: RegistrationProps) {
   const [numError, setNumError] = useState<string>()
   const [disableFields, setDisableFields] = useState(true)
   const [dateOfBirth, setDateOfBirth] = useState()
-  const radioButtons: RadioButtonProps[] = useMemo(() => ([
-    {
-      id: 'M', // acts as primary key, should be unique and non-empty string
-      label: 'Male',
-      value: 'male'
-    },
-    {
-      id: 'F',
-      label: 'Female',
-      value: 'female'
-    }
-  ]), []);
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+  // const radioButtons: RadioButtonProps[] = useMemo(() => ([
+  //   {
+  //     id: 'M', // acts as primary key, should be unique and non-empty string
+  //     label: 'Male',
+  //     value: 'male'
+  //   },
+  //   {
+  //     id: 'F',
+  //     label: 'Female',
+  //     value: 'female'
+  //   }
+  // ]), []);
 
 
   const OPAT_API: string = `https://local.jmc.edu.pk:82/api/Patients/GetPatientDataFromMob?mob=${mobileNo}`
@@ -135,7 +138,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
                 setSelectedId(reg_user.gender)
               }
             })
-          } if (opat_data !== null) {
+          } else if (opat_data !== null) {
             if (opat_data.length > 1) {
               const getItem = () => {
                 return opat_data.filter(item =>
@@ -208,7 +211,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
           dateOfBirth: "Date Of Birth is Required"
 
         })
-      } 
+      }
       else if (fullName == undefined && fatherName == undefined && email == undefined && weB_PASSWORD == undefined && selectedId == undefined && formattedDate === currentDateformat) {
         setErrors({
           ...errors,
@@ -331,10 +334,10 @@ export default function Registraion({ navigation }: RegistrationProps) {
           ...errorMsg,
           password: "Password is required",
         })
-      } 
+      }
       else if (getUserReg) {
         Alert.alert("Registered", "You are already Registered")
-      } 
+      }
       else {
         setErrors({
           ...errors,
@@ -357,21 +360,23 @@ export default function Registraion({ navigation }: RegistrationProps) {
         const result = await onRegister!(mobileNo!, weB_PASSWORD!, title!, email, fullName, fatherName, selectedId, formattedDate);
 
         if (result.status === 200) {
-          Alert.alert("Successful", "You have been Registered Successfully", [
-            {
-              text: 'Log In',
-              onPress: () => navigation.navigate('Login'),
-              style: 'cancel',
-            }])
-        } 
+
+          setModalVisible(true)
+          // Alert.alert("Successful", "You have been Registered Successfully", [
+          //   {
+          //     text: 'Log In',
+          //     onPress: () => navigation.navigate('Login'),
+          //     style: 'cancel',
+          //   }])
+        }
         else {
           Alert.alert("Error", "Something went wrong, Please try again")
         }
       }
-    } 
+    }
     catch (error) {
       setNumError('Something went wrong, please try again later');
-    } 
+    }
     finally {
       setLoading(false);
     }
@@ -385,7 +390,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
     setDate(date)
     formattedDate === currentDateformat ? setErrors({ ...errors, dateOfBirthtype: true })
       :
-    setErrors({ ...errors, dateOfBirthtype: false })
+      setErrors({ ...errors, dateOfBirthtype: false })
     setOpen(false)
   }
 
@@ -395,7 +400,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
       showsVerticalScrollIndicator={false}
       style={s`flex-1`}
       scrollEnabled={Dimensions.get('window').height < 804 ? true : false}>
-      <View style={[styles.ScreenContainer, {flexDirection: 'column'}]}>
+      <View style={[styles.ScreenContainer, { flexDirection: 'column' }]}>
         <GestureHandlerRootView style={s`flex-1`}>
           <View>
             <Header />
@@ -435,7 +440,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
                   </View>
                 </View>
               </Animated.View>
-              {error ? <Text  allowFontScaling={false} style={s`text-red-600 text-sm`}>{numError}</Text> : ''}
+              {error ? <Text allowFontScaling={false} style={s`text-red-600 text-sm`}>{numError}</Text> : ''}
               {/*  Full Name Input Field */}
               <Animated.View style={s`flex`} entering={BounceInDown.duration(1200)} exiting={FadeOut} >
                 <View style={[s`flex z-0 flex-row rounded-md  border-blue-300 p-0 justify-around items-center`, styles.InputView]}>
@@ -517,17 +522,38 @@ export default function Registraion({ navigation }: RegistrationProps) {
                       style={s`flex-column justify-center items-center`}
                       disabled={disableFields ? false : true}
                       onBlur={() => selectedId !== '' ? setErrors({ ...errors, gendertype: false }) : setErrors({ gendertype: true })}>
-                      <RadioGroup
+                      {/* <RadioGroup
                         containerStyle={{
                           flexDirection: 'row',
                           borderColor: 'lightblue',
-                          height: 30
+                          height: 30,
+                          flexShrink : 1,
+                          flexGrow : 1
                         }}
                         accessibilityLabel='blue'
+                        
                         radioButtons={radioButtons}
                         onPress={setSelectedId}
                         testID='Radio'
-                        selectedId={selectedId}/>
+                        selectedId={selectedId}/> */}
+                      <RadioButton.Group onValueChange={newValue => setSelectedId(newValue)} value={selectedId!}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+                          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                            <Text style={s`text-black text-md`} allowFontScaling={false}>Male</Text>
+
+                            <View style={[Platform.OS === 'ios' ? styles.radio : s`flex-row`]}>
+                              <RadioButton value="M" />
+                            </View>
+                          </View>
+                          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                            <Text style={s`text-black text-md`} allowFontScaling={false}>Female</Text>
+
+                            <View style={[Platform.OS === 'ios' ? styles.radio : s`flex-row`]}>
+                              <RadioButton value="F" />
+                            </View>
+                          </View>
+                        </View>
+                      </RadioButton.Group>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -542,7 +568,7 @@ export default function Registraion({ navigation }: RegistrationProps) {
                   </View>
                   <TouchableOpacity style={[s`flex-row `, { width: '85%' }]} onPress={() => setOpen(true)}>
                     <View style={[s`justify-right items-center `, { width: '75%' }]}>
-                        <Text allowFontScaling={false}>{dateOfBirth || formattedDate}</Text>
+                      <Text allowFontScaling={false}>{dateOfBirth || formattedDate}</Text>
                     </View>
                     <View style={[s` justify-center items-center`, { width: '30%' }]}>
                       <Icon name='calendar' color={'grey'} />
@@ -595,6 +621,38 @@ export default function Registraion({ navigation }: RegistrationProps) {
           <View>
             <Footer />
           </View>
+
+          {/* Invoice MODAL */}
+          <Modal
+            isVisible={modalVisible}
+            animationInTiming={300}
+            animationIn={'zoomIn'}
+            animationOut={'zoomOut'}
+            coverScreen={false}
+
+          >
+              <View style={s`bg-white w-full h-68 p-4 justify-center items-center rounded-lg`}>
+            <View style={[s`flex shrink-0 w-full items-center`, styles.lottieContainer]}>
+
+
+
+                <LottieView
+                  style={[styles.lottie]}
+                  source={require('../src/animations/paymentsuccess.json')}
+                  autoPlay
+
+                />
+
+              </View>
+              <Text allowFontScaling={false} style={s`text-black text-center text-md`}>You have been Registered Successfully!</Text>
+
+            <TouchableOpacity style={s`pt-4`} onPress={() => navigation.navigate('Login')} >
+              <Text allowFontScaling={false} style={s`text-blue-500 text-center text-md`}>Login Now</Text>
+            </TouchableOpacity>
+            </View>
+
+
+          </Modal>
         </GestureHandlerRootView>
       </View>
     </KeyboardAwareScrollView>
@@ -707,5 +765,19 @@ const styles = StyleSheet.create({
     height: 150,
     position: 'absolute',
     bottom: 0,
+  },
+  radio: {
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: 'black'
+  },
+  lottieContainer: {
+    zIndex: 0,
+  },
+  lottie: {
+    // width: Dimensions.get('window').height < 704 ? 150 : 200,
+    // height: Dimensions.get('window').height < 704 ? 100 : 150,
+    width: 120,
+    height: 120,
   },
 });

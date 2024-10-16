@@ -150,11 +150,11 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
     return (
       <Pressable style={[s`flex-row z-1 justify-between items-center my-4 mx-2`, styles.List]}>
         <View style={[s`flex-row items-center justify-between`, {}]}>
-          <Avatar ImageUrl={item.opaT_SEX === 'M' ? Man : Woman} width={20} height={20} />
+          <Avatar ImageUrl={item.opaT_SEX === 'M' ? Man : Woman} width={10} height={20} />
 
           <View style={[s`flex justify-between pl-4`, {}]}>
-            <Text allowFontScaling={false} style={[s`text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 11 : 13 }]}>{item.opaT_ID}</Text>
-            <Text allowFontScaling={false} style={[s`text-blue-900`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 13 : 15 }]}>{item.opaT_PNAME.length > 20 ? item.opaT_PNAME.slice(0, 20) + '..' : item.opaT_PNAME}</Text>
+            <Text allowFontScaling={false} style={[s`text-black`, { fontFamily: 'Quicksand-Bold', fontSize: hp(14) }]}>{item.opaT_ID}</Text>
+            <Text allowFontScaling={false} style={[s`text-blue-900`, { fontFamily: 'Quicksand-Bold', fontSize: hp(16) }]}>{item.opaT_PNAME.length > 20 ? item.opaT_PNAME.slice(0, 20) + '..' : item.opaT_PNAME}</Text>
           </View>
         </View>
 
@@ -211,7 +211,8 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
               <Header />
             </View>
             <View style={s`flex-row mb-2 pt-8 px-6 justify-between items-center`}>
-              <Image source={Logo} style={{ width: Dimensions.get('window').height < 604 ? 100 : 130, height: Dimensions.get('window').height <= 804 ? 40 : 50 }} />
+              {/* <Image source={Logo} style={{ width: Dimensions.get('window').height < 604 ? 100 : 130, height: Dimensions.get('window').height <= 804 ? 40 : 50 }} /> */}
+              <Image source={Logo} style={{ width: hp(130), height: hp(50) }} />
               {/* <Image source={Logo} width={100} height={100} /> */}
               <View>
                 {/* For Opening and Closing */}
@@ -220,8 +221,9 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
                   onPress={() => {
                     setOpen((prevOpen) => !prevOpen)
                   }}>
-                  <Avatar ImageUrl={user.gender === 'M' ? Man : Woman} width={20} height={20} />
-                  <Text allowFontScaling={false} style={[s`text-black pt-1 text-sm`, { fontSize: Dimensions.get('window').height < 604 ? 10 : 14, fontFamily: 'Quicksand-Bold' }]}>{user.pname?.slice(0, 7)}</Text>
+                  {/* <Avatar ImageUrl={user.gender === 'M' ? Man : Woman}  width={hp(20)} height={hp(20)} /> */}
+                  <Image source={user.gender === 'M' ? Man : Woman} style={{width : hp(40) , height : hp(40)}} />
+                  <Text allowFontScaling={false} style={[s`text-black pt-1`, { fontSize: hp(15), fontFamily: 'Quicksand-Bold' }]}>{user.pname?.slice(0, 7)}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -250,15 +252,15 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={{ backgroundColor: 'white', backfaceVisibility: 'hidden' }}
           handleStyle={{ backgroundColor: '#fb4d4d', borderTopRightRadius: 15, borderTopLeftRadius: 15 }}>
-          <View style={s`flex-column w-full `}>
+          <View style={s` w-full `}>
             <Pressable
               onPress={() => navigation.push('MRScreen', { user })}
-              style={[s`flex-row p-4 items-center justify-around w-full `, { elevation: 20, backgroundColor: '#fb4d4d' }]}>
-              <View style={[s` items-center`, { width: '30%' }]}>
-                <Icon name='plus' color={'white'} size={20} />
-              </View>
-              <View style={[s`pl-8`, { width: Dimensions.get('window').width <= 600 ? '70%' : '60%' }]}>
-                <Text allowFontScaling={false} style={s`text-white text-medium italic font-semibold`}>
+              style={[s` p-4 items-center justify-around w-full `, { elevation: 20, backgroundColor: '#fb4d4d' }]}>
+              <View style={[s`flex-row justify-center items-center`, { width: '100%' , gap : 14}]}>
+                <Icon name='plus' color={'white'} size={hp(20)} />
+                {/* </View>
+                <View style={[s`pl-8`, { width: Dimensions.get('window').width <= 600 ? '70%' : '60%' }]}> */}
+                <Text allowFontScaling={false} style={[s`text-white italic font-semibold` , {fontSize : hp(14)}]}>
                   Create New MR #
                 </Text>
               </View>
@@ -268,13 +270,13 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
             {
               bottomSheetData == 0 ?
                 (
-                  <Text allowFontScaling={false} style={[s`text-sm font-medium m-12 items-center justify-center italic text-center text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}>
+                  <Text allowFontScaling={false} style={[s`font-medium items-center justify-center italic text-center text-black`, { margin : hp(25) , fontFamily: 'Quicksand-Bold', fontSize: hp(14) }]}>
                     No MR Number is Registered with this Mobile Number! Please Click below button to create MR #.
                   </Text>
                 )
                 :
                 (
-                  <Text allowFontScaling={false} style={[s`text-sm font-medium mx-4 italic text-center text-black`, { fontFamily: 'Quicksand-Bold', fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}>
+                  <Text allowFontScaling={false} style={[s`font-medium italic text-center text-black`, { marginHorizontal : hp(20) , marginVertical : hp(4) ,fontFamily: 'Quicksand-Bold', fontSize: hp(14) }]}>
                     Following MR # are registered on your mobile number kindly select one for service.
                   </Text>
                 )
@@ -295,7 +297,8 @@ export default function HomeScreen({ route, navigation }: HomeProps): JSX.Elemen
                   <IconButton
                     name="mail-forward"
                     color={'white'}
-                    size={Dimensions.get('window').height < 704 ? 15 : 25}
+                    // size={Dimensions.get('window').height < 704 ? 15 : 25}
+                    size={hp(25)}
                   />
                 </Pressable>
               </Animated.View>

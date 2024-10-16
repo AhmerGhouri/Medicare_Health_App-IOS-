@@ -9,8 +9,10 @@ import {
   Dimensions,
   Alert,
   Platform,
+  SafeAreaView,
+  KeyboardAvoidingView,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Logo from '../src/assets/Medicare_logo_screen.png'
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import axios from 'axios';
@@ -26,6 +28,7 @@ import { addUserToStore } from '../app/slices/userSlice';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Animated, { BounceInDown, FadeOut } from 'react-native-reanimated';
+import { useResponsiveDimensions } from '../app/hooks/useDimension';
 
 
 
@@ -55,7 +58,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
   const [numError, setNumError] = useState('')
   const [numMsg, setnumMsg] = useState(false)
   const [showPassword, setShowPassword] = useState<boolean>(true)
-
+  const { wp , hp } = useResponsiveDimensions()
 
   const showhidePass = () => {
 
@@ -161,6 +164,88 @@ export default function LoginScreen({ navigation }: LoginProps) {
 
   }
 
+  const styles = useMemo(() => {
+
+    return StyleSheet.create({ 
+      ScreenContainer: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+      },
+      InputView: {
+        shadowColor: 'black',
+        backgroundColor: 'white',
+        shadowRadius: 5,
+        shadowOffset: {
+          width: 5,
+          height: 5,
+        },
+        padding: Platform.OS === 'ios' ? Dimensions.get('window').height > 704 ? 18 : 16 : Dimensions.get('screen').height <= 704 ? 0 : 4,
+        shadowOpacity: 0.3,
+        elevation: 15,
+        // width: Dimensions.get("window").height <= 804 ? "80%" : "80%"
+        width: hp(350)
+      },
+      CredentialsInput: {
+        color: 'black',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 28,
+      },
+      InputBox: {
+        gap: 16,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      input: {
+        borderWidth: 1,
+        width: 250,
+      },
+      Footer: {
+    
+        alignItems: 'flex-end',
+        zIndex: -1
+    
+      },
+      container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      headerImg: {
+        width: 250,
+        height: 200,
+      },
+      button: {
+        backgroundColor: 'red',
+        padding: 10,
+        marginTop: 10,
+        width: 250,
+      },
+      buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+      },
+      error: {
+        display: 'flex',
+        width: 60
+      },
+      errorMsg: {
+        color: 'red',
+        marginTop: 10,
+      },
+      footerImg: {
+        width: 250,
+        height: 150,
+        position: 'absolute',
+        bottom: 0,
+      },
+    
+    });
+
+  }, []) 
+
   return (
 
     <View style={[styles.ScreenContainer, { flexDirection: 'column' }]}>
@@ -177,17 +262,18 @@ export default function LoginScreen({ navigation }: LoginProps) {
           <View style={styles.InputBox}>
             <Animated.View style={s`flex`} entering={BounceInDown.duration(1300)} exiting={FadeOut} >
               <View style={[s`flex flex-row rounded-md border-red-300 p-1 justify-around items-center`, styles.InputView]}>
-                <View style={[s`items-center`, { width: '15%' }]}>
-                  <Icon name='phone' color={'grey'} size={Dimensions.get('window').height < 804 ? 12 : 14} />
+                <View style={[s`items-center`, { width: '12%' }]}>
+                  {/* <Icon name='phone' color={'grey'} size={Dimensions.get('window').height < 804 ? 12 : 14} /> */}
+                  <Icon name='phone' color={'grey'} size={hp(14)} />
                 </View>
-                <View style={[{ width: '85%', alignItems: 'center' }]}>
+                <View style={[{ width: hp(250), alignItems: 'center' , paddingLeft : Platform.OS === 'android' ? hp(30) : 0}]}>
                   <TextInput
                     allowFontScaling={false}
                     onBlur={handleInput}
                     placeholderTextColor={'black'}
                     placeholder='Enter Your Mobile Number'
                     keyboardType='numeric'
-                    style={[s`text-black`, { fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}
+                    style={[s`text-black`, { textAlign : Platform.OS === 'ios' ? 'center' : null, width : hp(250) , fontSize: Dimensions.get('window').height < 804 ? 12 : 14}]}
                     maxLength={11}
                     onChangeText={(text: string) => setMobileNo(text)}
                     value={mobileNo}
@@ -201,18 +287,18 @@ export default function LoginScreen({ navigation }: LoginProps) {
                 <View style={[s`items-center`, { width: '15%' }]}>
                   <Icon name='lock' color={'grey'} size={Dimensions.get('window').height < 804 ? 12 : 14} />
                 </View>
-                <View style={[{ width: '65%', alignItems: 'center', paddingLeft: '12%' }]}>
+                <View style={[{ width: '65%', alignItems: 'center' }]}>
                   <TextInput
                     allowFontScaling={false}
                     placeholder='Enter Your Password'
                     placeholderTextColor={'black'}
-                    style={[s`text-black `, { fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}
+                    style={[s`text-black `, { textAlign : Platform.OS === 'ios' ? 'center' : null , width : hp(160) , fontSize: Dimensions.get('window').height < 804 ? 12 : 14 }]}
                     keyboardType='default'
                     secureTextEntry={showPassword}
                     onChangeText={(text: string) => setPassword(text)}
                     value={weB_PASSWORD} />
                 </View>
-                <View style={[{ width: '20%', alignItems: 'center' }]}>
+                <View style={[{ width: '12%', alignItems: 'center' }]}>
                   <Icon name={showPassword ? 'eye-slash' : 'eye'} color={'grey'} onPress={showhidePass} size={Dimensions.get('window').height < 804 ? 12 : 16} />
                 </View>
               </View>
@@ -268,79 +354,3 @@ export default function LoginScreen({ navigation }: LoginProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  ScreenContainer: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  InputView: {
-    shadowColor: 'black',
-    backgroundColor: 'white',
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    padding: Platform.OS === 'ios' ? Dimensions.get('window').height > 704 ? 18 : 16 : Dimensions.get('screen').height <= 704 ? 0 : 4,
-    shadowOpacity: 0.3,
-    elevation: 15,
-    width: Dimensions.get("window").height <= 804 ? "80%" : "80%"
-  },
-  CredentialsInput: {
-    color: 'black',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 28,
-  },
-  InputBox: {
-    gap: 16,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  input: {
-    borderWidth: 1,
-    width: 250,
-  },
-  Footer: {
-
-    alignItems: 'flex-end',
-    zIndex: -1
-
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerImg: {
-    width: 250,
-    height: 200,
-  },
-  button: {
-    backgroundColor: 'red',
-    padding: 10,
-    marginTop: 10,
-    width: 250,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-  },
-  error: {
-    display: 'flex',
-    width: 60
-  },
-  errorMsg: {
-    color: 'red',
-    marginTop: 10,
-  },
-  footerImg: {
-    width: 250,
-    height: 150,
-    position: 'absolute',
-    bottom: 0,
-  },
-
-});

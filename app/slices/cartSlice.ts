@@ -85,6 +85,9 @@ export const Cart = createSlice({
 
         },
         removeFromCart: (state, action: PayloadAction<string | undefined | CartItem>) => {
+
+            console.log("Removed Item" , action.payload);
+
             let updatedCart = state.cartItem.filter((item) => item.ltesT_ID !== action.payload)
             return {
                 ...state,

@@ -26,6 +26,7 @@
 		0D5AAE19675849EA89F2E4FE /* FontAwesome6Pro.js in Resources */ = {isa = PBXBuildFile; fileRef = D2AC67AEDDEF459598DA58AE /* FontAwesome6Pro.js */; };
 		0D9CF629A63C4C83B9661CEC /* contents.xcworkspacedata in Resources */ = {isa = PBXBuildFile; fileRef = 0FDD950DFD19431DAF705262 /* contents.xcworkspacedata */; };
 		0E15E6238B1D418D977B482A /* EvilIcons.js in Resources */ = {isa = PBXBuildFile; fileRef = F6222C077BE5426FBC16029C /* EvilIcons.js */; };
+		0E8BD000E180BEF2DB8E62B6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A3CA92A0D91C752F9F89D5B8 /* PrivacyInfo.xcprivacy */; };
 		0F614FE68EA64AA2B8C26B2C /* common-types.js in Resources */ = {isa = PBXBuildFile; fileRef = A22FC7125CC64C03B580D08A /* common-types.js */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -351,6 +352,7 @@
 		A1EBC65F7C894145B6A8BC19 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic.ttf"; path = "../src/fonts/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		A22FC7125CC64C03B580D08A /* common-types.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "common-types.js"; path = "../node_modules/react-native-vector-icons/node_modules/yargs/build/lib/typings/common-types.js"; sourceTree = "<group>"; };
 		A2986F98559441E6BF997E53 /* annotationProcessors.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = annotationProcessors.json; path = "../node_modules/react-native-vector-icons/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json"; sourceTree = "<group>"; };
+		A3CA92A0D91C752F9F89D5B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = HHS_Medicare/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A434F978865C4C68944659CC /* package.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = package.json; path = "../node_modules/react-native-vector-icons/node_modules/cliui/package.json"; sourceTree = "<group>"; };
 		A45F79F9C970491C84B060FB /* FontAwesome6.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome6.js; path = "../node_modules/react-native-vector-icons/FontAwesome6.js"; sourceTree = "<group>"; };
 		A462F239A0BB4BEC823A8347 /* RNVectorIconsManager.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = RNVectorIconsManager.h; path = "../node_modules/react-native-vector-icons/RNVectorIconsManager/RNVectorIconsManager.h"; sourceTree = "<group>"; };
@@ -442,7 +444,7 @@
 		FCFF966C53EA48AD93C7BE0A /* R.jar */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = R.jar; path = "../node_modules/react-native-vector-icons/android/build/intermediates/compile_r_class_jar/debug/R.jar"; sourceTree = "<group>"; };
 		FE363BB4822347CB86D08511 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LICENSE; path = "../node_modules/react-native-vector-icons/LICENSE"; sourceTree = "<group>"; };
 		FF59E83D9DD44AD094509436 /* EvilIcons.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.json; path = "../node_modules/react-native-vector-icons/dist/glyphmaps/EvilIcons.json"; sourceTree = "<group>"; };
-		FFDB3E10A4934A1FA906836C /* VectorIconsModule$Errors.class */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = VectorIconsModule$Errors.class; path = "../node_modules/react-native-vector-icons/android/build/intermediates/javac/debug/classes/com/oblador/vectoricons/VectorIconsModule$Errors.class"; sourceTree = "<group>"; };
+		FFDB3E10A4934A1FA906836C /* VectorIconsModule$Errors.class */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "VectorIconsModule$Errors.class"; path = "../node_modules/react-native-vector-icons/android/build/intermediates/javac/debug/classes/com/oblador/vectoricons/VectorIconsModule$Errors.class"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +494,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				A3CA92A0D91C752F9F89D5B8 /* PrivacyInfo.xcprivacy */,
 			);
 			name = HHS_Medicare;
 			sourceTree = "<group>";
@@ -1050,6 +1053,7 @@
 				F874A4094ED74B2AB0DEBEAA /* yargs-parser.js in Resources */,
 				2D2646750EE04751838ABAFE /* bundled-icon-set.tpl in Resources */,
 				E7F7C7429CA74113919A318C /* separated-icon-set.tpl in Resources */,
+				0E8BD000E180BEF2DB8E62B6 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1410,7 +1414,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -1485,7 +1492,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

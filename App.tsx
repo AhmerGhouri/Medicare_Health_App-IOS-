@@ -20,8 +20,7 @@ import LogoTitle from './components/LogoTitle/LogoTitle';
 import { useAppSelector } from './app/hooks/hooks';
 import ClearAllBtn from './components/ClearAllBtn/ClearAllBtn';
 import MyTabs, { HistoryScreen } from './Navigator/Navigator';
-import PasswordGenerator from './Screens/PasswordGenerator';
-
+import PaymentScreen from './Screens/PaymentScreen';
 
 
 export type RootStackParamList = {
@@ -46,6 +45,7 @@ export type RootStackParamList = {
   TabCartScreen: any,
   HistoryScreen: any,
   Password: any,
+  Testing : any,
 };
 
 
@@ -204,7 +204,8 @@ export const Layout = () => {
           headerBackTitleVisible: false,
           headerTransparent: true,
           headerTitle: '',
-        }} component={PasswordGenerator} />
+        }} component={PaymentScreen} />
+        
 
       </Stack.Navigator>
 

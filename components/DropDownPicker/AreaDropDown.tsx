@@ -104,12 +104,12 @@ export const AreaDropDownPicker: React.FC<data> = props => {
         margin: 8,
         paddingTop: 5,
         marginVertical: 12,
-        fontSize: 14,
+        fontSize: hp(14),
       },
       dropDownInput: {
         fontFamily: 'Poppins',
         color: 'black',
-        fontSize: 14,
+        fontSize: hp(14),
         zIndex: 1,
       },
       checkIcon: {
@@ -117,7 +117,7 @@ export const AreaDropDownPicker: React.FC<data> = props => {
       },
       emptyMessageText: {
         color: 'black',
-        fontSize: 12,
+        fontSize: hp(12),
       },
       emptyMessageContainer: {
         alignItems: 'center',
@@ -142,7 +142,7 @@ export const AreaDropDownPicker: React.FC<data> = props => {
         />
         <Icon
           name={isClicked ? 'up' : 'down'}
-          size={20}
+          size={hp(20)}
           color={'black'}
         />
       </TouchableOpacity>
